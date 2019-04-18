@@ -74,3 +74,11 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.io/custom-fonts/#from-packages
+
+  # Wechat: &#xe627;
+  # QQ: &#xe630;
+  # Weibo: &#xe620;
+  fonts:
+  - family: appIconFonts
+    fonts:
+    - asset: fonts/icon/iconfont.ttf
