@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_dev/login_page.dart';
-import 'package:frontend_dev/account_center_page.dart';
+import 'package:frontend_dev/pages/login_page.dart';
+import 'package:frontend_dev/pages/account_center_page.dart';
+import 'package:frontend_dev/datas/Location.dart'; // TODO:降低这个类的耦合
 
 class DrawerPage extends StatefulWidget {
   DrawerPage({this.oriNickname, this.oriEmail, this.oriAvatar});
@@ -80,8 +81,9 @@ class _DrawerPageState extends State<DrawerPage> {
                   children: <Widget>[
                     // 用户头像
                     UserAccountsDrawerHeader(
-                      accountName: Text('${widget.oriAvatar}'), // 昵称
-                      accountEmail: Text('${widget.oriNickname}'), // 邮箱
+
+                      accountName: Text('${widget.oriNickname}'), // 昵称
+                      accountEmail: Text('${widget.oriEmail}'), // 邮箱
                       currentAccountPicture: GestureDetector(
                         onTap: _accountSwitchCallback,
                         child: CircleAvatar(
@@ -199,6 +201,39 @@ class _DrawerPageState extends State<DrawerPage> {
                     ),
 
                     Divider(),
+
+                    // 获取定位
+                    ListTile(
+                      leading: CircleAvatar(
+                        child: Icon(
+                          Icons.add_location,
+                          color: Colors.white,
+                        ),
+                        backgroundColor: Colors.black,
+                      ),
+                      title: Text('获取定位'),
+                      onTap: () {
+                        Navigator.pop(context);
+                        getProvinces(context);
+                      },
+                    ),
+
+                    Divider(),
+
+                    // 退出侧栏
+                    ListTile(
+                      leading: CircleAvatar(
+                        child: Icon(
+                          Icons.exit_to_app,
+                          color: Colors.white,
+                        ),
+                        backgroundColor: Colors.black,
+                      ),
+                      title: Text('退出侧栏'),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    )
                   ],
                 ),
               ),
