@@ -13,8 +13,9 @@ class AccountCenterPage extends StatefulWidget {
 }
 
 class _AccountCenterPageState extends State<AccountCenterPage> {
-  final GlobalKey<_AccountCenterPageState> _accountCenterPageKey =
-    new GlobalKey<_AccountCenterPageState>();
+  // TODO:暂时还未用到
+  /*final GlobalKey<_AccountCenterPageState> _accountCenterPageKey =
+    new GlobalKey<_AccountCenterPageState>();*/
 
   // 初始化微信、QQ、微博图标
   List<IconButton> oriAccounts = [
