@@ -25,7 +25,7 @@ class MainCardState extends State<MainCard>{
           color: widget.color,
         ),
         new Container(
-          height: 4 * widget.cardSize,
+          height: 4.3 * widget.cardSize,
           width: 3 * widget.cardSize,
           margin: EdgeInsets.all(0),
           color: widget.color,

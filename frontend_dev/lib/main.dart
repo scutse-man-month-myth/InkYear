@@ -9,6 +9,7 @@ import 'package:frontend_dev/constants/IconStyle.dart';
 import 'package:frontend_dev/constants/StringStyle.dart';
 import 'package:frontend_dev/datas/Location.dart'; // TODO:降低这个类的耦合
 import 'package:frontend_dev/tools/Card.dart'; //导入Card
+import 'package:frontend_dev/pages/card_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -55,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
   // 页面参数
   // TODO:在initState里初始化
   List<Widget> _bodys;
-  int _tabIndex = 2;
+  int _tabIndex = 1;
 
   // 得到页面
   // TODO:临时填充将被替换
@@ -72,21 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _bodys = [
       _getBody(0),
       //改卡片页面demo，还没写类
-      new Stack(
-        children: <Widget>[
-          new Positioned(
-            top: 50,
-            left: 40,
-            child: new MainCard(
-              cardSize: 110,
-              color: Colors.white,
-              child: new Center(
-                  child: new Text("Hello")
-              ),
-            ),
-          )
-        ],
-      ),
+      CardPage(),
       DailyRecord(),
     ];
   }
