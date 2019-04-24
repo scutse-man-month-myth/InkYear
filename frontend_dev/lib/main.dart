@@ -8,8 +8,8 @@ import 'package:frontend_dev/constants/ThemeColors.dart';
 import 'package:frontend_dev/constants/IconStyle.dart';
 import 'package:frontend_dev/constants/StringStyle.dart';
 import 'package:frontend_dev/datas/Location.dart'; // TODO:降低这个类的耦合
-import 'package:frontend_dev/tools/Card.dart'; //导入Card
 import 'package:frontend_dev/pages/card_page.dart';
+import 'package:frontend_dev/pages/card_packet_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -66,6 +66,8 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  static VoidCallback _openCardPacketCallback;
+
   @override
   void initState() {
     super.initState();
@@ -91,6 +93,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    _openCardPacketCallback = (){
+      Navigator.push(
+        context,
+        new MaterialPageRoute(builder: (context) => new CardPacketPage()),
+      );
+    };
+
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).backgroundColor,
@@ -219,12 +228,14 @@ class _MyHomePageState extends State<MyHomePage> {
           oriNickname: _nickname,
           oriEmail: _email,
         ),
+        //4.24,刘皓贤修改了floatingActionButton位置和点击事件
         floatingActionButton: IconButton(
             icon: new Icon(
               Icons.add_circle,
-              size: 40,
+              size: 50,
             ),
-            onPressed: null
+            padding: EdgeInsets.fromLTRB(0, 0, 60, 40),
+            onPressed: _openCardPacketCallback,
         ),
       )
     );

@@ -52,10 +52,12 @@ class SelectCard extends StatefulWidget{
 class SelectCardState extends State<SelectCard>{
 
   //选择卡片后返回到主页面
-  static VoidCallback _returnMainPageCallback;
+  static VoidCallback _chooseCardCallback;
 
   Widget build(BuildContext context){
-    _returnMainPageCallback = null;
+    _chooseCardCallback = (){
+      Navigator.pop(context);
+    };
     return new GestureDetector(
       child: new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,7 +75,7 @@ class SelectCardState extends State<SelectCard>{
           )
         ],
       ),
-      onTap: _returnMainPageCallback,
+      onTap: _chooseCardCallback,
     );
   }
 }
