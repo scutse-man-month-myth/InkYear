@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_dev/constants/AntDesignIcons.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -13,24 +14,15 @@ class _LoginPageState extends State<LoginPage> {
   List _loginMethod = [
     {
       "title": "Wechat",
-      "icon": IconData(
-          0xe627,
-          fontFamily: 'Accounts'
-      ),
+      "icon": AntDesignIcons.wechat,
     }, // Login via Wechat
     {
       "title": "QQ",
-      "icon": IconData(
-          0xe630,
-          fontFamily: 'Accounts'
-      ),
+      "icon": AntDesignIcons.qq,
     }, // Login via QQ
     {
       "title": "Weibo",
-      "icon": IconData(
-          0xe620,
-          fontFamily: 'Accounts'
-      ),
+      "icon": AntDesignIcons.weibo,
     }, // Login via Weibo
   ];
 
@@ -39,25 +31,28 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
         body: Form(
             key: _formKey,
-            child: ListView(
-              padding: EdgeInsets.symmetric(horizontal: 22.0),
-              children: <Widget>[
-                SizedBox(height: kToolbarHeight),
-                buildTitle('Login'),
-                buildTitleLine(),
-                SizedBox(height: 70.0),
-                buildEmailTextField(),
-                SizedBox(height: 30.0),
-                buildPasswordTextField(context),
-                buildForgetPasswordText(context),
-                SizedBox(height: 60.0),
-                buildLoginButton(context),
-                SizedBox(height: 30.0),
-                buildOtherLoginText(),
-                buildOtherMethodIcon(context),
-                buildRegisterText(context),
-              ],
-            )
+            child: Container(
+              color: Theme.of(context).backgroundColor,
+              child: ListView(
+                padding: EdgeInsets.symmetric(horizontal: 22.0),
+                children: <Widget>[
+                  SizedBox(height: kToolbarHeight),
+                  buildTitle('Login'),
+                  buildTitleLine(),
+                  SizedBox(height: 70.0),
+                  buildEmailTextField(),
+                  SizedBox(height: 30.0),
+                  buildPasswordTextField(context),
+                  buildForgetPasswordText(context),
+                  SizedBox(height: 60.0),
+                  buildLoginButton(context),
+                  SizedBox(height: 30.0),
+                  buildOtherLoginText(),
+                  buildOtherMethodIcon(context),
+                  buildRegisterText(context),
+                ],
+              ),
+            ),
         )
     );
   }
@@ -78,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
       child: Align(
         alignment: Alignment.bottomLeft,
         child: Container(
-          color: Colors.black,
+          color: Theme.of(context).primaryColor,
           width: 40.0,
           height: 2.0,
         ),

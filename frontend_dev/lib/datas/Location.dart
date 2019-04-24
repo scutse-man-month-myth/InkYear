@@ -5,6 +5,8 @@ import 'package:frontend_dev/datas/Province.dart';
 import 'package:frontend_dev/datas/City.dart';
 import 'package:frontend_dev/datas/County.dart';
 
+// TODO:调用GPS定位 + 高德地图API
+
 // 选择地点的参数
 int currentLevel = 0;
 int levelProvince = 0;
@@ -22,7 +24,6 @@ List cityList = <String>[];
 List countyList = <String>[];
 
 /*得到省份参数*/
-// TODO:改成非私有的了
 getProvinces(BuildContext context) async{
   var url = 'http://guolin.tech/api/china/';
   var httpClient = new HttpClient();
@@ -39,7 +40,7 @@ getProvinces(BuildContext context) async{
 }
 
 /*得到城市参数*/
-_getCities(BuildContext context) async{
+getCities(BuildContext context) async{
   var url = 'http://guolin.tech/api/china/' + selectProvince.toString();
   var httpClient = new HttpClient();
 
@@ -54,7 +55,7 @@ _getCities(BuildContext context) async{
 }
 
 /*得到国家参数*/
-_getCounties(BuildContext context) async{
+getCounties(BuildContext context) async{
   var url = 'http://guolin.tech/api/china/' + selectProvince.toString() + "/" + selectCity.toString();
   var httpClient = new HttpClient();
 
@@ -104,15 +105,15 @@ class ChooseProvinceState extends State<ChooseProvince>{
               onPressed: (){
                 setState(() {
                   selectProvince = provinceList[index].id;
-                  _getCities(context);
-                  province = provinceList[index].pname;
+                  getCities(context);
+                  province = provinceList[index].provinceName;
                 });
               },
               child: new Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   new Divider(),
-                  new Text(provinceList[index].pname, style: textStyle,)
+                  new Text(provinceList[index].provinceName, style: textStyle,)
                 ],
               )
           ),
@@ -157,7 +158,7 @@ class ChooseCityState extends State<ChooseCity>{
               onPressed: (){
                 setState(() {
                   selectCity = cityList[index].id;
-                  _getCounties(context);
+                  getCounties(context);
                   city = cityList[index].cityName;
                 });
               },
