@@ -8,6 +8,7 @@ import 'package:frontend_dev/constants/ThemeColors.dart';
 import 'package:frontend_dev/constants/IconStyle.dart';
 import 'package:frontend_dev/constants/StringStyle.dart';
 import 'package:frontend_dev/datas/Location.dart'; // TODO:降低这个类的耦合
+import 'package:frontend_dev/tools/Card.dart'; //导入Card
 
 void main() => runApp(MyApp());
 
@@ -70,7 +71,22 @@ class _MyHomePageState extends State<MyHomePage> {
     // TODO:写成生成器模式
     _bodys = [
       _getBody(0),
-      _getBody(1),
+      //改卡片页面demo，还没写类
+      new Stack(
+        children: <Widget>[
+          new Positioned(
+            top: 50,
+            left: 40,
+            child: new MainCard(
+              cardSize: 110,
+              color: Colors.white,
+              child: new Center(
+                  child: new Text("Hello")
+              ),
+            ),
+          )
+        ],
+      ),
       DailyRecord(),
     ];
   }
