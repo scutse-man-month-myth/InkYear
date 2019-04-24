@@ -4,6 +4,8 @@ import 'package:frontend_dev/pages/weather_page.dart';
 import 'package:frontend_dev/pages/state_page.dart';
 import 'package:frontend_dev/tools/TopReminder.dart'; // TODO:整合进AppBar
 import 'package:frontend_dev/tools/Toast.dart';
+import 'package:frontend_dev/constants/ThemeColors.dart';
+import 'package:frontend_dev/constants/IconStyle.dart';
 import 'package:frontend_dev/datas/Location.dart'; // TODO:降低这个类的耦合
 
 void main() => runApp(MyApp());
@@ -14,9 +16,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       // 全局主题配置
       theme: ThemeData(
-        // TODO:Colors 颜色方案
-        primaryColor: Colors.black,
-        // TODO:Themes 样式方案
+        primaryColor: ThemeColors.primaryColor,
+        primaryIconTheme: IconStyle.primaryIconStyle,
+        // primaryTextTheme: ,
       ),
       // 入口界面控件
       home: MyHomePage(),
@@ -32,98 +34,110 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  // 用户参数
+  // TODO:封装成User类
   String _avatar = 'imgs/profile.jpeg'; // 头像
   String _nickname = 'nickname'; // 昵称
   String _email = 'nickname@xxx.xxx'; // 邮箱
-  int _tabIndex = 2;
-  var _bodys;
+
+  // 日期参数
+  // TODO:封装成Date类或直接使用内置Date类
   String month = "Jan";
   int day = 1;
   String date = "Jan 1";
   String week = "MONDAY";
 
-  Widget _getBody(int i){
-    return new Center(
-      child: new Text("body $i"),
+  // 页面参数
+  // TODO:在initState里初始化
+  List<Widget> _bodys;
+  int _tabIndex = 2;
+
+  // TODO:临时填充将被替换
+  Widget _getBody(int index) {
+    return Center(
+      child: Text("body $index"),
     );
   }
 
-  void initDate(){
-    _bodys = [
-      _getBody(0),
-      _getBody(1),
-      new DailyRecord(),
-    ];
-  }
-
-  void openTopReminder(context) {
-    // 导航器（`Navigator`）组件，用于管理具有堆栈规则的一组子组件。
-    // 许多应用程序在其窗口组件层次结构的顶部附近有一个导航器，以便使用叠加显示其逻辑历史记录，
-    // 最近访问过的页面可视化地显示在旧页面之上。使用此模式，
-    // 导航器可以通过在叠加层中移动组件来直观地从一个页面转换到另一个页面。
-    // 类似地，导航器可用于通过将对话框窗口组件放置在当前页面上方来显示对话框。
-    // 导航器（`Navigator`）组件的关于（`of`）方法，来自此类的最近实例的状态，它包含给定的上下文。
-    // 导航器（`Navigator`）组件的推（`push`）方法，将给定路径推送到最紧密包围给定上下文的导航器。
+  void _openTopReminder(context) {
     Navigator.of(context).push(
-      // 页面路由生成器（`PageRouteBuilder`）组件，用于根据回调定义一次性页面路由的实用程序类。
       PageRouteBuilder(
-        // 转换完成后路由是否会遮盖以前的路由。
+        // 当前的路由不会遮盖之前的路由
         opaque: false,
-        // 页面构建器（`pageBuilder`）属性，用于构建路径的主要内容。
-        pageBuilder: (BuildContext context, _, __) {
-          return TopReminder(widgetChild:new WeatherPage());
-        },
-        // TODO: 第5步：实现“过渡动画”。
+        // 构建路由的主要内容
+        pageBuilder: (BuildContext context, _, __) => TopReminder(child:WeatherPage()),
       ),
     );
   }
 
   @override
+  void initState() {
+    super.initState();
+    // TODO:写成生成器模式
+    _bodys = [
+      _getBody(0),
+      _getBody(1),
+      DailyRecord(),
+    ];
+  }
+
+  @override
   Widget build(BuildContext context) {
-    initDate();
     return Container(
       decoration: BoxDecoration(
-      image: DecorationImage(
-        image: AssetImage("imgs/background2.jpg"),
-        fit: BoxFit.fitWidth,
+        image: DecorationImage(
+          image: AssetImage("imgs/background2.jpg"),
+          fit: BoxFit.fitWidth,
         )
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: new AppBar(
+        appBar: AppBar(
           backgroundColor: Colors.transparent,
-          leading: Builder(builder: (BuildContext context){
-            return new Padding(
-              padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
-              child: new GestureDetector(
-                child: new CircleAvatar(
-                  backgroundImage: new AssetImage("imgs/timg.jpg"),
+          leading: Builder( // 需要上下文辅助打开侧边栏
+            builder: (BuildContext context) =>
+              Padding(
+                padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                child: GestureDetector(
+                  child: CircleAvatar(
+                    radius: 20.0,
+                    backgroundImage: AssetImage("imgs/timg.jpg"),
+                  ),
+                  onTap: () {
+                    Scaffold.of(context).openDrawer();
+                  },
                 ),
-                onTap: (){
-                  Scaffold.of(context).openDrawer();
-                },
               ),
-            );
-          }),
-          title: new Text(_nickname, style: new TextStyle(fontSize: 25),),
+          ),
+          title: Text(
+            _nickname,
+            style: TextStyle(fontSize: 25),
+          ),
           actions: <Widget>[
-            new Padding(
+            Padding(
               padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
-              child: new Row(
+              child: Row(
                 children: <Widget>[
-                  new Text(date, style: new TextStyle(fontSize: 16),),
-                  new Padding(padding: EdgeInsets.fromLTRB(7, 0, 0, 0)),
-                  new Text(week, style: new TextStyle(fontSize: 16),),
+                  Text(
+                    date,
+                    style: TextStyle(fontSize: 16),),
+                  Padding(padding: EdgeInsets.fromLTRB(7, 0, 0, 0)),
+                  Text(
+                    week,
+                    style: TextStyle(fontSize: 16),
+                  ),
                 ],
               ),
             ),
-            new IconButton(
-                icon: new Icon(Icons.cloud),
+            IconButton(
+                // TODO:动态变化天气图标
+                icon: Icon(Icons.cloud),
                 onPressed: () {
-                  if(county == ""){
+                  if(county == ""){ // 未选择地址
                     Toast.toast(context, "请先选择地址");
-                  }else{
-                    openTopReminder(context);
+                  }
+                  else{ // 已选择地址
+                    _openTopReminder(context);
                   }
                 }
             ),

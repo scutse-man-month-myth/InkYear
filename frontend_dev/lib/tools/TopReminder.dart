@@ -7,10 +7,10 @@ class TopReminder extends StatefulWidget {
   TopReminder({
     @required
     this.reminderText,
-    this.widgetChild
+    this.child
   });
 
-  Widget widgetChild;
+  Widget child;
 
   @override
   _TopReminderState createState() => _TopReminderState();
@@ -30,7 +30,7 @@ class _TopReminderState extends State<TopReminder> {
                 width: double.infinity,
                 height: 350.0,
                 color: Colors.transparent,
-                child: widget.widgetChild,
+                child: widget.child,
             )
           ],
         )

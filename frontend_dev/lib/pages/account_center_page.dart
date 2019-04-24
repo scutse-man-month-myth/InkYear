@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_dev/constants/AntDesignIcons.dart';
 
 typedef void ChangeCallback(String value);
 
@@ -20,24 +21,15 @@ class _AccountCenterPageState extends State<AccountCenterPage> {
   // 初始化微信、QQ、微博图标
   List<IconButton> oriAccounts = [
     IconButton( // Wechat图标
-      icon: Icon(IconData(
-        0xe627,
-        fontFamily: 'Accounts',
-      )),
+      icon: Icon(AntDesignIcons.wechat),
       onPressed: _wechatAccountChangeCallback,
     ),
     IconButton( // QQ图标
-      icon: Icon(IconData(
-        0xe630,
-        fontFamily: 'Accounts',
-      )),
+      icon: Icon(AntDesignIcons.qq),
       onPressed: _qqAccountChangeCallback,
     ),
     IconButton( // Weibo图标
-      icon: Icon(IconData(
-        0xe620,
-        fontFamily: 'Accounts',
-      )),
+      icon: Icon(AntDesignIcons.weibo),
       onPressed: _weiboAccountChangeCallback,
     ),
   ]; // 原绑定

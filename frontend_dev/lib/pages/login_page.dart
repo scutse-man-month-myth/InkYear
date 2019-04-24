@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_dev/constants/AntDesignIcons.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -13,24 +14,15 @@ class _LoginPageState extends State<LoginPage> {
   List _loginMethod = [
     {
       "title": "Wechat",
-      "icon": IconData(
-          0xe627,
-          fontFamily: 'Accounts'
-      ),
+      "icon": AntDesignIcons.wechat,
     }, // Login via Wechat
     {
       "title": "QQ",
-      "icon": IconData(
-          0xe630,
-          fontFamily: 'Accounts'
-      ),
+      "icon": AntDesignIcons.qq,
     }, // Login via QQ
     {
       "title": "Weibo",
-      "icon": IconData(
-          0xe620,
-          fontFamily: 'Accounts'
-      ),
+      "icon": AntDesignIcons.weibo,
     }, // Login via Weibo
   ];
 
