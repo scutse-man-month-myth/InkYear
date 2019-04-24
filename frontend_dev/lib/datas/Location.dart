@@ -21,6 +21,7 @@ List provinceList = <String>[];
 List cityList = <String>[];
 List countyList = <String>[];
 
+
 /*得到省份参数*/
 // TODO:改成非私有的了
 getProvinces(BuildContext context) async{
