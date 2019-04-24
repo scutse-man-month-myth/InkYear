@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_dev/pages/state_page.dart';
 import 'package:frontend_dev/pages/drawer_page.dart';
 import 'package:frontend_dev/pages/weather_page.dart';
-import 'package:frontend_dev/pages/state_page.dart';
-import 'package:frontend_dev/tools/TopReminder.dart'; // TODO:整合进AppBar
+import 'package:frontend_dev/tools/TopReminder.dart';
 import 'package:frontend_dev/tools/Toast.dart';
 import 'package:frontend_dev/constants/ThemeColors.dart';
 import 'package:frontend_dev/constants/IconStyle.dart';
+import 'package:frontend_dev/constants/StringStyle.dart';
 import 'package:frontend_dev/datas/Location.dart'; // TODO:降低这个类的耦合
 
 void main() => runApp(MyApp());
@@ -17,7 +18,10 @@ class MyApp extends StatelessWidget {
       // 全局主题配置
       theme: ThemeData(
         primaryColor: ThemeColors.primaryColor,
+        backgroundColor: ThemeColors.backgroundColor,
+        accentColor: ThemeColors.accentColor,
         primaryIconTheme: IconStyle.primaryIconStyle,
+        primaryTextTheme: StringStyle.primaryTextStyle,
         // primaryTextTheme: ,
       ),
       // 入口界面控件
@@ -41,32 +45,22 @@ class _MyHomePageState extends State<MyHomePage> {
   String _email = 'nickname@xxx.xxx'; // 邮箱
 
   // 日期参数
-  // TODO:封装成Date类或直接使用内置Date类
-  String month = "Jan";
-  int day = 1;
-  String date = "Jan 1";
-  String week = "MONDAY";
+  // TODO:用内置Date类
+  String _month = "Jan";
+  int _day = 1;
+  String _date = "Jan 1";
+  String _week = "MONDAY";
 
   // 页面参数
   // TODO:在initState里初始化
   List<Widget> _bodys;
   int _tabIndex = 2;
 
+  // 得到页面
   // TODO:临时填充将被替换
   Widget _getBody(int index) {
     return Center(
       child: Text("body $index"),
-    );
-  }
-
-  void _openTopReminder(context) {
-    Navigator.of(context).push(
-      PageRouteBuilder(
-        // 当前的路由不会遮盖之前的路由
-        opaque: false,
-        // 构建路由的主要内容
-        pageBuilder: (BuildContext context, _, __) => TopReminder(child:WeatherPage()),
-      ),
     );
   }
 
@@ -81,10 +75,22 @@ class _MyHomePageState extends State<MyHomePage> {
     ];
   }
 
+  void _openTopReminder(context) {
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        // 当前的路由不会遮盖之前的路由
+        opaque: false,
+        // 构建路由的主要内容
+        pageBuilder: (BuildContext context, _, __) => TopReminder(child:WeatherPage()),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+        color: Theme.of(context).backgroundColor,
         image: DecorationImage(
           image: AssetImage("imgs/background2.jpg"),
           fit: BoxFit.fitWidth,
@@ -94,19 +100,24 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
-          leading: Builder( // 需要上下文辅助打开侧边栏
+          leading: Builder(
             builder: (BuildContext context) =>
-              Padding(
-                padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
-                child: GestureDetector(
-                  child: CircleAvatar(
-                    radius: 20.0,
-                    backgroundImage: AssetImage("imgs/timg.jpg"),
+              Stack(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                    child: CircleAvatar(
+                      radius: 20.0,
+                      backgroundColor: Theme.of(context).backgroundColor,
+                      backgroundImage: AssetImage("imgs/timg.jpg"),
+                    ),
                   ),
-                  onTap: () {
-                    Scaffold.of(context).openDrawer();
-                  },
-                ),
+                  GestureDetector(
+                    onTap: () {
+                      Scaffold.of(context).openDrawer();
+                    }
+                  ),
+                ]
               ),
           ),
           title: Text(
@@ -114,35 +125,49 @@ class _MyHomePageState extends State<MyHomePage> {
             style: TextStyle(fontSize: 25),
           ),
           actions: <Widget>[
+            /// 显示日期
             Padding(
               padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
               child: Row(
                 children: <Widget>[
                   Text(
-                    date,
-                    style: TextStyle(fontSize: 16),),
+                    _date,
+                    style: TextStyle(fontSize: 16),
+                  ),
                   Padding(padding: EdgeInsets.fromLTRB(7, 0, 0, 0)),
                   Text(
-                    week,
+                    _week,
                     style: TextStyle(fontSize: 16),
                   ),
                 ],
               ),
             ),
+            /// 显示天气
             IconButton(
-                // TODO:动态变化天气图标
-                icon: Icon(Icons.cloud),
+              // TODO:动态变化天气图标
+                icon: Icon(
+                  Icons.cloud,
+                  color: Theme.of(context).accentColor,
+                ),
                 onPressed: () {
-                  if(county == ""){ // 未选择地址
+                  if(county == "") { // 未选择地址
                     Toast.toast(context, "请先选择地址");
                   }
-                  else{ // 已选择地址
+                  else { // 已选择地址
                     _openTopReminder(context);
                   }
                 }
             ),
-            new IconButton(icon: new Icon(Icons.format_list_bulleted, color: Colors.white,), onPressed: null)
+            /// 显示搜索
+            IconButton(
+              icon: Icon(Icons.search),
+              color: Theme.of(context).accentColor,
+              onPressed: () {
+                // TODO:实现搜索功能
+              },
+            ),
           ],
+          elevation: 0.0,
         ),
         body: _bodys[_tabIndex],
         bottomNavigationBar: new Row(
