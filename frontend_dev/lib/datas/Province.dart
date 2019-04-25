@@ -1,13 +1,13 @@
 class Province{
   int id;
-  String pname;
+  String provinceName;
 
-  Province({this.id, this.pname});
+  Province({this.id, this.provinceName});
 
   factory Province.fromJson(Map<String, dynamic> json) {
     return Province(
       id:  json['id'],
-      pname: json['name']
+      provinceName: json['name']
     );
   }
 }
