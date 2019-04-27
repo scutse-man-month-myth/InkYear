@@ -12,24 +12,24 @@ class _CardPageState extends State<CardPage>{
     return new Stack(
       children: <Widget>[
         new Positioned(
-            top: 20,
-            left: 120,
+            top: 10,
+            left: (MediaQuery.of(context).size.width - 320) / 2.0 + 80,
             child: MainTag(
               size: 110,
               color: Colors.grey,
             )
         ),
         new Positioned(
-            top: 20,
-            left: 80,
+            top: 10,
+            left: (MediaQuery.of(context).size.width - 320) / 2.0 + 40,
             child: MainTag(
               size: 110,
               color: Colors.blue,
             )
         ),
         new Positioned(
-          top: 20,
-          left: 40,
+          top: 10,
+          left: (MediaQuery.of(context).size.width - 320) / 2.0,
           child: new MainCard(
             cardSize: 110,
             color: Colors.white,
@@ -38,6 +38,14 @@ class _CardPageState extends State<CardPage>{
             ),
           ),
         ),
+        new Positioned(
+            top: 50,
+            right: (MediaQuery.of(context).size.width - 320) / 2.0 + 20,
+            child: new IconButton(
+                icon: new Icon(Icons.add_circle, size: 40,),
+                onPressed: null
+            )
+        )
       ],
     );
   }

@@ -48,15 +48,15 @@ class _CardPacketPageState extends State<CardPacketPage>{
                                 child: new SelectCard(),
                               ),
                               new Padding(
-                                padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                                padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
                                 child: new SelectCard(),
                               ),
                               new Padding(
-                                padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                                padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
                                 child: new SelectCard(),
                               ),
                               new Padding(
-                                padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                                padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
                                 child: new SelectCard(),
                               ),
                             ],
@@ -68,15 +68,15 @@ class _CardPacketPageState extends State<CardPacketPage>{
                                 child: new SelectCard(),
                               ),
                               new Padding(
-                                padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                                padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
                                 child: new SelectCard(),
                               ),
                               new Padding(
-                                padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                                padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
                                 child: new SelectCard(),
                               ),
                               new Padding(
-                                padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                                padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
                                 child: new SelectCard(),
                               ),
                             ],

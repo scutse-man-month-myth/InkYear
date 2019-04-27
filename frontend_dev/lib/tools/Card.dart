@@ -25,10 +25,19 @@ class MainCardState extends State<MainCard>{
           color: widget.color,
         ),
         new Container(
-          height: 4.3 * widget.cardSize,
-          width: 3 * widget.cardSize,
+          decoration: new BoxDecoration(
+            boxShadow: <BoxShadow>[
+              new BoxShadow(
+                color: Colors.black54,//阴影颜色
+                blurRadius: 10.0,//阴影大小
+                offset: Offset(10.0, 10.0)
+              ),
+            ],
+            color: widget.color,
+          ),
+          height: 4.5 * widget.cardSize,
+          width: 2.9 * widget.cardSize,
           margin: EdgeInsets.all(0),
-          color: widget.color,
           child: widget.child,
         )
       ],
@@ -42,7 +51,7 @@ class SelectCard extends StatefulWidget{
   Widget child;
   Color color;
   SelectCard({
-    this.child, this.cardSize = 50, this.color = Colors.white
+    this.child, this.cardSize = 60, this.color = Colors.white
   });
 
   State<StatefulWidget> createState(){
@@ -67,10 +76,20 @@ class SelectCardState extends State<SelectCard>{
             color: widget.color,
           ),
           new Container(
-            height: 4 * widget.cardSize,
-            width: 3 * widget.cardSize,
+            decoration: new BoxDecoration(
+              boxShadow: <BoxShadow>[
+                new BoxShadow(
+
+                    color: Colors.black54,//阴影颜色
+                    blurRadius: 10.0,//阴影大小
+                    offset: Offset(10.0, 10.0)
+                ),
+              ],
+              color: widget.color,
+            ),
+            height: 4.5 * widget.cardSize,
+            width: 2.9 * widget.cardSize,
             margin: EdgeInsets.all(0),
-            color: widget.color,
             child: widget.child,
           )
         ],
@@ -79,3 +98,4 @@ class SelectCardState extends State<SelectCard>{
     );
   }
 }
+

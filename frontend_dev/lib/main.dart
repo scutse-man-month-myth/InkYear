@@ -229,14 +229,20 @@ class _MyHomePageState extends State<MyHomePage> {
           oriEmail: _email,
         ),
         //4.24,刘皓贤修改了floatingActionButton位置和点击事件
-        floatingActionButton: IconButton(
-            icon: new Icon(
-              Icons.add_circle,
-              size: 50,
+        floatingActionButton: new Padding(
+          padding: EdgeInsets.fromLTRB(0, 0, 40, 20),
+          child: new CircleAvatar(
+            radius:30,
+            child: IconButton(
+              icon: new Icon(
+                Icons.chrome_reader_mode,
+                size: 45,
+              ),
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+              onPressed: _openCardPacketCallback,
             ),
-            padding: EdgeInsets.fromLTRB(0, 0, 60, 40),
-            onPressed: _openCardPacketCallback,
-        ),
+          ),
+        )
       )
     );
   }
