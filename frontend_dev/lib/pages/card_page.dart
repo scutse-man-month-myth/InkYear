@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_dev/tools/Card.dart';
 import 'package:frontend_dev/tools/Tag.dart';
+import 'package:frontend_dev/tools/CardModel.dart';
 
 //编辑卡片页面
 class CardPage extends StatefulWidget{
@@ -34,7 +35,7 @@ class _CardPageState extends State<CardPage>{
             cardSize: 110,
             color: Colors.white,
             child: new Center(
-                child: new Text("Hello")
+                child: new BasicCardModel(),
             ),
           ),
         ),
