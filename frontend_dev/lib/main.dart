@@ -8,7 +8,8 @@ import 'package:frontend_dev/constants/ThemeColors.dart';
 import 'package:frontend_dev/constants/IconStyle.dart';
 import 'package:frontend_dev/constants/StringStyle.dart';
 import 'package:frontend_dev/datas/Location.dart'; // TODO:降低这个类的耦合
-import 'package:frontend_dev/tools/Card.dart'; //导入Card
+import 'package:frontend_dev/pages/card_page.dart';
+import 'package:frontend_dev/pages/card_packet_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -55,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
   // 页面参数
   // TODO:在initState里初始化
   List<Widget> _bodys;
-  int _tabIndex = 2;
+  int _tabIndex = 1;
 
   // 得到页面
   // TODO:临时填充将被替换
@@ -65,6 +66,8 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  static VoidCallback _openCardPacketCallback;
+
   @override
   void initState() {
     super.initState();
@@ -72,21 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _bodys = [
       _getBody(0),
       //改卡片页面demo，还没写类
-      new Stack(
-        children: <Widget>[
-          new Positioned(
-            top: 50,
-            left: 40,
-            child: new MainCard(
-              cardSize: 110,
-              color: Colors.white,
-              child: new Center(
-                  child: new Text("Hello")
-              ),
-            ),
-          )
-        ],
-      ),
+      CardPage(),
       DailyRecord(),
     ];
   }
@@ -104,6 +93,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    _openCardPacketCallback = (){
+      Navigator.push(
+        context,
+        new MaterialPageRoute(builder: (context) => new CardPacketPage()),
+      );
+    };
+
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).backgroundColor,
@@ -232,13 +228,21 @@ class _MyHomePageState extends State<MyHomePage> {
           oriNickname: _nickname,
           oriEmail: _email,
         ),
-        floatingActionButton: IconButton(
-            icon: new Icon(
-              Icons.add_circle,
-              size: 40,
+        //4.24,刘皓贤修改了floatingActionButton位置和点击事件
+        floatingActionButton: new Padding(
+          padding: EdgeInsets.fromLTRB(0, 0, 40, 20),
+          child: new CircleAvatar(
+            radius:30,
+            child: IconButton(
+              icon: new Icon(
+                Icons.chrome_reader_mode,
+                size: 45,
+              ),
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+              onPressed: _openCardPacketCallback,
             ),
-            onPressed: null
-        ),
+          ),
+        )
       )
     );
   }

@@ -30,16 +30,16 @@ class MainTagState extends State<MainTag>{
             padding: EdgeInsets.all(0),
             margin: EdgeInsets.all(0),
             color: widget.color,
-            height: 0.35 * widget.size,
+            height: 0.25 * widget.size,
             width: widget.size,
           ),
           new CustomPaint(
             painter: new TriangleCustomPainter(
                 context,
                 <Coordinate>[
-                  new Coordinate(cx:0 , cy: -0.35 * widget.size / 2),
-                  new Coordinate(cx:0 , cy: 0.35 * widget.size / 2),
-                  new Coordinate(cx: 0.35 * widget.size , cy: 0.35 * widget.size / 2),
+                  new Coordinate(cx:0 , cy: -0.25 * widget.size / 2),
+                  new Coordinate(cx:0 , cy: 0.25 * widget.size / 2),
+                  new Coordinate(cx: 0.35 * widget.size , cy: 0.25 * widget.size / 2),
                 ],
                 color: widget.color
             ),
@@ -70,16 +70,16 @@ class SelectTagState extends State<SelectTag>{
           padding: EdgeInsets.all(0),
           margin: EdgeInsets.all(0),
           color: widget.color,
-          height: 0.35 * widget.size,
+          height: 0.25 * widget.size,
           width: widget.size,
         ),
         new CustomPaint(
           painter: new TriangleCustomPainter(
               context,
               <Coordinate>[
-                new Coordinate(cx:0 , cy: -0.35 * widget.size / 2),
-                new Coordinate(cx:0 , cy: 0.35 * widget.size / 2),
-                new Coordinate(cx: 0.35 * widget.size , cy: 0.35 * widget.size / 2),
+                new Coordinate(cx:0 , cy: -0.25 * widget.size / 2),
+                new Coordinate(cx:0 , cy: 0.25 * widget.size / 2),
+                new Coordinate(cx: 0.35 * widget.size , cy: 0.25 * widget.size / 2),
               ],
               color: widget.color
           ),

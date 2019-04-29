@@ -25,10 +25,19 @@ class MainCardState extends State<MainCard>{
           color: widget.color,
         ),
         new Container(
-          height: 4 * widget.cardSize,
-          width: 3 * widget.cardSize,
+          decoration: new BoxDecoration(
+            boxShadow: <BoxShadow>[
+              new BoxShadow(
+                color: Colors.black54,//阴影颜色
+                blurRadius: 10.0,//阴影大小
+                offset: Offset(10.0, 10.0)
+              ),
+            ],
+            color: widget.color,
+          ),
+          height: 4.5 * widget.cardSize,
+          width: 2.9 * widget.cardSize,
           margin: EdgeInsets.all(0),
-          color: widget.color,
           child: widget.child,
         )
       ],
@@ -42,7 +51,7 @@ class SelectCard extends StatefulWidget{
   Widget child;
   Color color;
   SelectCard({
-    this.child, this.cardSize = 50, this.color = Colors.white
+    this.child, this.cardSize = 60, this.color = Colors.white
   });
 
   State<StatefulWidget> createState(){
@@ -52,10 +61,12 @@ class SelectCard extends StatefulWidget{
 class SelectCardState extends State<SelectCard>{
 
   //选择卡片后返回到主页面
-  static VoidCallback _returnMainPageCallback;
+  static VoidCallback _chooseCardCallback;
 
   Widget build(BuildContext context){
-    _returnMainPageCallback = null;
+    _chooseCardCallback = (){
+      Navigator.pop(context);
+    };
     return new GestureDetector(
       child: new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,15 +76,26 @@ class SelectCardState extends State<SelectCard>{
             color: widget.color,
           ),
           new Container(
-            height: 4 * widget.cardSize,
-            width: 3 * widget.cardSize,
+            decoration: new BoxDecoration(
+              boxShadow: <BoxShadow>[
+                new BoxShadow(
+
+                    color: Colors.black54,//阴影颜色
+                    blurRadius: 10.0,//阴影大小
+                    offset: Offset(10.0, 10.0)
+                ),
+              ],
+              color: widget.color,
+            ),
+            height: 4.5 * widget.cardSize,
+            width: 2.9 * widget.cardSize,
             margin: EdgeInsets.all(0),
-            color: widget.color,
             child: widget.child,
           )
         ],
       ),
-      onTap: _returnMainPageCallback,
+      onTap: _chooseCardCallback,
     );
   }
 }
+
