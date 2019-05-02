@@ -50,8 +50,9 @@ class SelectCard extends StatefulWidget{
   double cardSize;
   Widget child;
   Color color;
+  VoidCallback onPressed =(){};
   SelectCard({
-    this.child, this.cardSize = 60, this.color = Colors.white
+    this.child, this.cardSize = 60, this.color = Colors.white, this.onPressed
   });
 
   State<StatefulWidget> createState(){
@@ -60,13 +61,8 @@ class SelectCard extends StatefulWidget{
 }
 class SelectCardState extends State<SelectCard>{
 
-  //选择卡片后返回到主页面
-  static VoidCallback _chooseCardCallback;
-
   Widget build(BuildContext context){
-    _chooseCardCallback = (){
-      Navigator.pop(context);
-    };
+
     return new GestureDetector(
       child: new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,7 +90,7 @@ class SelectCardState extends State<SelectCard>{
           )
         ],
       ),
-      onTap: _chooseCardCallback,
+      onTap: widget.onPressed,
     );
   }
 }
