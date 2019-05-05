@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_dev/constants/AntDesignIcons.dart';
+import 'package:frontend_dev/tools/Toast.dart';
 
 typedef void ChangeCallback(String value);
 
 class AccountCenterPage extends StatefulWidget {
-  AccountCenterPage({this.oriNickname, this.oriEmail, this.oriAvatar});
+  AccountCenterPage({this.oriNickname, this.oriEmail, this.oriAvatar, this.oriPassword});
   String oriAvatar; // 头像
   String oriNickname; // 昵称
   String oriEmail; // 邮箱
+  String oriPassword; // 密码
 
   @override
   _AccountCenterPageState createState() => _AccountCenterPageState();
@@ -18,6 +20,7 @@ class _AccountCenterPageState extends State<AccountCenterPage> {
 
   TextEditingController _nicknameController = new TextEditingController();
   TextEditingController _emailController = new TextEditingController();
+  TextEditingController _passwordController = new TextEditingController();
 
   @override
   void initState() {
@@ -29,6 +32,7 @@ class _AccountCenterPageState extends State<AccountCenterPage> {
     VoidCallback _avatarChangeCallback; // 更改头像
     ChangeCallback _nicknameChangeCallback; // 更改昵称
     ChangeCallback _emailChangeCallback; // 更改邮箱
+    ChangeCallback _passwordChangeCallback; // 更改邮箱
     VoidCallback _wechatAccountChangeCallback; // 更改微信
     VoidCallback _qqAccountChangeCallback; // 更改QQ
     VoidCallback _weiboAccountChangeCallback; // 更改微博
@@ -36,7 +40,7 @@ class _AccountCenterPageState extends State<AccountCenterPage> {
     /// TODO:更改头像
     _avatarChangeCallback = () {
       setState(() {
-        // ...
+        Toast.toast(context, "功能尚未开放......Orz\n敬请期待吧~(￣▽￣)");
       });
     };
 
@@ -56,24 +60,32 @@ class _AccountCenterPageState extends State<AccountCenterPage> {
       });
     };
 
+    /// 更改密码
+    _passwordChangeCallback = (String value) {
+      setState(() {
+        widget.oriPassword = value;
+        print('newEmail: ${widget.oriPassword}');
+      });
+    };
+
     /// TODO:更改微信
     _wechatAccountChangeCallback = () {
       setState(() {
-        // ...
+        Toast.toast(context, "功能尚未开放......Orz\n敬请期待吧~(￣▽￣)");
       });
     };
 
     /// TODO:更改QQ
     _qqAccountChangeCallback = () {
       setState(() {
-        // ...
+        Toast.toast(context, "功能尚未开放......Orz\n敬请期待吧~(￣▽￣)");
       });
     };
 
     /// TODO:更改微博
     _weiboAccountChangeCallback = () {
       setState(() {
-        // ...
+        Toast.toast(context, "功能尚未开放......Orz\n敬请期待吧~(￣▽￣)");
       });
     };
 
@@ -184,6 +196,33 @@ class _AccountCenterPageState extends State<AccountCenterPage> {
       );
     }
 
+    /// 绘制密码列表项
+    /// TODO:剔除特殊字符
+    ListTile buildPasswordListTile() {
+      return ListTile(
+        leading: Icon(
+          Icons.code,
+          color: Colors.black,
+        ),
+        title: TextFormField(
+            decoration: InputDecoration(
+              // TODO:匹配密码长度
+              hintText: '··········',
+            ),
+            obscureText: true,
+            validator: (String value) {
+              if (value.length > 20) {
+                return '请输入合适长度的密码';
+              }
+            },
+            // TODO:有点小问题，回调好像没启动
+            onSaved: _passwordChangeCallback,
+            controller: _passwordController,
+          )
+        // title: Text('Password: ${widget.oriPassword}'),
+      );
+    }
+
     /// 绘制绑定列表项
     ListTile buildAccountsListTile() {
       return ListTile(
@@ -202,7 +241,6 @@ class _AccountCenterPageState extends State<AccountCenterPage> {
     }
 
     return Scaffold(
-      // TODO: 统一文字图标颜色
       body: Container(
         color: Theme.of(context).backgroundColor,
         child: ListView(
@@ -228,6 +266,10 @@ class _AccountCenterPageState extends State<AccountCenterPage> {
 
             // 点击更改邮箱
             buildEmailListTile(),
+            Divider(color: Theme.of(context).backgroundColor),
+
+            // 点击更改密码
+            buildPasswordListTile(),
             Divider(color: Theme.of(context).backgroundColor),
 
             // 点击更改绑定
