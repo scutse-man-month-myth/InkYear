@@ -1,5 +1,10 @@
 import 'package:frontend_dev/tools/Card.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend_dev/tools/CardModel.dart';
+
+String _modelTag1 = "1";
+String _modelTag2 = "2";
+String _modelTag3 = "3";
 
 class CardPacketPage extends StatefulWidget{
   @override
@@ -45,11 +50,21 @@ class _CardPacketPageState extends State<CardPacketPage>{
                             children: <Widget>[
                               new Padding(
                                 padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                child: new SelectCard(),
+                                child: new SelectCard(
+                                  child: ExtendCardModel1(),
+                                  onPressed: (){
+                                    Navigator.pop(context,_modelTag1);
+                                  },
+                                ),
                               ),
                               new Padding(
                                 padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
-                                child: new SelectCard(),
+                                child: new SelectCard(
+                                  child: ExtendCardModel3(),
+                                  onPressed: (){
+                                    Navigator.pop(context,_modelTag3);
+                                  },
+                                ),
                               ),
                               new Padding(
                                 padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
@@ -65,7 +80,12 @@ class _CardPacketPageState extends State<CardPacketPage>{
                             children: <Widget>[
                               new Padding(
                                 padding: EdgeInsets.fromLTRB(0, 100, 0, 0),
-                                child: new SelectCard(),
+                                child: new SelectCard(
+                                  child: ExtendCardModel2(),
+                                  onPressed: (){
+                                    Navigator.pop(context,_modelTag2);
+                                  },
+                                ),
                               ),
                               new Padding(
                                 padding: EdgeInsets.fromLTRB(0, 50, 0, 0),

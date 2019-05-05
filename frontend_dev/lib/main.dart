@@ -57,6 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
   // TODO:在initState里初始化
   List<Widget> _bodys;
   int _tabIndex = 1;
+  bool isEdit = true;
 
   // 得到页面
   // TODO:临时填充将被替换
@@ -65,6 +66,8 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Text("body $index"),
     );
   }
+
+
 
   static VoidCallback _openCardPacketCallback;
 
@@ -94,10 +97,12 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     _openCardPacketCallback = (){
-      Navigator.push(
+      Navigator.push<String>(
         context,
         new MaterialPageRoute(builder: (context) => new CardPacketPage()),
-      );
+      ).then((String result){
+        Toast.toast(context, result);
+      });
     };
 
     return Container(
@@ -194,6 +199,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 setState(() {
                   _tabIndex = 0;
+                  isEdit = false;
                 });
               },
             ),
@@ -206,6 +212,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 setState(() {
                   _tabIndex = 1;
+                  isEdit = true;
                 });
               },
             ),
@@ -218,6 +225,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 setState(() {
                   _tabIndex = 2;
+                  isEdit = false;
                 });
               },
             ),
@@ -228,8 +236,8 @@ class _MyHomePageState extends State<MyHomePage> {
           oriNickname: _nickname,
           oriEmail: _email,
         ),
-        //4.24,刘皓贤修改了floatingActionButton位置和点击事件
-        floatingActionButton: new Padding(
+        floatingActionButton: isEdit ?
+        new Padding(
           padding: EdgeInsets.fromLTRB(0, 0, 40, 20),
           child: new CircleAvatar(
             radius:30,
@@ -243,6 +251,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
         )
+            : null
       )
     );
   }
