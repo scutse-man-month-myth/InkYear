@@ -11,6 +11,7 @@ import 'package:frontend_dev/constants/StringStyle.dart';
 import 'package:frontend_dev/datas/Location.dart'; // TODO:降低类的耦合
 import 'package:frontend_dev/pages/card_page.dart';
 import 'package:frontend_dev/pages/card_packet_page.dart';
+import 'package:frontend_dev/pages/calendar_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -57,20 +58,10 @@ class _MyHomePageState extends State<MyHomePage> {
   String _week = "MONDAY";
 
   // 页面参数
-  // TODO: 临时硬编码
   List<Widget> _bodys;
   int _tabIndex = 1;
   bool isEdit = true;
-
-  // 得到页面
-  // TODO: 临时硬编码
-  Widget _getBody(int index) {
-    return Center(
-      child: Text("body $index"),
-    );
-  }
-
-
+  bool isCalendar = false;
 
   static VoidCallback _openCardPacketCallback;
 
@@ -78,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     _bodys = [
-      _getBody(0),
+      CalenderPage(),
       //改卡片页面demo，还没写类
       CardPage(),
       DailyRecord(),
@@ -117,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: AppBar(
+        appBar: isCalendar ? null : AppBar(
           backgroundColor: Colors.transparent,
           leading: Builder(
             builder: (BuildContext context) =>
@@ -203,6 +194,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 setState(() {
                   _tabIndex = 0;
                   isEdit = false;
+                  isCalendar = true;
                 });
               },
             ),
@@ -216,6 +208,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 setState(() {
                   _tabIndex = 1;
                   isEdit = true;
+                  isCalendar = false;
                 });
               },
             ),
@@ -229,6 +222,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 setState(() {
                   _tabIndex = 2;
                   isEdit = false;
+                  isCalendar = false;
                 });
               },
             ),
