@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:frontend_dev/pages/state_page.dart';
 import 'package:frontend_dev/pages/drawer_page.dart';
 import 'package:frontend_dev/pages/weather_page.dart';
@@ -7,13 +8,14 @@ import 'package:frontend_dev/tools/Toast.dart';
 import 'package:frontend_dev/constants/ThemeColors.dart';
 import 'package:frontend_dev/constants/IconStyle.dart';
 import 'package:frontend_dev/constants/StringStyle.dart';
-import 'package:frontend_dev/datas/Location.dart'; // TODO:降低这个类的耦合
+import 'package:frontend_dev/datas/Location.dart'; // TODO:降低类的耦合
 import 'package:frontend_dev/pages/card_page.dart';
 import 'package:frontend_dev/pages/card_packet_page.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -41,26 +43,27 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   // 用户参数
-  // TODO:封装成User类
-  String _avatar = 'imgs/profile.jpeg'; // 头像
+  // TODO: 数据库重写
+  String _avatar = 'imgs/timg.jpg'; // 头像
   String _nickname = 'nickname'; // 昵称
   String _email = 'nickname@xxx.xxx'; // 邮箱
+  String _password = 'password'; // 密码
 
   // 日期参数
-  // TODO:用内置Date类
+  // TODO: 数据库重写
   String _month = "Jan";
   int _day = 1;
   String _date = "Jan 1";
   String _week = "MONDAY";
 
   // 页面参数
-  // TODO:在initState里初始化
+  // TODO: 临时硬编码
   List<Widget> _bodys;
   int _tabIndex = 1;
   bool isEdit = true;
 
   // 得到页面
-  // TODO:临时填充将被替换
+  // TODO: 临时硬编码
   Widget _getBody(int index) {
     return Center(
       child: Text("body $index"),
@@ -74,7 +77,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    // TODO:写成生成器模式
     _bodys = [
       _getBody(0),
       //改卡片页面demo，还没写类
@@ -89,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // 当前的路由不会遮盖之前的路由
         opaque: false,
         // 构建路由的主要内容
-        pageBuilder: (BuildContext context, _, __) => TopReminder(child:WeatherPage()),
+        pageBuilder: (BuildContext context, _, __) => TopReminder(child:WeatherPage(), reminderText: 'WeatherPage',),
       ),
     );
   }
@@ -161,19 +163,19 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             /// 显示天气
             IconButton(
-              // TODO:动态变化天气图标
-                icon: Icon(
-                  Icons.cloud,
-                  color: Theme.of(context).accentColor,
-                ),
-                onPressed: () {
-                  if(county == "") { // 未选择地址
-                    Toast.toast(context, "请先选择地址");
-                  }
-                  else { // 已选择地址
-                    _openTopReminder(context);
-                  }
+              // TODO:动态变化图标
+              icon: Icon(
+                Icons.cloud,
+                color: Theme.of(context).accentColor,
+              ),
+              onPressed: () {
+                if(county == "") { // 未选择地址
+                  Toast.toast(context, "请先选择地址");
                 }
+                else { // 已选择地址
+                  _openTopReminder(context);
+                }
+              }
             ),
             /// 显示搜索
             IconButton(
@@ -181,6 +183,7 @@ class _MyHomePageState extends State<MyHomePage> {
               color: Theme.of(context).accentColor,
               onPressed: () {
                 // TODO:实现搜索功能
+                Toast.toast(context, "功能尚未开放......Orz\n敬请期待吧~(￣▽￣)");
               },
             ),
           ],
@@ -235,6 +238,7 @@ class _MyHomePageState extends State<MyHomePage> {
           oriAvatar: _avatar,
           oriNickname: _nickname,
           oriEmail: _email,
+          oriPassword: _password,
         ),
         floatingActionButton: isEdit ?
         new Padding(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_dev/constants/AntDesignIcons.dart';
+import 'package:frontend_dev/pages/register_page.dart';
+import 'package:frontend_dev/tools/Toast.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -135,7 +137,8 @@ class _LoginPageState extends State<LoginPage> {
             style: TextStyle(fontSize: 14.0, color: Colors.grey),
           ),
           onPressed: () {
-            Navigator.pop(context);
+            // TODO: 处理忘记密码
+            Toast.toast(context, "功能尚未开放......Orz\n敬请期待吧~(￣▽￣)");
           },
         ),
       ),
@@ -157,7 +160,6 @@ class _LoginPageState extends State<LoginPage> {
             if (_formKey.currentState.validate()) {
               ///只有输入的内容符合要求通过才会到达此处
               _formKey.currentState.save();
-              //TODO 执行登录方法
               print('email:$_email , password:$_password');
             }
           },
@@ -216,9 +218,14 @@ class _LoginPageState extends State<LoginPage> {
                 style: TextStyle(color: Colors.green),
               ),
               onTap: () {
-                //TODO 跳转到注册页面
-                print('去注册');
                 Navigator.pop(context);
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return RegisterPage();
+                    },
+                  ),
+                );
               },
             ),
           ],
