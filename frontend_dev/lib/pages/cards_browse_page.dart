@@ -1,7 +1,42 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
+import 'package:frontend_dev/tools/Card.dart';
+
+//先简单做个ListView顶住
+class CardsBrowsePage extends StatefulWidget{
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return CardsBrowsePageState();
+  }
+}
+class CardsBrowsePageState extends State<CardsBrowsePage>{
+  //TODO 存放卡片的数据成员
+  final _cardsForToday = <Widget>[];
+
+  Widget build(BuildContext context){
+    return ListView(
+      children: <Widget>[
+
+      ],
+    );
+  }
 
 
+  //构造cards的函数
+  MainCard _buildCards(){
+    
+  }
+
+}
+
+
+
+
+
+
+/*
 //采用的第三方自定义的widget
 /// Simple Folding Cell Widget by FaoB
 //单个folding_cell示例
@@ -188,3 +223,4 @@ class SimpleFoldingCellState extends State<SimpleFoldingCell>
     _isExpanded = !_isExpanded;
   }
 }
+*/

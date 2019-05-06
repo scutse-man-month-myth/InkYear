@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
-
+/*
 /// Simple Folding Cell Widget by FaoB
 class SimpleFoldingCell extends StatefulWidget {
   SimpleFoldingCell(
@@ -185,3 +185,4 @@ class SimpleFoldingCellState extends State<SimpleFoldingCell>
     _isExpanded = !_isExpanded;
   }
 }
+*/
