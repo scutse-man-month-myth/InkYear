@@ -18,8 +18,6 @@ class TopReminder extends StatefulWidget {
 
 // 与自定义的顶部提醒组件关联的状态子类。
 class _TopReminderState extends State<TopReminder> {
-  // TODO: 第4步：实现“倒计时抛”。
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -34,7 +32,6 @@ class _TopReminderState extends State<TopReminder> {
             )
           ],
         )
-      // TODO: 第3步：实现“路由导航”，点击提醒页面时返回。
     );
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 //个人状态的参数
-// TODO: 变成构造函数参数输入
+// TODO: 数据库重写
 int maxState = 100;
 int currentState = 78;
 String cartoonName = "Ponyta-H85";
@@ -306,16 +306,6 @@ class DailyRecordState extends State<DailyRecord>{
         )
     );
   }
-
-  // TODO:暂时还未用到
-  /*_verticalDivider() => BoxDecoration(
-    border: Border(
-      right: BorderSide(
-        color: Theme.of(context).dividerColor,
-        width: 0.5,
-      ),
-    ),
-  );*/
 }
 
 /*个人状态页面的顶部不滑动头部*/

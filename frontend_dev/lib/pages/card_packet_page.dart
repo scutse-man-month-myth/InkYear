@@ -27,6 +27,7 @@ class _CardPacketPageState extends State<CardPacketPage>{
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
+          elevation: 0.0,
           leading: new IconButton(
               icon: new Icon(Icons.keyboard_backspace, size: 40, color: Colors.white,),
               onPressed: (){

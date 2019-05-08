@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_dev/pages/login_page.dart';
 import 'package:frontend_dev/pages/account_center_page.dart';
+import 'package:frontend_dev/pages/tag_list_page.dart';
+import 'package:frontend_dev/tools/Toast.dart';
+
 
 class DrawerPage extends StatefulWidget {
-  DrawerPage({this.oriNickname, this.oriEmail, this.oriAvatar});
+  DrawerPage({this.oriNickname, this.oriEmail, this.oriAvatar, this.oriPassword});
   String oriAvatar; // 头像
   String oriNickname; // 昵称
   String oriEmail; // 邮箱
+  String oriPassword; // 密码
 
   @override
   _DrawerPageState createState() => _DrawerPageState();
@@ -17,20 +21,12 @@ class _DrawerPageState extends State<DrawerPage> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO:_accountSwitchCallback
     VoidCallback _accountSwitchCallback; // 切换账户
-    // TODO:_enterAccountCenter
     VoidCallback _enterAccountCenter;  // 进入个人中心
-    // TODO:_enterTagList
     VoidCallback _enterTagList; // 进入标签分类
-    // TODO:_enterExportData
     VoidCallback _enterExportData;  // 进入导出数据
-    // TODO:_enterAdvancedFeatures
     VoidCallback _enterAdvancedFeatures; // 进入高级功能
-    // TODO:_enterUsageGuide
     VoidCallback _enterUsageGuide; // 进入使用指南
-
-    /// TODO:注册页面
 
     /// 登录页面
     MaterialPageRoute _buildLoginPage() {
@@ -40,13 +36,21 @@ class _DrawerPageState extends State<DrawerPage> {
     }
 
     /// 个人中心页面
-    MaterialPageRoute _buildAccountCenterPage(String avatar, String nickname, String email) {
+    MaterialPageRoute _buildAccountCenterPage(String avatar, String nickname, String email, String password) {
       return MaterialPageRoute(
         builder: (context) => AccountCenterPage(
           oriAvatar: avatar,
           oriNickname: nickname,
           oriEmail: email,
+          oriPassword: password,
         ),
+      );
+    }
+
+    /// 标签分类页面
+    MaterialPageRoute _buildTagListPage() {
+      return MaterialPageRoute(
+        builder: (context) => TagListPage(),
       );
     }
 
@@ -62,12 +66,34 @@ class _DrawerPageState extends State<DrawerPage> {
 
     /// 进入个人中心
     _enterAccountCenter = () {
-      Navigator.of(context).push(_buildAccountCenterPage(widget.oriAvatar, widget.oriNickname, widget.oriEmail));
+      Navigator.of(context).push(_buildAccountCenterPage(widget.oriAvatar, widget.oriNickname, widget.oriEmail, widget.oriPassword));
+    };
+
+    /// 进入标签分类
+    _enterTagList = () {
+      Navigator.of(context).push(_buildTagListPage());
+    };
+
+    /// 进入导入数据
+    _enterExportData = () {
+      // TODO: 完善功能
+      Toast.toast(context, "功能尚未开放......Orz\n敬请期待吧~(￣▽￣)");
+    };
+
+    /// 进入高级功能
+    _enterAdvancedFeatures = () {
+      // TODO: 完善功能
+      Toast.toast(context, "功能尚未开放......Orz\n敬请期待吧~(￣▽￣)");
+    };
+
+    /// 进入使用指南
+    _enterUsageGuide = () {
+      // TODO: 完善功能
+      Toast.toast(context, "功能尚未开放......Orz\n敬请期待吧~(￣▽￣)");
     };
 
     return Drawer(
       child: new Scaffold(
-        // TODO:用Stack不用Column
           body: Stack(
             children: <Widget>[
 
@@ -155,7 +181,6 @@ class _DrawerPageState extends State<DrawerPage> {
                     ),
                     // 关于我们
                     AboutListTile(
-                      // TODO:选项字体颜色调整
                       icon: CircleAvatar(
                         child: Icon(
                           Icons.thumb_up,
@@ -202,7 +227,63 @@ class _DrawerPageState extends State<DrawerPage> {
               ),
 
               // 次要选项
-              // TODO:仿照B站底部三个图标-设置/主题/夜间
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    GestureDetector(
+                      child: Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Row(
+                          children: <Widget>[
+                            Icon(Icons.settings),
+                            SizedBox(width: 5),
+                            Text('设置'),
+                          ],
+                        ),
+                      ),
+                      onTap: () {
+                        // TODO: 跳转路由
+                        Toast.toast(context, "功能尚未开放......Orz\n敬请期待吧~(￣▽￣)");
+                      },
+                    ),
+                    GestureDetector(
+                      child: Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Row(
+                          children: <Widget>[
+                            Icon(Icons.color_lens),
+                            SizedBox(width: 5),
+                            Text('主题'),
+                          ],
+                        ),
+                      ),
+                      onTap: () {
+                        // TODO: 跳转路由
+                        Toast.toast(context, "功能尚未开放......Orz\n敬请期待吧~(￣▽￣)");
+                      },
+                    ),
+                    GestureDetector(
+                      child: Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Row(
+                          children: <Widget>[
+                            Icon(Icons.remove_red_eye),
+                            SizedBox(width: 5),
+                            Text('夜间'),
+                          ],
+                        ),
+                      ),
+                      onTap: () {
+                        // TODO: 跳转路由
+                        Toast.toast(context, "功能尚未开放......Orz\n敬请期待吧~(￣▽￣)");
+                      },
+                    ),
+                  ],
+                ),
+              ),
+
 
             ],
           )
