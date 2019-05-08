@@ -16,13 +16,13 @@ class BasicCardModel extends StatefulWidget{
 
 class BasicCardModelState extends State<BasicCardModel>{
 
-  TextStyle _textStyle = new TextStyle(fontSize: 15, color: Colors.black);
-  String _text = "5.睡眠时间(小时)";
+  // TextStyle _textStyle = new TextStyle(fontSize: 15, color: Colors.black);
+  // String _text = "5.睡眠时间(小时)";
   /*bool check1 = false;
   bool check2 = false;
   bool check3 = false;
   bool check4 = false;*/
-  double value1 = 0.0;
+  double value1 = 7;
   double value2 = 0.0;
 
   /*String title;
@@ -42,6 +42,9 @@ class BasicCardModelState extends State<BasicCardModel>{
 
   List<bool> isChecks = [false, false, false];
   List<bool> isSwitchs = [false, false, false];
+  List<bool> isStars = [false, false, false, false, false];
+
+  List<bool> isActives = [true, true, true];
 
   Widget build(BuildContext context){
     /*return new Column(
@@ -353,66 +356,73 @@ class BasicCardModelState extends State<BasicCardModel>{
     }
 
     Widget _buildSeekbarTile(String content) {
-      return new Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+      return new Row(
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          // mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            new Text(content, style: _textStyle),
+            // new Text(content, style: _textStyle),
+            new Padding(
+              padding: EdgeInsets.fromLTRB(15, 10, 0, 10),
+              child: new Icon(Icons.hotel, color: Colors.black54, size: 25),
+            ),
             new Container(
-              padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
-              width: 250,
+              padding: EdgeInsets.fromLTRB(15, 10, 0, 10),
+              width: 170,
               child: new SeekBar(
-                backgroundColor: Colors.lightBlueAccent,
-                progressColor: Colors.blue,
-                progresseight: 10,
+                backgroundColor: Colors.black12,
+                progressColor: Colors.red,
+                progresseight: 5,
                 value: value1,
                 sectionCount: 5,
-                sectionRadius: 5,
-                sectionColor: Colors.red,
-                sectionUnSelecteColor: Colors.red[100],
                 showSectionText: true,
                 sectionTexts: <SectionTextModel>[
-                  new SectionTextModel(
+                  /*new SectionTextModel(
                     position: 0,
                     text: "0",
                     progressColor: Colors.blue,
+                  ),*/
+                  new SectionTextModel(
+                    position: 0,
+                    text: "5h-",
+                    progressColor: Colors.red,
                   ),
                   new SectionTextModel(
                     position: 1,
-                    text: "2",
-                    progressColor: Colors.blue,
+                    text: "6h",
+                    progressColor: Colors.red,
                   ),
                   new SectionTextModel(
                     position: 2,
-                    text: "4",
-                    progressColor: Colors.blue,
+                    text: "7h",
+                    progressColor: Colors.green,
                   ),
                   new SectionTextModel(
                     position: 3,
-                    text: "6",
-                    progressColor: Colors.blue,
+                    text: "8h",
+                    progressColor: Colors.green,
                   ),
                   new SectionTextModel(
                     position: 4,
-                    text: "8",
-                    progressColor: Colors.blue,
+                    text: "9h",
+                    progressColor: Colors.green,
                   ),
                   new SectionTextModel(
                     position: 5,
-                    text: ">=10",
-                    progressColor: Colors.blue,
+                    text: "10h+",
+                    progressColor: Colors.black54,
                   ),
                 ],
-                sectionTextMarginTop: 2,
+                sectionTextMarginTop: 10,
                 sectionDecimal: 0,
-                sectionTextColor: Colors.black,
-                sectionSelectTextColor: Colors.red,
-                sectionTextSize: 14,
-                hideBubble: true,
+                sectionTextColor: Colors.black54,
+                sectionSelectTextColor: Colors.black,
+                sectionTextSize: 15,
+                /*hideBubble: true,
                 bubbleRadius: 15,
                 bubbleColor: Colors.purple,
                 bubbleTextColor: Colors.white,
                 bubbleTextSize: 14,
-                bubbleMargin: -20,
+                bubbleMargin: -20,*/
                 afterDragShowSectionText: true,
                 onValueChanged: (progressValue){
                   setState(() {
@@ -425,50 +435,163 @@ class BasicCardModelState extends State<BasicCardModel>{
         );
   }
 
-  Widget _buildSecondStepContent() {
+    Widget _buildSecondStepContent() {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Switch(
-              value: isSwitchs[0],
-              activeColor: Colors.green,
-              inactiveThumbColor: Colors.redAccent,
-              inactiveTrackColor: Colors.red[200],
-              onChanged: (bool choice) {
-                this.setState(() {
-                  isSwitchs[0] = !isSwitchs[0];
-                });
-              },
-            ),
-            SizedBox(width: 10),
-            Text('早起'),
-            SizedBox(width: 30),
-            Switch(
-              value: isSwitchs[1],
-              activeColor: Colors.green,
-              inactiveThumbColor: Colors.redAccent,
-              inactiveTrackColor: Colors.red[200],
-              onChanged: (bool choice) {
-                this.setState(() {
-                  isSwitchs[1] = !isSwitchs[1];
-                });
-              },
-            ),
-            SizedBox(width: 10),
-            Text('早睡'),
-          ],
-        ),
-        /*_buildSeekbarTile("睡眠时间"),
-        _buildSeekbarTile("喝水杯数"),
+        _buildSeekbarTile("睡眠时间"),
+        Container(
+          padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+          child: Row(
+            // mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Switch(
+                value: isSwitchs[0],
+                activeColor: Colors.green,
+                inactiveThumbColor: Colors.redAccent,
+                inactiveTrackColor: Colors.red[200],
+                onChanged: (bool choice) {
+                  this.setState(() {
+                    isSwitchs[0] = !isSwitchs[0];
+                  });
+                },
+              ),
+              SizedBox(width: 10),
+              Text('早起'),
+              SizedBox(width: 25),
+              Switch(
+                value: isSwitchs[1],
+                activeColor: Colors.green,
+                inactiveThumbColor: Colors.redAccent,
+                inactiveTrackColor: Colors.red[200],
+                onChanged: (bool choice) {
+                  this.setState(() {
+                    isSwitchs[1] = !isSwitchs[1];
+                  });
+                },
+              ),
+              SizedBox(width: 10),
+              Text('早睡'),
+            ],
+          ),
+        )
+        /*_buildSeekbarTile("喝水杯数"),
         _buildSeekbarTile("久坐时间"),*/
       ],
     );
   }
 
+    Widget _buildStar(int idx) {
+      return GestureDetector(
+        child: isStars[idx] ? Icon(Icons.star, size: 35) : Icon(Icons.star_border, size: 35),
+        onTap: () {
+          setState(() {
+            isStars[idx] = !isStars[idx];
+          });
+        },
+      );
+    }
 
+    Widget _buildThirdStepContent() {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text("Today's Mood: "),
+          SizedBox(height: 10),
+          // TODO: 改成动态
+          Row(
+            children: <Widget>[
+              Icon(Icons.mood, size: 35),
+              SizedBox(width: 15),
+              Icon(Icons.mood_bad, size: 35),
+              SizedBox(width: 15),
+              Icon(Icons.mood, size: 35),
+              SizedBox(width: 15),
+              Icon(Icons.mood_bad, size: 35),
+              SizedBox(width: 15),
+              Icon(Icons.mood, size: 35),
+            ],
+          ),
+          SizedBox(height: 10),
+          Text("Today's Goods: "),
+          TextField(
+            decoration: InputDecoration(
+              hintText: '一句话记录下开心的事8\nE.g. 胡吃海喝',
+            ),
+            maxLines: 2,
+          ),
+          SizedBox(height: 10),
+          Text("Today's Bads: "),
+          TextField(
+            decoration: InputDecoration(
+              hintText: '一句话记录下难过的事8(逃\nE.g. 熬夜大赛',
+            ),
+            maxLines: 2,
+          ),
+          SizedBox(height: 10),
+          Text("Today's Grade: "),
+          SizedBox(height: 10),
+          // TODO: 改成动态
+          Row(
+            children: <Widget>[
+              /*IconButton(
+                icon: isStars[0] ? Icon(Icons.star) : Icon(Icons.star_border),
+                onPressed: () {
+                  setState(() {
+                    isStars[0] = !isStars[0];
+                  });
+                },
+              ),
+              // SizedBox(width: 15),
+              IconButton(
+                icon: isStars[1] ? Icon(Icons.star) : Icon(Icons.star_border),
+                onPressed: () {
+                  setState(() {
+                    isStars[1] = !isStars[1];
+                  });
+                },
+              ),
+              // SizedBox(width: 15),
+              IconButton(
+                icon: isStars[2] ? Icon(Icons.star) : Icon(Icons.star_border),
+                onPressed: () {
+                  setState(() {
+                    isStars[2] = !isStars[2];
+                  });
+                },
+              ),
+              // SizedBox(width: 15),
+              IconButton(
+                icon: isStars[3] ? Icon(Icons.star) : Icon(Icons.star_border),
+                onPressed: () {
+                  setState(() {
+                    isStars[3] = !isStars[3];
+                  });
+                },
+              ),
+              // SizedBox(width: 15),
+              IconButton(
+                icon: isStars[4] ? Icon(Icons.star) : Icon(Icons.star_border),
+                onPressed: () {
+                  setState(() {
+                    isStars[4] = !isStars[4];
+                  });
+                },
+              ),*/
+              _buildStar(0),
+              SizedBox(width: 13),
+              _buildStar(1),
+              SizedBox(width: 13),
+              _buildStar(2),
+              SizedBox(width: 13),
+              _buildStar(3),
+              SizedBox(width: 13),
+              _buildStar(4),
+            ],
+          ),
+        ],
+      );
+    }
 
     List<Widget> stepWidgets = [
       _buildFirstStepContent(),
@@ -481,8 +604,6 @@ class BasicCardModelState extends State<BasicCardModel>{
       StepState.indexed,
     ];
 
-    List<bool> isActives = [true, true, true];
-
     return Align(
         alignment: Alignment.topCenter,
         child: new Stepper(
@@ -490,25 +611,25 @@ class BasicCardModelState extends State<BasicCardModel>{
             type: StepperType.vertical,
             steps: <Step>[
               new Step(
-                title: new Text('三省吾身'),
+                title: new Text('随缘打卡'),
                 content: (current_step == 0) ? stepWidgets[0] : SizedBox(height: 1),
                 state: stepStates[0],
                 isActive: isActives[0],
-                subtitle: new Text('√ 必须完成三件事情'),
+                subtitle: new Text('√ 吾日三省吾身惹'),
               ),
               new Step(
                 title: new Text('朋克养生'),
                 content: (current_step == 1) ? stepWidgets[1] : SizedBox(height: 1),
                 state: stepStates[1],
                 isActive: isActives[1],
-                subtitle: new Text('√ 年纪轻轻爱惜身体'),
+                subtitle: new Text('√ 生活不止有枸杞'),
               ),
               new Step(
-                title: new Text('第三步'),
-                content: new Text('第三步内容'),
+                title: new Text('佛系度日'),
+                content: _buildThirdStepContent(),
                 state: stepStates[2],
                 isActive: isActives[2],
-                subtitle: new Text('√ 每天必须完成的三件事情'),
+                subtitle: new Text('√ 乱喝鸡汤三脂高'),
               ),
             ],
           onStepTapped: (step) {
