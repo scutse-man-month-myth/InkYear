@@ -11,21 +11,38 @@ import 'package:frontend_dev/constants/StringStyle.dart';
 import 'package:frontend_dev/datas/Location.dart'; // TODO:降低类的耦合
 import 'package:frontend_dev/pages/card_page.dart';
 import 'package:frontend_dev/pages/card_packet_page.dart';
+import 'package:frontend_dev/pages/calendar_page.dart';
+
+import 'dart:async';
+import 'package:sqflite/sqflite.dart';
+import 'package:frontend_dev/database/database.dart';
+import 'package:frontend_dev/database/table_state.dart';
+import 'package:frontend_dev/database/table_config.dart';
+
+String databaseName = "InkYear"; // 数据库名字
+int year;
+int month;
+int day;
+bool isSetup = false; // 是否第一次使用
+bool isSameDay = false; // 是否同一天使用
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  MyApp() {
+    // TODO: 初始化数据库和数据表
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       // 全局主题配置
       theme: ThemeData(
-        primaryColor: ThemeColors.primaryColor,
+        /*primaryColor: ThemeColors.primaryColor,
         backgroundColor: ThemeColors.backgroundColor,
         accentColor: ThemeColors.accentColor,
         primaryIconTheme: IconStyle.primaryIconStyle,
-        primaryTextTheme: StringStyle.primaryTextStyle,
+        primaryTextTheme: StringStyle.primaryTextStyle,*/
         // primaryTextTheme: ,
       ),
       // 入口界面控件
@@ -57,20 +74,10 @@ class _MyHomePageState extends State<MyHomePage> {
   String _week = "MONDAY";
 
   // 页面参数
-  // TODO: 临时硬编码
   List<Widget> _bodys;
   int _tabIndex = 1;
   bool isEdit = true;
-
-  // 得到页面
-  // TODO: 临时硬编码
-  Widget _getBody(int index) {
-    return Center(
-      child: Text("body $index"),
-    );
-  }
-
-
+  bool isCalendar = false;
 
   static VoidCallback _openCardPacketCallback;
 
@@ -78,11 +85,12 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     _bodys = [
-      _getBody(0),
+      CalenderPage(),
       //改卡片页面demo，还没写类
       CardPage(),
       DailyRecord(),
     ];
+
   }
 
   void _openTopReminder(context) {
@@ -181,7 +189,12 @@ class _MyHomePageState extends State<MyHomePage> {
             IconButton(
               icon: Icon(Icons.search),
               color: Theme.of(context).accentColor,
-              onPressed: () {
+              onPressed: () async {
+                // TODO: 初始化数据库和数据表
+                await deleteDB(databaseName);
+                await createDatabase(databaseName);
+                await createStateTable();
+                await addState();
                 // TODO:实现搜索功能
                 Toast.toast(context, "功能尚未开放......Orz\n敬请期待吧~(￣▽￣)");
               },
@@ -203,6 +216,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 setState(() {
                   _tabIndex = 0;
                   isEdit = false;
+                  isCalendar = true;
                 });
               },
             ),
@@ -216,6 +230,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 setState(() {
                   _tabIndex = 1;
                   isEdit = true;
+                  isCalendar = false;
                 });
               },
             ),
@@ -229,6 +244,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 setState(() {
                   _tabIndex = 2;
                   isEdit = false;
+                  isCalendar = false;
                 });
               },
             ),
@@ -241,7 +257,7 @@ class _MyHomePageState extends State<MyHomePage> {
           oriPassword: _password,
         ),
         floatingActionButton: isEdit ?
-        new Padding(
+        /*new Padding(
           padding: EdgeInsets.fromLTRB(0, 0, 40, 20),
           child: new CircleAvatar(
             radius:30,
@@ -249,11 +265,25 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: new Icon(
                 Icons.chrome_reader_mode,
                 size: 45,
+                color: Colors.white,
               ),
               padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
               onPressed: _openCardPacketCallback,
             ),
+            backgroundColor: Colors.black54,
           ),
+        )*/
+        new Padding(
+          padding: EdgeInsets.fromLTRB(0, 0, 40, 20),
+          child: FloatingActionButton(
+            child: Icon(
+              Icons.chrome_reader_mode,
+              size: 45,
+              color: Colors.white,
+            ),
+            onPressed: _openCardPacketCallback,
+            backgroundColor: Colors.black54,
+          )
         )
             : null
       )

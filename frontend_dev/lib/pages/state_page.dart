@@ -3,9 +3,7 @@ import 'dart:math';
 
 //个人状态的参数
 // TODO: 数据库重写
-int maxState = 100;
-int currentState = 78;
-String cartoonName = "Ponyta-H85";
+String nickname = "Nickname";
 int maxDegree = 100;
 int currentDegree = 57;
 int accumulateDayNum = 15;
@@ -20,22 +18,29 @@ class DailyRecord extends StatefulWidget{
 }
 class DailyRecordState extends State<DailyRecord>{
 
-  int maximumSleep = 100;
-  int maximumHunger = 100;
-  int maximumMood = 100;
-  int maximumStudy = 100;
-  int maximumSport =100;
-  int currentSleep = 80;
-  int currentHunger = 80;
-  int currentMood = 80;
-  int currentStudy = 80;
-  int currentSport = 80;
+  final int maxState = 100; // 状态最大值
+  final int maximumMental = 100; // 佛系最大值
+  final int maximumPhysical = 100; // 养生最大值
+  final int maximumSkill = 100; // 技能最大值
+  final int maximumSense = 100; // 素养最大值
+  final int maximumTravel = 100; // 足迹最大值
+  final int maximumSocialize = 100; // 印象最大值
+  final int maximumOthers = 100; // 其它最大值
+
+  final int currentState = 78; // 状态当前值
+  final int currentMental = 100; // 佛系当前值
+  final int currentPhysical = 100; // 养生当前值
+  final int currentSkill = 100; // 技能当前值
+  final int currentSense = 100; // 素养当前值
+  final int currentTravel = 100; // 足迹当前值
+  final int currentSocialize = 100; // 印象当前值
+  final int currentOthers = 100; // 其它当前值
 
   Widget build(BuildContext context){
     return new CustomScrollView(
       shrinkWrap: true,
       slivers: <Widget>[
-        //滑动不动头部
+        // 滑动不动头部
         new SliverPersistentHeader(
           delegate: _SliverAppBarDelegate(
               minHeight: 280,
@@ -43,7 +48,7 @@ class DailyRecordState extends State<DailyRecord>{
               child: new Stack(
                 fit: StackFit.passthrough,
                 children: <Widget>[
-                  //小人
+                  // 固定小人像
                   new Positioned(
                     top: 40,
                     left: (MediaQuery.of(context).size.width - 250) / 2.0,
@@ -53,7 +58,7 @@ class DailyRecordState extends State<DailyRecord>{
                       child: new Image.asset("imgs/person.png"),
                     ),
                   ),
-                  //半圆进度条
+                  // 半圆进度条
                   new Positioned(
                       top: 60,
                       left: (MediaQuery.of(context).size.width - 340) / 2.0,
@@ -61,7 +66,7 @@ class DailyRecordState extends State<DailyRecord>{
                           child: new GradientCircularProgressIndicator(
                             stokeWidth: 6,
                             radius: 170,
-                            colors: [Colors.lightBlueAccent, Colors.lightBlueAccent],
+                            colors: [Colors.black54, Colors.black54],
                             totalAngle: pi,
                             value: currentState / maxState,
                             backgroundColor: Colors.white70,
@@ -69,7 +74,7 @@ class DailyRecordState extends State<DailyRecord>{
                           ),
                           angle: 3 * pi / 2.0)
                   ),
-                  //总状态Text
+                  // 总状态Text
                   new Positioned(
                       top: 15,
                       left: (MediaQuery.of(context).size.width - 150) / 2.0,
@@ -77,7 +82,7 @@ class DailyRecordState extends State<DailyRecord>{
                           children: <Widget>[
                             new Container(
                               padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                              child: new Text("State",style: TextStyle(fontSize: 20,
+                              child: new Text("State\t",style: TextStyle(fontSize: 20,
                                   color: Colors.white, fontWeight: FontWeight.w500),),
                             ),
                             new Text("$currentState/$maxState", style: TextStyle(fontSize: 30,
@@ -90,7 +95,7 @@ class DailyRecordState extends State<DailyRecord>{
           ),
           pinned: true,
         ),
-        //滑动动的底部
+        // 滑动动的底部
         new SliverPadding(
           padding: const EdgeInsets.all(0.0),
           sliver: new SliverList(
@@ -114,8 +119,8 @@ class DailyRecordState extends State<DailyRecord>{
                                     padding: EdgeInsets.fromLTRB((MediaQuery.of(context).size.width -230) / 2.0, 25, 0, 5),
                                     child: new Row(
                                       children: <Widget>[
-                                        new Text(cartoonName, style: TextStyle(fontSize: 35, fontWeight: FontWeight.w400),),
-                                        new IconButton(icon: new Icon(Icons.brush), onPressed: null)
+                                        new Text(nickname, style: TextStyle(fontSize: 35, fontWeight: FontWeight.w400),),
+                                        new IconButton(icon: new Icon(Icons.mood, size: 35,), onPressed: null)
                                       ],
                                     ),
                                   ),
@@ -177,7 +182,7 @@ class DailyRecordState extends State<DailyRecord>{
                                       ),
                                     ],
                                   ),
-                                  //分隔符
+                                  // 分隔符
                                   new Container(
                                     padding: EdgeInsets.fromLTRB(20, 25, 20, 0),
                                     child: new Divider(
@@ -194,48 +199,48 @@ class DailyRecordState extends State<DailyRecord>{
                                             children: <Widget>[
                                               new Container(
                                                   padding: EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
-                                                  child: new Icon(Icons.hotel, size: 35,)
-                                              ),
-                                              new Padding(padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0)),
-                                              new Expanded(
-                                                  child:new Column(
-                                                    children: <Widget>[
-                                                      _getNameText(context, '健康（$currentSleep/$maximumSleep）'),
-                                                      new LinearProgressIndicator(value: currentSleep/maximumSleep),
-                                                    ],
-                                                  )
-                                              ),
-                                            ],
-                                          ),
-                                          new Row(
-                                            children: <Widget>[
-                                              new Container(
-                                                  padding: EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
-                                                  child: new Icon(Icons.local_dining, size: 35,)
-                                              ),
-                                              new Padding(padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0)),
-                                              new Expanded(
-                                                  child:new Column(
-                                                    children: <Widget>[
-                                                      _getNameText(context, '饥饿（$currentHunger/$maximumHunger）'),
-                                                      new LinearProgressIndicator(value: currentHunger/maximumHunger),
-                                                    ],
-                                                  )
-                                              ),
-                                            ],
-                                          ),
-                                          new Row(
-                                            children: <Widget>[
-                                              new Container(
-                                                  padding: EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
                                                   child: new Icon(Icons.favorite, size: 35,)
                                               ),
                                               new Padding(padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0)),
                                               new Expanded(
                                                   child:new Column(
                                                     children: <Widget>[
-                                                      _getNameText(context, '心情（$currentMood/$maximumMood）'),
-                                                      new LinearProgressIndicator(value: currentMood/maximumMood),
+                                                      _getNameText(context, '佛系（$currentMental/$maximumMental）'),
+                                                      new LinearProgressIndicator(value: currentMental/maximumMental),
+                                                    ],
+                                                  )
+                                              ),
+                                            ],
+                                          ),
+                                          new Row(
+                                            children: <Widget>[
+                                              new Container(
+                                                  padding: EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
+                                                  child: new Icon(Icons.accessibility_new, size: 35,)
+                                              ),
+                                              new Padding(padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0)),
+                                              new Expanded(
+                                                  child:new Column(
+                                                    children: <Widget>[
+                                                      _getNameText(context, '养生（$currentPhysical/$maximumPhysical）'),
+                                                      new LinearProgressIndicator(value: currentPhysical/maximumPhysical),
+                                                    ],
+                                                  )
+                                              ),
+                                            ],
+                                          ),
+                                          new Row(
+                                            children: <Widget>[
+                                              new Container(
+                                                  padding: EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
+                                                  child: new Icon(Icons.build, size: 35,)
+                                              ),
+                                              new Padding(padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0)),
+                                              new Expanded(
+                                                  child:new Column(
+                                                    children: <Widget>[
+                                                      _getNameText(context, '技能（$currentSkill/$maximumSkill）'),
+                                                      new LinearProgressIndicator(value: currentSkill/maximumSkill),
                                                     ],
                                                   )
                                               ),
@@ -251,8 +256,25 @@ class DailyRecordState extends State<DailyRecord>{
                                               new Expanded(
                                                   child:new Column(
                                                     children: <Widget>[
-                                                      _getNameText(context, '学习（$currentStudy/$maximumStudy）'),
-                                                      new LinearProgressIndicator(value: currentStudy/maximumStudy),
+                                                      _getNameText(context, '素养（$currentSense/$maximumSense）'),
+                                                      new LinearProgressIndicator(value: currentSense/maximumSense),
+                                                    ],
+                                                  )
+                                              ),
+                                            ],
+                                          ),
+                                          /*new Row(
+                                            children: <Widget>[
+                                              new Container(
+                                                  padding: EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
+                                                  child: new Icon(Icons.language, size: 35,)
+                                              ),
+                                              new Padding(padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0)),
+                                              new Expanded(
+                                                  child:new Column(
+                                                    children: <Widget>[
+                                                      _getNameText(context, '足迹（$currentTravel/$maximumTravel）'),
+                                                      new LinearProgressIndicator(value: currentTravel/maximumTravel),
                                                     ],
                                                   )
                                               ),
@@ -262,14 +284,31 @@ class DailyRecordState extends State<DailyRecord>{
                                             children: <Widget>[
                                               new Container(
                                                   padding: EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
-                                                  child: new Icon(Icons.directions_run, size: 35,)
+                                                  child: new Icon(Icons.dashboard, size: 35,)
                                               ),
                                               new Padding(padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0)),
                                               new Expanded(
                                                   child:new Column(
                                                     children: <Widget>[
-                                                      _getNameText(context, '心情（$currentSport/$maximumSport）'),
-                                                      new LinearProgressIndicator(value: currentSport/maximumSport),
+                                                      _getNameText(context, '印象（$currentSocialize/$maximumSocialize）'),
+                                                      new LinearProgressIndicator(value: currentSocialize/maximumSocialize),
+                                                    ],
+                                                  )
+                                              ),
+                                            ],
+                                          ),*/
+                                          new Row(
+                                            children: <Widget>[
+                                              new Container(
+                                                  padding: EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
+                                                  child: new Icon(Icons.all_inclusive, size: 35,)
+                                              ),
+                                              new Padding(padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0)),
+                                              new Expanded(
+                                                  child:new Column(
+                                                    children: <Widget>[
+                                                      _getNameText(context, '其它（$currentOthers/$maximumOthers）'),
+                                                      new LinearProgressIndicator(value: currentOthers/maximumOthers),
                                                     ],
                                                   )
                                               ),

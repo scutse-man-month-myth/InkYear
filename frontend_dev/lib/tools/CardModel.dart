@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_seekbar/flutter_seekbar.dart';
+import 'package:frontend_dev/database/table_card.dart';
+
+String databaseName = "InkYear";
 
 TextStyle tagStyle = TextStyle(color: Colors.blueGrey, fontSize: 10);
 TextStyle titleStyle = TextStyle(color: Colors.blueGrey, fontSize: 11);
@@ -14,20 +17,84 @@ class BasicCardModel extends StatefulWidget{
 class BasicCardModelState extends State<BasicCardModel>{
 
   TextStyle _textStyle = new TextStyle(fontSize: 15, color: Colors.black);
-  bool check1 = false;
+  String _text = "5.睡眠时间(小时)";
+  /*bool check1 = false;
   bool check2 = false;
   bool check3 = false;
-  bool check4 = false;
+  bool check4 = false;*/
   double value1 = 0.0;
   double value2 = 0.0;
 
+  /*String title;
+  String content;*/
+
+  int current_step = 0;
+  List<Step> my_steps = [
+    new Step(
+        title: new Text("Step 1"), content: new Text("Hello"), isActive: true),
+    new Step(
+        title: new Text("Step 2"), content: new Text("World"), isActive: true),
+    new Step(
+        title: new Text("Step 3"),
+        content: new Text("Hello World"),
+        isActive: true)
+  ];
+
+  List<bool> isChecks = [false, false, false];
+  List<bool> isSwitchs = [false, false, false];
 
   Widget build(BuildContext context){
-    return new Column(
+    /*return new Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        new Padding(
+        new IconButton(
+          icon: Icon(Icons.copyright),
+          onPressed: () async {
+            createCardTable();
+          },
+        ),
+        TextField(
+          onChanged: (String value) {
+            setState(() {
+              title = value;
+            });
+            print("title: $title");
+          },
+        ),
+        TextField(
+          onChanged: (String value) {
+            setState(() {
+              content = value;
+            });
+            print("content: $content");
+          },
+        ),
+        new IconButton(
+          icon: Icon(Icons.copyright),
+          onPressed: () async {
+            addCard(title, content);
+          },
+        ),
+        new IconButton(
+          icon: Icon(Icons.copyright),
+          onPressed: () async {
+            updateCard(title, content);
+          },
+        ),
+        new IconButton(
+          icon: Icon(Icons.copyright),
+          onPressed: () async {
+            queryCard(0);
+          },
+        ),
+        new IconButton(
+          icon: Icon(Icons.copyright),
+          onPressed: () async {
+            deleteDB();
+          },
+        ),
+        /*new Padding(
           padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
           child: new Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -245,8 +312,229 @@ class BasicCardModelState extends State<BasicCardModel>{
                 )
               ],
             )
-        ),
+        ),*/
       ],
+    );*/
+
+    Widget _buildCheckboxTile(IconData iconData, String title, int index) {
+      return Row(
+        children: <Widget>[
+          Icon(iconData, size: 20),
+          SizedBox(width: 10),
+          Text(title, style: TextStyle(fontSize: 17)),
+          SizedBox(width: 70),
+          Checkbox(
+            value: isChecks[index],
+            tristate: true,
+            checkColor: Colors.white,
+            activeColor: Colors.green,
+            onChanged: (bool choice) {
+              setState(() {
+                if(choice == true)
+                  isChecks[index] = true;
+                else
+                  isChecks[index] = false;
+              });
+            },
+          ),
+        ],
+      );
+    }
+
+    Widget _buildFirstStepContent() {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          _buildCheckboxTile(Icons.build, '技术深耕', 0),
+          _buildCheckboxTile(Icons.brush, '英语阅读', 1),
+          _buildCheckboxTile(Icons.accessibility_new, '步道乐跑', 2),
+        ],
+      );
+    }
+
+    Widget _buildSeekbarTile(String content) {
+      return new Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            new Text(content, style: _textStyle),
+            new Container(
+              padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
+              width: 250,
+              child: new SeekBar(
+                backgroundColor: Colors.lightBlueAccent,
+                progressColor: Colors.blue,
+                progresseight: 10,
+                value: value1,
+                sectionCount: 5,
+                sectionRadius: 5,
+                sectionColor: Colors.red,
+                sectionUnSelecteColor: Colors.red[100],
+                showSectionText: true,
+                sectionTexts: <SectionTextModel>[
+                  new SectionTextModel(
+                    position: 0,
+                    text: "0",
+                    progressColor: Colors.blue,
+                  ),
+                  new SectionTextModel(
+                    position: 1,
+                    text: "2",
+                    progressColor: Colors.blue,
+                  ),
+                  new SectionTextModel(
+                    position: 2,
+                    text: "4",
+                    progressColor: Colors.blue,
+                  ),
+                  new SectionTextModel(
+                    position: 3,
+                    text: "6",
+                    progressColor: Colors.blue,
+                  ),
+                  new SectionTextModel(
+                    position: 4,
+                    text: "8",
+                    progressColor: Colors.blue,
+                  ),
+                  new SectionTextModel(
+                    position: 5,
+                    text: ">=10",
+                    progressColor: Colors.blue,
+                  ),
+                ],
+                sectionTextMarginTop: 2,
+                sectionDecimal: 0,
+                sectionTextColor: Colors.black,
+                sectionSelectTextColor: Colors.red,
+                sectionTextSize: 14,
+                hideBubble: true,
+                bubbleRadius: 15,
+                bubbleColor: Colors.purple,
+                bubbleTextColor: Colors.white,
+                bubbleTextSize: 14,
+                bubbleMargin: -20,
+                afterDragShowSectionText: true,
+                onValueChanged: (progressValue){
+                  setState(() {
+                    value1 = progressValue.value;
+                  });
+                },
+              ),
+            )
+          ],
+        );
+  }
+
+  Widget _buildSecondStepContent() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Switch(
+              value: isSwitchs[0],
+              activeColor: Colors.green,
+              inactiveThumbColor: Colors.redAccent,
+              inactiveTrackColor: Colors.red[200],
+              onChanged: (bool choice) {
+                this.setState(() {
+                  isSwitchs[0] = !isSwitchs[0];
+                });
+              },
+            ),
+            SizedBox(width: 10),
+            Text('早起'),
+            SizedBox(width: 30),
+            Switch(
+              value: isSwitchs[1],
+              activeColor: Colors.green,
+              inactiveThumbColor: Colors.redAccent,
+              inactiveTrackColor: Colors.red[200],
+              onChanged: (bool choice) {
+                this.setState(() {
+                  isSwitchs[1] = !isSwitchs[1];
+                });
+              },
+            ),
+            SizedBox(width: 10),
+            Text('早睡'),
+          ],
+        ),
+        /*_buildSeekbarTile("睡眠时间"),
+        _buildSeekbarTile("喝水杯数"),
+        _buildSeekbarTile("久坐时间"),*/
+      ],
+    );
+  }
+
+
+
+    List<Widget> stepWidgets = [
+      _buildFirstStepContent(),
+      _buildSecondStepContent(),
+    ];
+
+    List<StepState> stepStates = [
+      StepState.indexed,
+      StepState.indexed,
+      StepState.indexed,
+    ];
+
+    List<bool> isActives = [true, true, true];
+
+    return Align(
+        alignment: Alignment.topCenter,
+        child: new Stepper(
+            currentStep: this.current_step,
+            type: StepperType.vertical,
+            steps: <Step>[
+              new Step(
+                title: new Text('三省吾身'),
+                content: (current_step == 0) ? stepWidgets[0] : SizedBox(height: 1),
+                state: stepStates[0],
+                isActive: isActives[0],
+                subtitle: new Text('√ 必须完成三件事情'),
+              ),
+              new Step(
+                title: new Text('朋克养生'),
+                content: (current_step == 1) ? stepWidgets[1] : SizedBox(height: 1),
+                state: stepStates[1],
+                isActive: isActives[1],
+                subtitle: new Text('√ 年纪轻轻爱惜身体'),
+              ),
+              new Step(
+                title: new Text('第三步'),
+                content: new Text('第三步内容'),
+                state: stepStates[2],
+                isActive: isActives[2],
+                subtitle: new Text('√ 每天必须完成的三件事情'),
+              ),
+            ],
+          onStepTapped: (step) {
+            setState(() {
+              current_step = step;
+            });
+          },
+          onStepCancel: () {
+            setState(() {
+              if (current_step > 0) {
+                current_step = current_step - 1;
+              } else {
+                current_step = 0;
+              }
+            });
+          },
+          onStepContinue: () {
+            setState(() {
+              if (current_step < my_steps.length - 1) {
+                current_step = current_step + 1;
+              } else {
+                current_step = 0;
+              }
+            });
+          },
+        )
     );
   }
 }
@@ -264,7 +552,12 @@ class ExtendCardModel1 extends StatelessWidget{
           new Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              new Icon(Icons.loyalty,size: 12, color: Colors.blueGrey,),
+              new IconButton(
+                icon: Icon(Icons.loyalty),
+                // size: 12,
+                color: Colors.blueGrey,
+                onPressed: null,
+              ),
               new Padding(padding: EdgeInsets.fromLTRB(5, 0, 0, 0)),
               new Text("添加标签", style: tagStyle,),
             ],

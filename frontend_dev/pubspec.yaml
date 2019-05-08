@@ -22,8 +22,8 @@ dependencies:
   flutter_seekbar:
     git: https://github.com/LiuC520/flutter_seekbar.git
   flutter_swiper: ^1.1.6
-
-
+  flutter_calendar: ^0.0.1
+  flutter_calendar_carousel:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -38,6 +38,9 @@ dependencies:
 
   # A Flutter plugin for finding commonly used locations on the filesystem. Supports iOS and Android.
   path_provider: ^0.5.0+1
+
+  # A small cozy library that allows you to make snappable list views.
+  snaplist: ^0.1.8
 
 dev_dependencies:
   flutter_test:
