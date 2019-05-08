@@ -68,10 +68,11 @@ class _SwiperViewState extends State<SwiperView> {
   List<Widget> cardList = List();
 
   void initState(){
+    // TODO: 修改界面
     cardList
     ..add(new CardPrototype(child: new BasicCardModel()))
       ..add(new CardPrototype(child: new BasicCardModel()))
-      ..add(new CardPrototype(child: new BasicCardModel()));
+      ..add(new CardPrototype(child: new ExtendCardModel1()));
 
     _itemCount = cardList.length;
     super.initState();

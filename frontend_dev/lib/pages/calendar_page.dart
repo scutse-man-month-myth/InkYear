@@ -9,9 +9,15 @@ class CalenderPage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
-    return new Container(
-          child: new ListView(
+    return Center(
+      child: new SizedBox(
+        width: 340,
+        height: 525,
+        child: Card(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(0.0))),
+          child: new Column(
             children: <Widget>[
+              new SizedBox(height: 10.0,),
               new Container(
                   child:new TimeLinePage()
               ),
@@ -49,7 +55,9 @@ class CalenderPage extends StatelessWidget{
               )
             ],
           ),
-        );
+        ),
+      ),
+    );
   }
 }
 
@@ -59,7 +67,7 @@ class TimeLinePage extends StatefulWidget {
 }
 class _TimeLinePageState extends State<TimeLinePage> {
 
-  DateTime _currentDate=DateTime.now();
+  DateTime _currentDate = DateTime.now();
   EventList<Event> _markedDate = new EventList<Event>(
       events: {
         new DateTime(2019, 5, 3): [
@@ -87,11 +95,18 @@ class _TimeLinePageState extends State<TimeLinePage> {
         child:CalendarCarousel<Event>(
           onDayPressed:(DateTime date,List<Event> events){this.setState(()=>handle(date));},
           todayButtonColor: Colors.blue,
-          thisMonthDayBorderColor: Colors.black,
+          todayBorderColor: Colors.white,
+          todayTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 20.0,
+          ),
+          thisMonthDayBorderColor: Colors.white,
+          headerMargin: EdgeInsets.all(0.0),
 
           maxSelectedDate: _currentDate,
-          markedDatesMap: _markedDate,
-          height: 450.0,
+          // markedDatesMap: _markedDate,
+          width: 300.0,
+          height: 400.0,
           markedDateIconBuilder: (event) {
             return Icon(Icons.lens);
           },
