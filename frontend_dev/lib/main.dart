@@ -8,6 +8,8 @@ import 'package:frontend_dev/tools/Toast.dart';
 import 'package:frontend_dev/constants/ThemeColors.dart';
 import 'package:frontend_dev/constants/IconStyle.dart';
 import 'package:frontend_dev/constants/StringStyle.dart';
+import 'package:frontend_dev/constants/SourceImages.dart';
+import 'package:frontend_dev/constants/AntDesignIcons.dart';
 import 'package:frontend_dev/datas/Location.dart'; // TODO:降低类的耦合
 import 'package:frontend_dev/pages/card_page.dart';
 import 'package:frontend_dev/pages/card_packet_page.dart';
@@ -19,6 +21,7 @@ import 'package:frontend_dev/database/database.dart';
 import 'package:frontend_dev/database/table_state.dart';
 import 'package:frontend_dev/database/table_config.dart';
 
+// TODO: 数据库信息
 String databaseName = "InkYear"; // 数据库名字
 int year;
 int month;
@@ -43,7 +46,6 @@ class MyApp extends StatelessWidget {
         accentColor: ThemeColors.accentColor,
         primaryIconTheme: IconStyle.primaryIconStyle,
         primaryTextTheme: StringStyle.primaryTextStyle,*/
-        // primaryTextTheme: ,
       ),
       // 入口界面控件
       home: MyHomePage(),
@@ -53,6 +55,32 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
+
+  int currentState = 500; // 状态当前值
+  int currentMental = 100; // 佛系当前值
+  int currentPhysical = 100; // 养生当前值
+  int currentSkill = 100; // 技能当前值
+  int currentSense = 100; // 素养当前值
+  int currentOthers = 100; // 其它当前值
+  String stateImg = SourceImages.soso; // 小人图像
+  // TODO:数据库重写
+  IconData stateIcon = AntDesignIcons.smile; // 小人心情
+  List<Widget> chips = [
+    Chip(
+      label: Text("Daily"),
+      avatar: CircleAvatar(
+        backgroundColor: Colors.transparent,
+        child: Icon(Icons.alarm_on, color: Colors.black),
+      ),
+    ),
+    Chip(
+      label: Text("All >>"),
+      avatar: CircleAvatar(
+        backgroundColor: Colors.transparent,
+        child: Icon(Icons.dashboard, color: Colors.black),
+      ),
+    ),
+  ];
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -65,35 +93,73 @@ class _MyHomePageState extends State<MyHomePage> {
   String _nickname = 'nickname'; // 昵称
   String _email = 'nickname@xxx.xxx'; // 邮箱
   String _password = 'password'; // 密码
+  TextStyle _nicknameTextStyle = TextStyle(fontSize: 25);
 
   // 日期参数
-  // TODO: 数据库重写
-  String _month = "Jan";
-  int _day = 1;
-  String _date = "Jan 1";
-  String _week = "MONDAY";
+  final List<String> _months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July' 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  final List<String> _weeks = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'STA', 'SUN'];
+  TextStyle _dateTextStyle = TextStyle(fontSize: 16, fontStyle: FontStyle.normal);
+  TextStyle _weekTextStyle = TextStyle(fontSize: 16, fontStyle: FontStyle.italic);
 
   // 页面参数
   List<Widget> _bodys;
   int _tabIndex = 1;
-  bool isEdit = true;
-  bool isCalendar = false;
-
-  static VoidCallback _openCardPacketCallback;
+  bool _isEdit = true;
 
   @override
   void initState() {
     super.initState();
+    print('initiate');
+    print(widget.currentState);
+    print(widget.currentMental);
+    print(widget.currentPhysical);
+    print(widget.currentSkill);
+    print(widget.currentSense);
+    print(widget.currentOthers);
     _bodys = [
-      CalenderPage(),
-      //改卡片页面demo，还没写类
+      CalenderPage(chips: widget.chips),
       CardPage(),
-      DailyRecord(),
+      DailyRecord(
+        currentState: widget.currentState,
+        currentMental: widget.currentMental,
+        currentPhysical: widget.currentPhysical,
+        currentSkill: widget.currentSkill,
+        currentSense: widget.currentSense,
+        currentOthers: widget.currentOthers,
+        img: widget.stateImg,
+        mood: widget.stateIcon,
+      )
     ];
-
   }
 
-  void _openTopReminder(context) {
+  void _buildDailyRecord(int totalState) async {
+    widget.currentState = await queryTotalState();
+    widget.currentMental = await querySingleState(States.mental.index); // 佛系当前值
+    widget.currentPhysical = await querySingleState(States.physical.index); // 养生当前值
+    widget.currentSkill = await querySingleState(States.skill.index); // 技能当前值
+    widget.currentSense = await querySingleState(States.sense.index); // 素养当前值
+    widget.currentOthers = await querySingleState(States.others.index);
+    if(totalState > 1500)
+      widget.stateImg = SourceImages.good;
+    else if(totalState < 1000)
+      widget.stateImg = SourceImages.bad;
+    else
+      widget.stateImg = SourceImages.soso;
+    print('processing');
+    print(widget.currentState);
+    print(widget.currentMental);
+    print(widget.currentPhysical);
+    print(widget.currentSkill);
+    print(widget.currentSense);
+    print(widget.currentOthers);
+  }
+
+  String _getMonth() => _months[DateTime.now().month-1];
+  String _getDay() => '${DateTime.now().day}';
+  String _getDate() => _getMonth() + ' ' + _getDay();
+  String _getWeek() => _months[DateTime.now().weekday-1];
+
+  void _openTopReminderCallback(BuildContext context) {
     Navigator.of(context).push(
       PageRouteBuilder(
         // 当前的路由不会遮盖之前的路由
@@ -104,25 +170,73 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void _openCardPacketCallback() {
+    Navigator.push<String>(
+      context,
+      new MaterialPageRoute(builder: (context) => new CardPacketPage()),
+    ).then((String result){
+      Toast.toast(context, result);
+    });
+  }
+
+  List<Widget> _buildBottomNavigatorButtons() {
+    List<IconData> icons = [Icons.calendar_today, Icons.add_circle_outline, Icons.accessibility];
+    List<Widget> buttons = List.generate(3, (int tabIndex) =>
+      IconButton(
+        icon: Icon(
+          icons[tabIndex],
+          size: _tabIndex == tabIndex ? 35 : 30,
+          color: _tabIndex == tabIndex ? Colors.blue : Colors.white,
+        ),
+        onPressed: () async {
+          int totalState = await queryTotalState();
+          await _buildDailyRecord(totalState);
+          _bodys[2] = DailyRecord(
+            currentState: widget.currentState,
+            currentMental: widget.currentMental,
+            currentPhysical: widget.currentPhysical,
+            currentSkill: widget.currentSkill,
+            currentSense: widget.currentSense,
+            currentOthers: widget.currentOthers,
+            img: widget.stateImg,
+            mood: widget.stateIcon,
+            dState: totalState - 1250,
+          );
+          setState(() {
+            _tabIndex = tabIndex;
+            if(_tabIndex == 1) _isEdit = true;
+            else _isEdit = false;
+          });
+        },
+      )
+    );
+    return buttons;
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    print('initiate');
+    print(widget.currentState);
+    print(widget.currentMental);
+    print(widget.currentPhysical);
+    print(widget.currentSkill);
+    print(widget.currentSense);
+    print(widget.currentOthers);
+  }
+
   @override
   Widget build(BuildContext context) {
-    _openCardPacketCallback = (){
-      Navigator.push<String>(
-        context,
-        new MaterialPageRoute(builder: (context) => new CardPacketPage()),
-      ).then((String result){
-        Toast.toast(context, result);
-      });
-    };
-
     return Container(
+      // 背景图片
       decoration: BoxDecoration(
-        color: Theme.of(context).backgroundColor,
         image: DecorationImage(
           image: AssetImage("imgs/background2.jpg"),
           fit: BoxFit.fitWidth,
         )
       ),
+      // 整体布局
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
@@ -149,43 +263,61 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           title: Text(
             _nickname,
-            style: TextStyle(fontSize: 25),
+            style: _nicknameTextStyle,
           ),
           actions: <Widget>[
-            /// 显示日期
+            // 显示日期
             Padding(
               padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
               child: Row(
                 children: <Widget>[
                   Text(
-                    _date,
-                    style: TextStyle(fontSize: 16),
+                    _getDate(),
+                    style: _dateTextStyle,
                   ),
                   Padding(padding: EdgeInsets.fromLTRB(7, 0, 0, 0)),
                   Text(
-                    _week,
-                    style: TextStyle(fontSize: 16),
+                    _getWeek(),
+                    style: _weekTextStyle,
                   ),
                 ],
               ),
             ),
-            /// 显示天气
+            // 显示天气
             IconButton(
               // TODO:动态变化图标
               icon: Icon(
                 Icons.cloud,
                 color: Theme.of(context).accentColor,
               ),
-              onPressed: () {
+              onPressed: () async {
                 if(county == "") { // 未选择地址
-                  Toast.toast(context, "请先选择地址");
+                  // Toast.toast(context, "请先选择地址");
+                  getProvinces(context);
                 }
                 else { // 已选择地址
-                  _openTopReminder(context);
+                  _openTopReminderCallback(context);
                 }
+                // TODO: 查询记录
+                // TODO: 移到其它位置
+                int totalState = await queryTotalState();
+                await _buildDailyRecord(totalState);
+                setState(() {
+                  _bodys[2] = DailyRecord(
+                    currentState: widget.currentState,
+                    currentMental: widget.currentMental,
+                    currentPhysical: widget.currentPhysical,
+                    currentSkill: widget.currentSkill,
+                    currentSense: widget.currentSense,
+                    currentOthers: widget.currentOthers,
+                    img: widget.stateImg,
+                    mood: widget.stateIcon,
+                    dState: totalState - 1250,
+                  );
+                });
               }
             ),
-            /// 显示搜索
+            // 显示搜索
             IconButton(
               icon: Icon(Icons.search),
               color: Theme.of(context).accentColor,
@@ -195,6 +327,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 await createDatabase(databaseName);
                 await createStateTable();
                 await addState();
+                await queryState();
                 // TODO:实现搜索功能
                 Toast.toast(context, "功能尚未开放......Orz\n敬请期待吧~(￣▽￣)");
               },
@@ -203,52 +336,50 @@ class _MyHomePageState extends State<MyHomePage> {
           elevation: 0.0,
         ),
         body: _bodys[_tabIndex],
-        bottomNavigationBar: new Row(
+        bottomNavigationBar: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
+          children: _buildBottomNavigatorButtons(),
+          /*<Widget>[
             new IconButton(
               icon: new Icon(
-                Icons.assignment,
-                size: 35,
-                color: _tabIndex == 0 ? Colors.blueAccent : Colors.white,
+                Icons.calendar_today,
+                size: _tabIndex == 0 ? 35 : 30,
+                color: _tabIndex == 0 ? Colors.blue : Colors.white,
               ),
               onPressed: () {
                 setState(() {
                   _tabIndex = 0;
-                  isEdit = false;
-                  isCalendar = true;
+                  _isEdit = false;
                 });
               },
             ),
             new IconButton(
               icon: new Icon(
-                Icons.border_color,
-                size: 35,
+                Icons.add_circle_outline,
+                size: _tabIndex == 1 ? 35 : 30,
                 color: _tabIndex == 1 ? Colors.blueAccent : Colors.white,
               ),
               onPressed: () {
                 setState(() {
                   _tabIndex = 1;
-                  isEdit = true;
-                  isCalendar = false;
+                  _isEdit = true;
                 });
               },
             ),
             new IconButton(
               icon: new Icon(
-                Icons.accessibility,
-                size: 35,
+                Icons.child_care,
+                size: _tabIndex == 2 ? 35 : 30,
                 color: _tabIndex == 2 ? Colors.blueAccent : Colors.white,
               ),
               onPressed: () {
                 setState(() {
                   _tabIndex = 2;
-                  isEdit = false;
-                  isCalendar = false;
+                  _isEdit = false;
                 });
               },
             ),
-          ],
+          ],*/
         ),
         drawer: DrawerPage(
           oriAvatar: _avatar,
@@ -256,7 +387,20 @@ class _MyHomePageState extends State<MyHomePage> {
           oriEmail: _email,
           oriPassword: _password,
         ),
-        floatingActionButton: isEdit ?
+        floatingActionButton: _isEdit ? Padding(
+            padding: EdgeInsets.fromLTRB(0, 0, 40, 20),
+            child: FloatingActionButton(
+              child: Icon(
+                Icons.chrome_reader_mode,
+                size: 45,
+                color: Colors.white,
+              ),
+              onPressed: _openCardPacketCallback,
+              backgroundColor: Colors.black54,
+            )
+        ) : null,
+        // resizeToAvoidBottomInset: false,
+        // resizeToAvoidBottomPadding: false,
         /*new Padding(
           padding: EdgeInsets.fromLTRB(0, 0, 40, 20),
           child: new CircleAvatar(
@@ -273,19 +417,6 @@ class _MyHomePageState extends State<MyHomePage> {
             backgroundColor: Colors.black54,
           ),
         )*/
-        new Padding(
-          padding: EdgeInsets.fromLTRB(0, 0, 40, 20),
-          child: FloatingActionButton(
-            child: Icon(
-              Icons.chrome_reader_mode,
-              size: 45,
-              color: Colors.white,
-            ),
-            onPressed: _openCardPacketCallback,
-            backgroundColor: Colors.black54,
-          )
-        )
-            : null
       )
     );
   }
