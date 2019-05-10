@@ -5,58 +5,45 @@ import 'package:flutter_calendar_carousel/classes/event_list.dart';
 import 'package:flutter_calendar_carousel/classes/event.dart';
 // import 'package:intl/intl.dart' show DateFormat;
 
-class CalenderPage extends StatelessWidget{
+class CalenderPage extends StatefulWidget {
+  CalenderPage({this.chips});
 
+  List<Widget> chips;
+
+  @override
+  _CalenderPageState createState() => _CalenderPageState();
+}
+
+class _CalenderPageState extends State<CalenderPage> {
   @override
   Widget build(BuildContext context){
     return Center(
-      child: new SizedBox(
+      child: Container(
+        color: Colors.white,
         width: 340,
         height: 525,
-        child: Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(0.0))),
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
           child: new Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              new SizedBox(height: 10.0,),
+              new SizedBox(height: 10.0),
               new Container(
                   child:new TimeLinePage()
               ),
-              //流式布局Wrap
+              new Text(
+                ' # ${(DateTime.now().toString().split('\ '))[0]}',
+              ),
+              new SizedBox(height: 10.0),
               new Wrap(
-                spacing: 5.0,
+                spacing: 10.0,
                 runSpacing: 0.0,
-                children: <Widget>[
-                  Chip(
-                    label: Text("abcd"),
-                    avatar: CircleAvatar(
-                      backgroundColor: Color(0xfff1f1f1),
-                      child: Text("A",style: TextStyle(fontSize: 12.0),),
-                    ),
-                  ),
-                  Chip(
-                    label: Text("abcd"),
-                    avatar: CircleAvatar(
-                      backgroundColor: Color(0xfff1f1f1),
-                      child: Icon(Icons.alarm),
-                    ),
-                  ),
-                  Chip(
-                    label: Text("abcd"),
-                    avatar: Icon(Icons.alarm),
-                  ),
-                  Chip(
-                    label: Text("abcd"),
-                    avatar: CircleAvatar(
-                      backgroundColor: Color(0xfff1f1f1),
-                      child: Text("C",style: TextStyle(fontSize: 12.0),),
-                    ),
-                  ),
-                ],
+                children: widget.chips,
               )
             ],
           ),
         ),
-      ),
+      )
     );
   }
 }
@@ -106,7 +93,7 @@ class _TimeLinePageState extends State<TimeLinePage> {
           maxSelectedDate: _currentDate,
           // markedDatesMap: _markedDate,
           width: 300.0,
-          height: 400.0,
+          height: 300.0,
           markedDateIconBuilder: (event) {
             return Icon(Icons.lens);
           },

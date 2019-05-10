@@ -1,40 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_dev/database/table_state.dart';
 import 'dart:math';
 
 //个人状态的参数
 // TODO: 数据库重写
 String nickname = "Nickname";
-int maxDegree = 100;
-int currentDegree = 57;
-int accumulateDayNum = 15;
-int dState = 5;
-int accumulateCardNum = 28;
+int maxDegree = 10;
+int currentDegree = 1;
+int accumulateDayNum = 1;
+int accumulateCardNum = 2;
 Color weatherPageColor = Colors.white;
 
 class DailyRecord extends StatefulWidget{
+  DailyRecord({this.currentState, this.currentMental, this.currentPhysical,
+    this.currentSkill, this.currentSense, this.currentTravel,
+    this.currentSocialize, this.currentOthers, this.img, this.mood, this.dState});
+
+  String img;
+  IconData mood;
+  int dState;
+
+  final int maxState = 2500; // 状态最大值
+  final int maximumMental = 500; // 佛系最大值
+  final int maximumPhysical = 500; // 养生最大值
+  final int maximumSkill = 500; // 技能最大值
+  final int maximumSense = 500; // 素养最大值
+  // final int maximumTravel = 500; // 足迹最大值
+  // final int maximumSocialize = 500; // 印象最大值
+  final int maximumOthers = 500; // 其它最大值
+
+  final int currentState; // 状态当前值
+  final int currentMental; // 佛系当前值
+  final int currentPhysical; // 养生当前值
+  final int currentSkill; // 技能当前值
+  final int currentSense; // 素养当前值
+  final int currentTravel; // 足迹当前值
+  final int currentSocialize; // 印象当前值
+  final int currentOthers; // 其它当前值
+
+  // TODO:匹配健康值
+  String state = 'soso';
+
   State<StatefulWidget> createState(){
     return new DailyRecordState();
   }
 }
 class DailyRecordState extends State<DailyRecord>{
-
-  final int maxState = 100; // 状态最大值
-  final int maximumMental = 100; // 佛系最大值
-  final int maximumPhysical = 100; // 养生最大值
-  final int maximumSkill = 100; // 技能最大值
-  final int maximumSense = 100; // 素养最大值
-  final int maximumTravel = 100; // 足迹最大值
-  final int maximumSocialize = 100; // 印象最大值
-  final int maximumOthers = 100; // 其它最大值
-
-  final int currentState = 78; // 状态当前值
-  final int currentMental = 100; // 佛系当前值
-  final int currentPhysical = 100; // 养生当前值
-  final int currentSkill = 100; // 技能当前值
-  final int currentSense = 100; // 素养当前值
-  final int currentTravel = 100; // 足迹当前值
-  final int currentSocialize = 100; // 印象当前值
-  final int currentOthers = 100; // 其它当前值
+  initState() {
+    List<String> splits = (widget.img.substring(5)).split('\.');
+    widget.state = splits[0].toUpperCase();
+  }
 
   Widget build(BuildContext context){
     return new CustomScrollView(
@@ -55,7 +70,7 @@ class DailyRecordState extends State<DailyRecord>{
                     child:  new Container(
                       height: 250,
                       width: 250,
-                      child: new Image.asset("imgs/person.png"),
+                      child: new Image.asset(widget.img),
                     ),
                   ),
                   // 半圆进度条
@@ -66,9 +81,9 @@ class DailyRecordState extends State<DailyRecord>{
                           child: new GradientCircularProgressIndicator(
                             stokeWidth: 6,
                             radius: 170,
-                            colors: [Colors.black54, Colors.black54],
+                            colors: [Colors.blue, Colors.blueAccent],
                             totalAngle: pi,
-                            value: currentState / maxState,
+                            value: widget.currentState / widget.maxState,
                             backgroundColor: Colors.white70,
                             strokeCapRound: true,
                           ),
@@ -85,7 +100,9 @@ class DailyRecordState extends State<DailyRecord>{
                               child: new Text("State\t",style: TextStyle(fontSize: 20,
                                   color: Colors.white, fontWeight: FontWeight.w500),),
                             ),
-                            new Text("$currentState/$maxState", style: TextStyle(fontSize: 30,
+                            //new Text("${widget.currentState}/${widget.maxState}", style: TextStyle(fontSize: 30,
+                                //color: Colors.white, fontWeight: FontWeight.w500), ),
+                            new Text("${widget.state}", style: TextStyle(fontSize: 30,
                                 color: Colors.white, fontWeight: FontWeight.w500), ),
                           ]
                       )
@@ -120,7 +137,7 @@ class DailyRecordState extends State<DailyRecord>{
                                     child: new Row(
                                       children: <Widget>[
                                         new Text(nickname, style: TextStyle(fontSize: 35, fontWeight: FontWeight.w400),),
-                                        new IconButton(icon: new Icon(Icons.mood, size: 35,), onPressed: null)
+                                        new IconButton(icon: new Icon(widget.mood, size: 30,), onPressed: null)
                                       ],
                                     ),
                                   ),
@@ -159,7 +176,7 @@ class DailyRecordState extends State<DailyRecord>{
                                           new Row(
                                             children: <Widget>[
                                               new Icon(Icons.add_circle, color: Colors.green,),
-                                              new Text("$dState", style: TextStyle(fontSize: 28, fontWeight: FontWeight.w400),),
+                                              new Text("${widget.dState}", style: TextStyle(fontSize: 28, fontWeight: FontWeight.w400),),
                                             ],
                                           ),
                                           new Text("状态变化",style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.blueGrey),)
@@ -205,8 +222,8 @@ class DailyRecordState extends State<DailyRecord>{
                                               new Expanded(
                                                   child:new Column(
                                                     children: <Widget>[
-                                                      _getNameText(context, '佛系（$currentMental/$maximumMental）'),
-                                                      new LinearProgressIndicator(value: currentMental/maximumMental),
+                                                      _getNameText(context, '佛系（${widget.currentMental}/${widget.maximumMental}）'),
+                                                      new LinearProgressIndicator(value: widget.currentMental/widget.maximumMental),
                                                     ],
                                                   )
                                               ),
@@ -222,8 +239,8 @@ class DailyRecordState extends State<DailyRecord>{
                                               new Expanded(
                                                   child:new Column(
                                                     children: <Widget>[
-                                                      _getNameText(context, '养生（$currentPhysical/$maximumPhysical）'),
-                                                      new LinearProgressIndicator(value: currentPhysical/maximumPhysical),
+                                                      _getNameText(context, '养生（${widget.currentPhysical}/${widget.maximumPhysical}）'),
+                                                      new LinearProgressIndicator(value: widget.currentPhysical/widget.maximumPhysical),
                                                     ],
                                                   )
                                               ),
@@ -239,8 +256,8 @@ class DailyRecordState extends State<DailyRecord>{
                                               new Expanded(
                                                   child:new Column(
                                                     children: <Widget>[
-                                                      _getNameText(context, '技能（$currentSkill/$maximumSkill）'),
-                                                      new LinearProgressIndicator(value: currentSkill/maximumSkill),
+                                                      _getNameText(context, '技能（${widget.currentSkill}/${widget.maximumSkill}）'),
+                                                      new LinearProgressIndicator(value: widget.currentSkill/widget.maximumSkill),
                                                     ],
                                                   )
                                               ),
@@ -256,8 +273,8 @@ class DailyRecordState extends State<DailyRecord>{
                                               new Expanded(
                                                   child:new Column(
                                                     children: <Widget>[
-                                                      _getNameText(context, '素养（$currentSense/$maximumSense）'),
-                                                      new LinearProgressIndicator(value: currentSense/maximumSense),
+                                                      _getNameText(context, '素养（${widget.currentSense}/${widget.maximumSense}）'),
+                                                      new LinearProgressIndicator(value: widget.currentSense/widget.maximumSense),
                                                     ],
                                                   )
                                               ),
@@ -307,8 +324,8 @@ class DailyRecordState extends State<DailyRecord>{
                                               new Expanded(
                                                   child:new Column(
                                                     children: <Widget>[
-                                                      _getNameText(context, '其它（$currentOthers/$maximumOthers）'),
-                                                      new LinearProgressIndicator(value: currentOthers/maximumOthers),
+                                                      _getNameText(context, '其它（${widget.currentOthers}/${widget.maximumOthers}）'),
+                                                      new LinearProgressIndicator(value: widget.currentOthers/widget.maximumOthers),
                                                     ],
                                                   )
                                               ),

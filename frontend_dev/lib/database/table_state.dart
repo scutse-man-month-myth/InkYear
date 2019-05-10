@@ -38,11 +38,11 @@ void addState() async {
   int year = DateTime.now().year;
   int month = DateTime.now().month;
   int day = DateTime.now().day;
-  int mental = 0;
-  int physical = 0;
-  int skill = 0;
-  int sense = 0;
-  int others = 0;
+  int mental = 250;
+  int physical = 250;
+  int skill = 250;
+  int sense = 250;
+  int others = 250;
   int total = mental + physical + skill + sense + others;
 
   int id;
@@ -63,7 +63,7 @@ void addState() async {
 }
 
 /// 更新总状态值
-void updateTotalState() async {
+void updateTotalState({int value = 0}) async {
   int year = DateTime.now().year;
   int month = DateTime.now().month;
   int day = DateTime.now().day;
@@ -73,7 +73,7 @@ void updateTotalState() async {
   int skill = await querySingleState(States.skill.index);
   int sense = await querySingleState(States.sense.index);
   int others = await querySingleState(States.others.index);
-  int total = mental + physical + skill + sense + others;
+  int total = mental + physical + skill + sense + others + value;
 
   int id;
 
@@ -110,6 +110,8 @@ void updateSingleState(int tag, int value) async {
     id = await txn.rawUpdate(sql);
   });
   print(id);
+
+  await updateTotalState();
 
   await db.close();
 }
@@ -160,4 +162,24 @@ Future<int> querySingleState(int tag) async {
   await db.close();
 
   return single;
+}
+
+/// 查询全记录
+Future<List<Map<String, dynamic>>> queryState() async {
+  int year = DateTime.now().year;
+  int month = DateTime.now().month;
+  int day = DateTime.now().day;
+
+  List<Map<String, dynamic>> results;
+
+  final String sql = "SELECT * FROM STATE WHERE year = '$year' AND month = '$month' AND day = '$day'";
+
+  Database db = await openDatabase(await createDatabase(databaseName));
+
+  results = await db.rawQuery(sql);
+  print(results);
+
+  await db.close();
+
+  return results;
 }

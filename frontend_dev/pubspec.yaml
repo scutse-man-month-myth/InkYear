@@ -24,6 +24,7 @@ dependencies:
   flutter_swiper: ^1.1.6
   flutter_calendar: ^0.0.1
   flutter_calendar_carousel:
+  url_launcher: ^3.0.2
   image_picker: ^0.4.12+1
 
   # The following adds the Cupertino Icons font to your application.
@@ -75,6 +76,9 @@ flutter:
    - imgs/weatherbackground1.jpg
    - imgs/weatherbackground2.jpg
    - imgs/weatherbackground3.jpg
+   - imgs/good.png
+   - imgs/bad.png
+   - imgs/soso.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
@@ -105,7 +109,15 @@ flutter:
   # Wechat: 0xe627
   # QQ: 0xe630
   # Weibo: 0xe620
+  # squint: 0xeff9
+  # smile: 0xf0c0
+  # meh: 0xf049;
+  # meh_rolling_eyes: 0xf04a
+  # sad_tear: 0xf0a5
   fonts:
     - family: Accounts
       fonts:
-        - asset: fonts/icon/iconfont.ttf
+        - asset: fonts/icon/iconfont_account.ttf
+    - family: Moods
+      fonts:
+        - asset: fonts/icon/iconfont_mood.ttf

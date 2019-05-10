@@ -17,4 +17,29 @@ class AntDesignIcons {
       fontFamily: 'Accounts'
   );
 
+  static final IconData squint = IconData(
+      0xeff9,
+      fontFamily: 'Moods'
+  );
+
+  static final IconData smile = IconData(
+      0xf0c0,
+      fontFamily: 'Moods'
+  );
+
+  static final IconData meh = IconData(
+      0xf049,
+      fontFamily: 'Moods'
+  );
+
+  static final IconData meh_rolling_eyes = IconData(
+      0xf04a,
+      fontFamily: 'Moods'
+  );
+
+  static final IconData sad_tear = IconData(
+      0xf0a5,
+      fontFamily: 'Moods'
+  );
+
 }

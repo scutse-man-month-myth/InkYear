@@ -16,7 +16,7 @@ class _CardPageState extends State<CardPage>{
     return new Center(
       child: new SwiperView(),
     );
-      /*new Stack(
+    /*new Stack(
       children: <Widget>[
         new Positioned(
             top: 10,
