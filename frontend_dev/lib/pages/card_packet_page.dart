@@ -5,6 +5,7 @@ import 'package:frontend_dev/tools/CardModel.dart';
 String _modelTag1 = "1";
 String _modelTag2 = "2";
 String _modelTag3 = "3";
+String _modelTag4 = "4";
 
 class CardPacketPage extends StatefulWidget{
   @override
@@ -90,7 +91,7 @@ class _CardPacketPageState extends State<CardPacketPage>{
                               ),
                               new Padding(
                                 padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
-                                child: new SelectCard(),
+                                child: new ExtendCardModel4(),
                               ),
                               new Padding(
                                 padding: EdgeInsets.fromLTRB(0, 50, 0, 0),

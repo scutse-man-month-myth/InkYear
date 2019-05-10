@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_seekbar/flutter_seekbar.dart';
 import 'package:frontend_dev/database/table_card.dart';
+import 'package:image_picker/image_picker.dart';
 
 String databaseName = "InkYear";
 
-TextStyle tagStyle = TextStyle(color: Colors.blueGrey, fontSize: 10);
-TextStyle titleStyle = TextStyle(color: Colors.blueGrey, fontSize: 11);
-TextStyle textStyle = TextStyle(color: Colors.blueGrey, fontSize: 8);
+TextStyle tagStyle = TextStyle(color: Colors.grey, fontSize: 10);
+TextStyle titleStyle = TextStyle(color: Colors.grey, fontSize: 12);
+TextStyle textStyle = TextStyle(color: Colors.grey, fontSize: 10);
+TextStyle hint_textStyle = TextStyle(color: Colors.grey, fontSize: 9);
+
+TextStyle big_titleStyle = TextStyle(color: Colors.grey, fontSize: 16);
+TextStyle big_textStyle = TextStyle(color: Colors.grey, fontSize: 14);
+TextStyle big_hint_textStyle = TextStyle(color: Colors.grey, fontSize: 12);
 
 class BasicCardModel extends StatefulWidget{
   State<StatefulWidget> createState(){
@@ -664,42 +670,41 @@ class ExtendCardModel1 extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return new Container(
-      padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+      padding: EdgeInsets.fromLTRB(16, 18, 10, 10),
       height: 250,
       width: 170,
       child:new Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          new Row(
+          /*new Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              new IconButton(
-                icon: Icon(Icons.loyalty),
-                // size: 12,
-                color: Colors.blueGrey,
-                onPressed: null,
-              ),
+              new Icon(Icons.loyalty,size: 12, color: Colors.blueGrey,),
               new Padding(padding: EdgeInsets.fromLTRB(5, 0, 0, 0)),
               new Text("添加标签", style: tagStyle,),
             ],
-          ),
+          ),*/
           new Padding(padding: EdgeInsets.fromLTRB(0, 2, 0, 0)),
           new Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              new Text("请输入标题", style: titleStyle,),
+              new Padding(padding: EdgeInsets.fromLTRB(5, 0, 0, 0)),
+              new Text("输入标题", style: titleStyle,),
             ],
           ),
-          new Divider(
-            height: 5,
-            color: Colors.black,
+          new Container(
+            padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+            child: new Divider(
+              height: 5,
+              color: Colors.grey,
+            ),
           ),
+          new Padding(padding: EdgeInsets.fromLTRB(0, 7, 0, 0)),
           new Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              new Icon(Icons.brush,size: 12, color: Colors.black,),
               new Padding(padding: EdgeInsets.fromLTRB(5, 0, 0, 0)),
-              new Text("让记忆停留此刻...", style: textStyle,)
+              new Text("记录你的生活...", style: textStyle,)
             ],
           ),
         ],
@@ -713,88 +718,74 @@ class ExtendCardModel2 extends StatelessWidget{
   Widget build(BuildContext context) {
     return new Container(
       padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-      height: 250,
-      width: 170,
+      height: 230,
+      width: 175,
       child:new Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          new Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              new Icon(Icons.loyalty,size: 12, color: Colors.blueGrey,),
-              new Padding(padding: EdgeInsets.fromLTRB(5, 0, 0, 0)),
-              new Text("添加标签", style: tagStyle,),
-            ],
-          ),
-          new Padding(padding: EdgeInsets.fromLTRB(0, 2, 0, 0)),
-          new Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              new Text("请输入标题", style: titleStyle,),
-            ],
-          ),
-          new Divider(
-            height: 7,
-            color: Colors.black,
-          ),
-          new Padding(padding: EdgeInsets.fromLTRB(0, 4, 0, 0)),
+          new Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
           new GestureDetector(
             child: new Container(
-              height: 60,
-              width: 120,
+              height: 105,
+              width: 148,
               decoration: BoxDecoration(
                 border: new Border.all(
-                  width: 0.7,
-                  color: Colors.black,
-                  style: BorderStyle.solid
+                    width: 0.7,
+                    color: Colors.grey,
+                    style: BorderStyle.solid
                 ),
                 color: Colors.white,
               ),
               child: new Column(
                 children: <Widget>[
-                  new Icon(Icons.add_circle, color: Colors.grey, size: 40,),
+                  new Padding(padding: EdgeInsets.fromLTRB(0, 17, 0, 0)),
+                  new Icon(Icons.add_circle, color: Colors.grey, size: 60,),
                   new Text("添加图片",style: textStyle,),
                 ],
               ),
             ),
             onTap: null,
           ),
-          new Padding(padding: EdgeInsets.fromLTRB(0, 4, 0, 0)),
+          new Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
           new Row(
             children: <Widget>[
-              new Icon(Icons.location_on,size: 15,),
-              new Padding(padding: EdgeInsets.fromLTRB(2, 0, 0, 0)),
-              new Text("商店位置", style: textStyle,),
+              new Padding(padding: EdgeInsets.fromLTRB(7, 0, 0, 0)),
+              new Icon(Icons.account_balance,size: 15,color: Colors.grey,),
+              new Padding(padding: EdgeInsets.fromLTRB(36, 0, 0, 0)),
+              new Column(
+                children: <Widget>[
+                  new Padding(padding: EdgeInsets.fromLTRB(0, 2, 0, 0)),
+                  new Text("输入店名", style: hint_textStyle,)
+                ],
+              ),
             ],
           ),
-          new Divider(
-            height: 5,
-            color: Colors.black,
-            indent: 18,
-          ),
-          new Row(
-            children: <Widget>[
-              new Text("店名:",style: textStyle,),
-              new Padding(padding: EdgeInsets.fromLTRB(2, 0, 0, 0)),
-            ],
-          ),
-          new Divider(
-            height: 5,
-            color: Colors.black,
-            indent: 18,
-          ),
+          new Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
           new Row(
             children: <Widget>[
               new Text("菜式:",style: textStyle,),
+              new Padding(padding: EdgeInsets.fromLTRB(3, 0, 0, 0)),
+              new Column(
+                children: <Widget>[
+                  new Padding(padding: EdgeInsets.fromLTRB(0, 2, 0, 0)),
+                  new Text("记录你的美食", style: hint_textStyle,),
+                ],
+              ),
               new Padding(padding: EdgeInsets.fromLTRB(2, 0, 0, 0)),
             ],
           ),
           new Padding(padding: EdgeInsets.fromLTRB(0, 25, 0, 0)),
           new Row(
             children: <Widget>[
-              new Text("评价:",style: textStyle,),
-              new Padding(padding: EdgeInsets.fromLTRB(2, 0, 0, 0)),
+              new Text("点评:",style: textStyle,),
+              new Padding(padding: EdgeInsets.fromLTRB(3, 0, 0, 0)),
+              new Column(
+                children: <Widget>[
+                  new Padding(padding: EdgeInsets.fromLTRB(0, 2, 0, 0)),
+                  new Text("记录你的感受", style: hint_textStyle,),
+                ],
+              ),
             ],
           ),
         ],
@@ -807,56 +798,335 @@ class ExtendCardModel3 extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return new Container(
-      padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+      padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
       height: 250,
       width: 170,
       child:new Column(
-        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          new Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              new Icon(Icons.loyalty,size: 12, color: Colors.blueGrey,),
-              new Padding(padding: EdgeInsets.fromLTRB(5, 0, 0, 0)),
-              new Text("添加标签", style: tagStyle,),
-            ],
+          new Container(
+              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+              child:  new Text("输入标题", style: titleStyle,)
           ),
-          new Padding(padding: EdgeInsets.fromLTRB(0, 2, 0, 0)),
+          new Padding(padding: EdgeInsets.fromLTRB(0, 15, 0, 0)),
           new Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              new Text("请输入标题", style: titleStyle,),
-            ],
-          ),
-          new Divider(
-            height: 5,
-            color: Colors.black,
-          ),
-          new Padding(padding: EdgeInsets.fromLTRB(0, 3, 0, 0)),
-          new Row(
-            children: <Widget>[
-              new Icon(Icons.sentiment_dissatisfied, size: 15,),
-              new Padding(padding: EdgeInsets.fromLTRB(5, 0, 0, 0)),
-              new Text("拔草", style: TextStyle(fontSize: 12, color: Colors.blueGrey, fontWeight: FontWeight.w700),),
+              new Container(
+                width: 65,
+                height: 65,
+                color: Colors.grey,
+                child: new Center(
+                  child: new Icon(Icons.add, color: Colors.white,),
+                ),
+              ),
+              new Container(
+                width: 65,
+                height: 65,
+                color: Colors.grey,
+                child: new Center(
+                  child: new Icon(Icons.add, color: Colors.white,),
+                ),
+              ),
             ],
           ),
           new Padding(padding: EdgeInsets.fromLTRB(0, 5, 0, 0)),
           new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              new Text("店名:",style: textStyle,),
-              new Padding(padding: EdgeInsets.fromLTRB(2, 0, 0, 0)),
+              new Container(
+                width: 65,
+                height: 65,
+                color: Colors.grey,
+                child: new Center(
+                  child: new Icon(Icons.add, color: Colors.white,),
+                ),
+              ),
+              new Container(
+                width: 65,
+                height: 65,
+                color: Colors.grey,
+                child: new Center(
+                  child: new Icon(Icons.add, color: Colors.white,),
+                ),
+              ),
             ],
           ),
-          new Divider(
-            height: 5,
-            color: Colors.black,
-            indent: 18,
+          new Padding(padding: EdgeInsets.fromLTRB(0, 5, 0, 0)),
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              new Container(
+                width: 65,
+                height: 65,
+                color: Colors.grey,
+                child: new Center(
+                  child: new Icon(Icons.add, color: Colors.white,),
+                ),
+              ),
+              new Container(
+                width: 65,
+                height: 65,
+                color: Colors.grey,
+                child: new Center(
+                  child: new Icon(Icons.add, color: Colors.white,),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class ExtendCardModel4 extends StatelessWidget{
+  Widget build(BuildContext context){
+    return new Container(
+      padding: EdgeInsets.fromLTRB(5, 5, 5, 10),
+      height: 250,
+      width: 170,
+      child: new Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          new Container(
+              padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
+              child: new Text("输入标题", style: titleStyle,)
           ),
-          new Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
+          new Padding(padding: EdgeInsets.fromLTRB(0, 7, 0, 0)),
+          new Container(
+            height: 70,
+            width: 148,
+            decoration: BoxDecoration(
+              border: new Border.all(
+                  width: 0.7,
+                  color: Colors.grey,
+                  style: BorderStyle.solid
+              ),
+              color: Colors.white,
+            ),
+            child: new Column(
+              children: <Widget>[
+                new Padding(padding: EdgeInsets.fromLTRB(0, 17, 0, 0)),
+                new Icon(Icons.add_circle, color: Colors.grey, size: 35,),
+              ],
+            ),
+          ),
+          new Container(
+            padding: EdgeInsets.fromLTRB(0, 5, 75, 0),
+            child: new Text("记录你的生活", style: hint_textStyle,),
+          ),
+          new Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
+          new Container(
+              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+              child: new Text("输入标题", style: titleStyle,)
+          ),
+          new Padding(padding: EdgeInsets.fromLTRB(0, 7, 0, 0)),
+          new Container(
+            height: 70,
+            width: 148,
+            decoration: BoxDecoration(
+              border: new Border.all(
+                  width: 0.7,
+                  color: Colors.grey,
+                  style: BorderStyle.solid
+              ),
+              color: Colors.white,
+            ),
+            child: new Column(
+              children: <Widget>[
+                new Padding(padding: EdgeInsets.fromLTRB(0, 17, 0, 0)),
+                new Icon(Icons.add_circle, color: Colors.grey, size: 35,),
+              ],
+            ),
+          ),
+          new Container(
+            padding: EdgeInsets.fromLTRB(0, 5, 75, 0),
+            child: new Text("记录你的生活", style: hint_textStyle,),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class BigExtendCardModel1 extends StatefulWidget{
+  State<StatefulWidget> createState(){
+    return new BigExtendCardModel1State();
+  }
+}
+
+class BigExtendCardModel1State extends State<BigExtendCardModel1>{
+
+  Widget build(BuildContext context) {
+    return new CustomScrollView(
+      shrinkWrap: true,
+      slivers: <Widget>[
+        new SliverPadding(
+          padding: EdgeInsets.all(0),
+          sliver: new SliverList(
+              delegate: SliverChildListDelegate(
+                <Widget>[
+                  new Container(
+                    padding: EdgeInsets.fromLTRB(16, 0, 10, 10),
+                    height: 440,
+                    width: 280,
+                    child:new Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        new TextFormField(
+                          decoration: InputDecoration(
+                            hintText: '输入标题',
+                            hintStyle: big_titleStyle,
+                          ),
+                          onSaved: null,
+                        ),
+                        new TextFormField(
+                          decoration: InputDecoration(
+                            hintText: '记录你的生活',
+                            hintStyle: big_textStyle,
+                            border: InputBorder.none,
+                          ),
+                          maxLines: 15,
+                          onSaved: null,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              )
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class BigExtendCardModel2 extends StatefulWidget{
+  State<StatefulWidget> createState(){
+    return new BigExtendCardModel2State();
+  }
+}
+
+class BigExtendCardModel2State extends State<BigExtendCardModel2>{
+  var _imgPath;
+
+  Widget _ImageView(imgPath) {
+    if (imgPath == null) {
+      return new Container(
+        height: 180,
+        width: 260,
+        decoration: BoxDecoration(
+          border: new Border.all(
+            width: 0.7,
+            color: Colors.grey,
+            style: BorderStyle.solid,
+          ),
+          color: Colors.white,
+        ),
+        child: new Column(
+          children: <Widget>[
+            new Padding(padding: EdgeInsets.fromLTRB(0, 30, 0, 0)),
+            new Icon(Icons.add_circle, color: Colors.grey, size: 100,),
+            new Text("添加图片",style: big_textStyle,),
+          ],
+        ),
+      );
+    } else {
+      return new SizedBox(
+        height: 180,
+        width: 260,
+        child: Image.file(
+          imgPath,
+          fit: BoxFit.fill,
+        ),
+      );
+    }
+  }
+
+  _openGallery() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _imgPath = image;
+    });
+  }
+
+
+  Widget build(BuildContext context){
+    return new Container(
+      padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+      height: 440,
+      width: 280,
+      child:new Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          new GestureDetector(
+            child: _ImageView(_imgPath),
+            onTap: (){
+              _openGallery();
+            },
+          ),
+          new Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
           new Row(
             children: <Widget>[
-              new Text("原因:",style: textStyle,),
-              new Padding(padding: EdgeInsets.fromLTRB(2, 0, 0, 0)),
+              new Padding(padding: EdgeInsets.fromLTRB(7, 0, 0, 0)),
+              new Icon(Icons.account_balance,size: 15,color: Colors.grey,),
+              new Padding(padding: EdgeInsets.fromLTRB(8, 0, 0, 0)),
+              new Expanded(
+                child: new TextFormField(
+                  decoration: InputDecoration(
+                    hintText: '输入店名',
+                    hintStyle: big_hint_textStyle,
+                  ),
+                  onSaved: null,
+                ),
+              ),
+            ],
+          ),
+          new Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
+          new Row(
+            children: <Widget>[
+              new Column(
+                children: <Widget>[
+                  new Text("菜式:",style: big_textStyle,),
+                  new Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 22))
+                ],
+              ),
+              new Padding(padding: EdgeInsets.fromLTRB(6, 0, 0, 0)),
+              new Expanded(
+                child: new TextFormField(
+                  decoration: InputDecoration(
+                    hintText: '记录美食',
+                    hintStyle: big_hint_textStyle,
+                    border: InputBorder.none,
+                  ),
+                  maxLength: 6,
+                  onSaved: null,
+                ),
+              )
+            ],
+          ),
+          new Padding(padding: EdgeInsets.fromLTRB(0, 30, 0, 0)),
+          new Row(
+            children: <Widget>[
+              new Column(
+                children: <Widget>[
+                  new Text("点评:",style: big_textStyle,),
+                  new Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 22))
+                ],
+              ),
+              new Padding(padding: EdgeInsets.fromLTRB(3, 0, 0, 0)),
+              new Expanded(
+                child: new TextFormField(
+                  decoration: InputDecoration(
+                    hintText: '记录你的评价',
+                    hintStyle: big_hint_textStyle,
+                    border: InputBorder.none,
+                  ),
+                  maxLength: 6,
+                  onSaved: null,
+                ),
+              )
             ],
           ),
         ],
