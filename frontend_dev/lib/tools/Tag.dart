@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_dev/tools/Toast.dart';
-
-
+import 'package:frontend_dev/pages/snaplist_page.dart';
+import 'package:frontend_dev/pages/card_page.dart';
+import 'package:frontend_dev/tools/CardModel.dart';
 
 class MainTag extends StatefulWidget{
   double size;
@@ -21,6 +22,29 @@ class MainTagState extends State<MainTag>{
 
   Widget build(BuildContext context){
     _seeCardsCallback = (){
+      /*Navigator.of(context).push(
+        /*MaterialPageRoute(
+          builder: (BuildContext context) => SnaplistPage(
+            widgets: [
+              new CardPrototype(child: new BasicCardModel()),
+              new CardPrototype(child: new BasicCardModel()),
+              new CardPrototype(child: new BasicCardModel()),
+            ]
+          ),
+        ),*/
+        PageRouteBuilder(
+          // 当前的路由不会遮盖之前的路由
+          opaque: false,
+          // 构建路由的主要内容
+          pageBuilder: (BuildContext context, _, __) => SnaplistPage(
+              widgets: [
+                new CardPrototype(child: new BasicCardModel()),
+                new CardPrototype(child: new BasicCardModel()),
+                new CardPrototype(child: new BasicCardModel()),
+              ]
+          ),
+        ),
+      );*/
       Toast.toast(context, "click!!!");
     };
     return new GestureDetector(

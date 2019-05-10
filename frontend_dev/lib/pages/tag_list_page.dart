@@ -57,11 +57,11 @@ class TagListPage extends StatelessWidget {
           body: ListView(
               children: <Widget>[
                 _createTag(Icons.favorite, '佛系'),
-                _createTag(Icons.hotel, '养生'),
+                _createTag(Icons.accessibility_new, '养生'),
                 _createTag(Icons.build, '技能'),
                 _createTag(Icons.brush, '素养'),
-                _createTag(Icons.language, '足迹'),
-                _createTag(Icons.dashboard, '印象'),
+                /*_createTag(Icons.language, '足迹'),
+                _createTag(Icons.dashboard, '印象'),*/
                 _createTag(Icons.all_inclusive, '其它'),
               ],
           )
