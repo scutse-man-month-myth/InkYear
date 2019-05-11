@@ -32,7 +32,6 @@ class _RegisterPageState extends State<RegisterPage> {
         body: Form(
           key: _formKey,
           child: Container(
-            color: Theme.of(context).backgroundColor,
             child: ListView(
               padding: EdgeInsets.symmetric(horizontal: 22.0),
               children: <Widget>[

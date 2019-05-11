@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_dev/constants/SourceImages.dart';
 
 class TagListPage extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -7,11 +8,11 @@ class TagListPage extends StatelessWidget {
       return Padding(
         padding: EdgeInsets.fromLTRB(5, 10, 10, 10),
         child: ListTile(
-          leading: Icon(iconData, color: Colors.black),
+          leading: Icon(iconData, color: Colors.white),
           title: Text(
             titleText,
             style: TextStyle(
-              color: Colors.black,
+              color: Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
@@ -25,30 +26,21 @@ class TagListPage extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-          color: Theme
-              .of(context)
-              .backgroundColor,
-          /*image: DecorationImage(
-            image: AssetImage("imgs/background2.jpg"),
+          image: DecorationImage(
+            image: AssetImage(SourceImages.background),
             fit: BoxFit.fitWidth,
-          )*/
+          )
       ),
       child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0.0,
-            leading: IconButton(
-                icon: Icon(
-                  Icons.arrow_back_ios),
-                onPressed: () {
-                  Navigator.pop(context);
-                }
-            ),
+            leading: BackButton(),
             title: Text(
               "标签分类",
               style: TextStyle(
-                color:Colors.black,
+                color:Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: 22,
               ),
@@ -60,8 +52,6 @@ class TagListPage extends StatelessWidget {
                 _createTag(Icons.accessibility_new, '养生'),
                 _createTag(Icons.build, '技能'),
                 _createTag(Icons.brush, '素养'),
-                /*_createTag(Icons.language, '足迹'),
-                _createTag(Icons.dashboard, '印象'),*/
                 _createTag(Icons.all_inclusive, '其它'),
               ],
           )

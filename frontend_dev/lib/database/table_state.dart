@@ -10,11 +10,9 @@ List<String> states = ['mental', 'physical', 'skill', 'sense', 'others'];
 void createStateTable() async {
   final String sql =
       "CREATE TABLE 'STATE' ("
-      // "id INTEGER PRIMARY KEY, "
       "year INTEGER, month INTEGER, day INTEGER, "
       "total INTERGER, "
       "mental INTEGER, physical INTEGER, skill INTEGER, sense INTEGER, "
-      // "travel INTEGER, socialize INTEGER, others INTEGER, "
       "others INTEGER, "
       // "card_id INTEGER, card_type TEXT, "
       "PRIMARY KEY (year, month, day) "
@@ -86,7 +84,7 @@ void updateTotalState({int value = 0}) async {
   await db.transaction((txn) async {
     id = await txn.rawUpdate(sql);
   });
-  print(id);
+  print('$id: update finished');
 
   await db.close();
 }
@@ -109,7 +107,7 @@ void updateSingleState(int tag, int value) async {
   await db.transaction((txn) async {
     id = await txn.rawUpdate(sql);
   });
-  print(id);
+  print('$id: update finished');
 
   await updateTotalState();
 
@@ -157,7 +155,7 @@ Future<int> querySingleState(int tag) async {
   print(results);
 
   single = results[0]['${states[tag]}'];
-  print('total: $single');
+  print('tag$tag: $single');
 
   await db.close();
 

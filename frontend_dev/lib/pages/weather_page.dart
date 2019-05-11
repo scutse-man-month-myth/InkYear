@@ -41,13 +41,16 @@ class WeatherPageState extends State<WeatherPage> {
         filter: new ImageFilter.blur(sigmaX: 5, sigmaY: 5),
         child: new Scaffold(
           backgroundColor: Colors.black.withOpacity(0.3),
+          appBar: AppBar(
+            leading: BackButton(),
+          ),
           body: new Container(
               width: double.infinity,
               height: 350.0,
               color: Colors.transparent,
               child: new Stack(
                 children: <Widget>[
-                  new Positioned(
+                  /*new Positioned(
                       top: 30,
                       left: 10,
                       child: new IconButton(
@@ -57,7 +60,7 @@ class WeatherPageState extends State<WeatherPage> {
                             Navigator.pop(context);
                           }
                       )
-                  ),
+                  ),*/
                   new Positioned(
                       top: 35,
                       left: (MediaQuery

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_dev/constants/SourceImages.dart';
 import 'package:frontend_dev/pages/login_page.dart';
 import 'package:frontend_dev/pages/account_center_page.dart';
 import 'package:frontend_dev/pages/tag_list_page.dart';
-import 'package:frontend_dev/tools/Toast.dart';
+import 'package:frontend_dev/widgets/Toast.dart';
 
 
 class DrawerPage extends StatefulWidget {
@@ -121,9 +122,9 @@ class _DrawerPageState extends State<DrawerPage> {
                       leading: CircleAvatar(
                         child: Icon(
                           Icons.account_circle,
-                          color: Theme.of(context).accentColor,
+                          color: Colors.white,
                         ),
-                        backgroundColor: Theme.of(context).iconTheme.color,
+                        backgroundColor: Colors.blue[300],
                       ),
                       title: Text('个人中心'),
                       onTap: _enterAccountCenter,
@@ -133,9 +134,9 @@ class _DrawerPageState extends State<DrawerPage> {
                       leading: CircleAvatar(
                         child: Icon(
                           Icons.featured_play_list,
-                          color: Theme.of(context).accentColor,
+                          color: Colors.white,
                         ),
-                        backgroundColor: Theme.of(context).iconTheme.color,
+                        backgroundColor: Colors.blue[300],
                       ),
                       title: Text('标签分类'),
                       onTap: _enterTagList,
@@ -145,9 +146,9 @@ class _DrawerPageState extends State<DrawerPage> {
                       leading: CircleAvatar(
                         child: Icon(
                           Icons.import_export,
-                          color: Theme.of(context).accentColor,
+                          color: Colors.white,
                         ),
-                        backgroundColor: Theme.of(context).iconTheme.color,
+                        backgroundColor: Colors.blue[300],
                       ),
                       title: Text('导出数据'),
                       onTap: _enterExportData,
@@ -157,9 +158,9 @@ class _DrawerPageState extends State<DrawerPage> {
                       leading: CircleAvatar(
                         child: Icon(
                           Icons.cloud_upload,
-                          color: Theme.of(context).accentColor,
+                          color: Colors.white,
                         ),
-                        backgroundColor: Theme.of(context).iconTheme.color,
+                        backgroundColor: Colors.blue[300],
                       ),
                       title: Text('高级功能'),
                       onTap: _enterAdvancedFeatures,
@@ -172,9 +173,9 @@ class _DrawerPageState extends State<DrawerPage> {
                       leading: CircleAvatar(
                         child: Icon(
                           Icons.help,
-                          color: Theme.of(context).accentColor,
+                          color: Colors.white,
                         ),
-                        backgroundColor: Theme.of(context).iconTheme.color,
+                        backgroundColor: Colors.blue[300],
                       ),
                       title: Text('使用指南'),
                       onTap: _enterUsageGuide,
@@ -184,18 +185,19 @@ class _DrawerPageState extends State<DrawerPage> {
                       icon: CircleAvatar(
                         child: Icon(
                           Icons.thumb_up,
-                          color: Theme.of(context).accentColor,
+                          color: Colors.white,
                         ),
-                        backgroundColor: Theme.of(context).iconTheme.color,
+                        backgroundColor: Colors.blue[300],
                       ),
                       child: Text('关于我们'),
                       // 应用介绍
                       applicationName: '墨年 InkYear',
-                      applicationVersion: '0.0.1',
-                      applicationIcon: Icon(
+                      applicationVersion: '1.0.0',
+                      /*applicationIcon: Icon(
                         Icons.apps,
                         color: Theme.of(context).iconTheme.color,
-                      ),
+                      ),*/
+                      applicationIcon: ImageIcon(AssetImage(SourceImages.logo)),
                       // 团队介绍
                       aboutBoxChildren: <Widget>[
                         ListTile(
@@ -237,7 +239,7 @@ class _DrawerPageState extends State<DrawerPage> {
                         padding: EdgeInsets.all(20),
                         child: Row(
                           children: <Widget>[
-                            Icon(Icons.settings),
+                            Icon(Icons.settings, color: Colors.blue[300]),
                             SizedBox(width: 5),
                             Text('设置'),
                           ],
@@ -253,7 +255,7 @@ class _DrawerPageState extends State<DrawerPage> {
                         padding: EdgeInsets.all(20),
                         child: Row(
                           children: <Widget>[
-                            Icon(Icons.color_lens),
+                            Icon(Icons.color_lens, color: Colors.blue[300]),
                             SizedBox(width: 5),
                             Text('主题'),
                           ],
@@ -269,7 +271,7 @@ class _DrawerPageState extends State<DrawerPage> {
                         padding: EdgeInsets.all(20),
                         child: Row(
                           children: <Widget>[
-                            Icon(Icons.remove_red_eye),
+                            Icon(Icons.brightness_2, color: Colors.blue[300]),
                             SizedBox(width: 5),
                             Text('夜间'),
                           ],

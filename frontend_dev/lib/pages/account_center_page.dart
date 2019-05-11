@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_dev/constants/AntDesignIcons.dart';
-import 'package:frontend_dev/tools/Toast.dart';
+import 'package:frontend_dev/widgets/Toast.dart';
 
 typedef void ChangeCallback(String value);
 
@@ -242,7 +242,6 @@ class _AccountCenterPageState extends State<AccountCenterPage> {
 
     return Scaffold(
       body: Container(
-        color: Theme.of(context).backgroundColor,
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 22.0),
           children: <Widget>[

@@ -3,38 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:frontend_dev/pages/state_page.dart';
 import 'package:frontend_dev/pages/drawer_page.dart';
 import 'package:frontend_dev/pages/weather_page.dart';
-import 'package:frontend_dev/tools/TopReminder.dart';
-import 'package:frontend_dev/tools/Toast.dart';
+import 'package:frontend_dev/widgets/TopReminder.dart';
+import 'package:frontend_dev/widgets/Toast.dart';
 import 'package:frontend_dev/constants/ThemeColors.dart';
 import 'package:frontend_dev/constants/IconStyle.dart';
 import 'package:frontend_dev/constants/StringStyle.dart';
 import 'package:frontend_dev/constants/SourceImages.dart';
+import 'package:frontend_dev/constants/StateMap.dart';
 import 'package:frontend_dev/constants/AntDesignIcons.dart';
 import 'package:frontend_dev/datas/Location.dart'; // TODO:降低类的耦合
 import 'package:frontend_dev/pages/card_page.dart';
 import 'package:frontend_dev/pages/card_packet_page.dart';
 import 'package:frontend_dev/pages/calendar_page.dart';
-
-import 'dart:async';
-import 'package:sqflite/sqflite.dart';
-import 'package:frontend_dev/database/database.dart';
+import 'package:frontend_dev/pages/enter_page.dart';
+import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:frontend_dev/database/table_state.dart';
 import 'package:frontend_dev/database/table_config.dart';
-
-// TODO: 数据库信息
-String databaseName = "InkYear"; // 数据库名字
-int year;
-int month;
-int day;
-bool isSetup = false; // 是否第一次使用
-bool isSameDay = false; // 是否同一天使用
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  MyApp() {
-    // TODO: 初始化数据库和数据表
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +36,7 @@ class MyApp extends StatelessWidget {
         primaryTextTheme: StringStyle.primaryTextStyle,*/
       ),
       // 入口界面控件
-      home: MyHomePage(),
+      home: EnterPage(),
     );
   }
 }
@@ -56,7 +44,7 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
 
-  int currentState = 500; // 状态当前值
+  int currentState = 100; // 状态当前值
   int currentMental = 100; // 佛系当前值
   int currentPhysical = 100; // 养生当前值
   int currentSkill = 100; // 技能当前值
@@ -89,8 +77,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   // 用户参数
   // TODO: 数据库重写
-  String _avatar = 'imgs/timg.jpg'; // 头像
-  String _nickname = 'nickname'; // 昵称
+  String _avatar = SourceImages.avatar; // 头像
+  String _nickname = 'Nickname'; // 昵称
   String _email = 'nickname@xxx.xxx'; // 邮箱
   String _password = 'password'; // 密码
   TextStyle _nicknameTextStyle = TextStyle(fontSize: 25);
@@ -106,18 +94,18 @@ class _MyHomePageState extends State<MyHomePage> {
   int _tabIndex = 1;
   bool _isEdit = true;
 
+  // 日历信息
+  // List<int> tags = [stateTags.skill.index, stateTags.mental.index];
+  // List<String> titles = ['Hello InkYear', 'McDonald'];
+  List<int> tags = [];
+  List<String> titles = [];
+
   @override
   void initState() {
     super.initState();
-    print('initiate');
-    print(widget.currentState);
-    print(widget.currentMental);
-    print(widget.currentPhysical);
-    print(widget.currentSkill);
-    print(widget.currentSense);
-    print(widget.currentOthers);
     _bodys = [
-      CalenderPage(chips: widget.chips),
+      // TODO: 联动传参
+      CalenderPage(tags: tags, titles: titles),
       CardPage(),
       DailyRecord(
         currentState: widget.currentState,
@@ -126,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
         currentSkill: widget.currentSkill,
         currentSense: widget.currentSense,
         currentOthers: widget.currentOthers,
-        img: widget.stateImg,
+        image: widget.stateImg,
         mood: widget.stateIcon,
       )
     ];
@@ -145,13 +133,10 @@ class _MyHomePageState extends State<MyHomePage> {
       widget.stateImg = SourceImages.bad;
     else
       widget.stateImg = SourceImages.soso;
-    print('processing');
-    print(widget.currentState);
-    print(widget.currentMental);
-    print(widget.currentPhysical);
-    print(widget.currentSkill);
-    print(widget.currentSense);
-    print(widget.currentOthers);
+  }
+
+  void _buildCalender() {
+
   }
 
   String _getMonth() => _months[DateTime.now().month-1];
@@ -179,51 +164,40 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  List<Widget> _buildBottomNavigatorButtons() {
-    List<IconData> icons = [Icons.calendar_today, Icons.add_circle_outline, Icons.accessibility];
-    List<Widget> buttons = List.generate(3, (int tabIndex) =>
-      IconButton(
-        icon: Icon(
-          icons[tabIndex],
-          size: _tabIndex == tabIndex ? 35 : 30,
-          color: _tabIndex == tabIndex ? Colors.blue : Colors.white,
-        ),
-        onPressed: () async {
-          int totalState = await queryTotalState();
-          await _buildDailyRecord(totalState);
-          _bodys[2] = DailyRecord(
-            currentState: widget.currentState,
-            currentMental: widget.currentMental,
-            currentPhysical: widget.currentPhysical,
-            currentSkill: widget.currentSkill,
-            currentSense: widget.currentSense,
-            currentOthers: widget.currentOthers,
-            img: widget.stateImg,
-            mood: widget.stateIcon,
-            dState: totalState - 1250,
-          );
-          setState(() {
-            _tabIndex = tabIndex;
-            if(_tabIndex == 1) _isEdit = true;
-            else _isEdit = false;
-          });
-        },
-      )
+  Widget _buildBottomNavigatorButtons() {
+    return FancyBottomNavigation(
+      tabs: [
+        TabData(iconData: Icons.calendar_today, title: "Calender"),
+        TabData(iconData: Icons.edit, title: "Card"),
+        TabData(iconData: Icons.accessibility, title: "State"),
+      ],
+      onTabChangedListener: (position) async {
+        // 强制刷新状态页面
+        int totalState = await queryTotalState();
+        await _buildDailyRecord(totalState);
+        _bodys[2] = DailyRecord(
+          currentState: widget.currentState,
+          currentMental: widget.currentMental,
+          currentPhysical: widget.currentPhysical,
+          currentSkill: widget.currentSkill,
+          currentSense: widget.currentSense,
+          currentOthers: widget.currentOthers,
+          image: widget.stateImg,
+          mood: widget.stateIcon,
+          deltaState: totalState - 1250,
+        );
+        // TODO: 强制刷新日历页面
+        setState(() {
+          _tabIndex = position;
+          if(_tabIndex == 1) _isEdit = true;
+          else _isEdit = false;
+        });
+      },
+      barBackgroundColor: Colors.white,
+      textColor: Colors.black54,
+      circleColor: Colors.blue[300],
+      initialSelection: 1,
     );
-    return buttons;
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    print('initiate');
-    print(widget.currentState);
-    print(widget.currentMental);
-    print(widget.currentPhysical);
-    print(widget.currentSkill);
-    print(widget.currentSense);
-    print(widget.currentOthers);
   }
 
   @override
@@ -232,7 +206,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // 背景图片
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("imgs/background2.jpg"),
+          image: AssetImage(SourceImages.background),
           fit: BoxFit.fitWidth,
         )
       ),
@@ -250,7 +224,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: CircleAvatar(
                       radius: 20.0,
                       backgroundColor: Theme.of(context).backgroundColor,
-                      backgroundImage: AssetImage("imgs/timg.jpg"),
+                      backgroundImage: AssetImage(SourceImages.avatar),
                     ),
                   ),
                   GestureDetector(
@@ -288,7 +262,7 @@ class _MyHomePageState extends State<MyHomePage> {
               // TODO:动态变化图标
               icon: Icon(
                 Icons.cloud,
-                color: Theme.of(context).accentColor,
+                color: Colors.white,
               ),
               onPressed: () async {
                 if(county == "") { // 未选择地址
@@ -298,36 +272,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 else { // 已选择地址
                   _openTopReminderCallback(context);
                 }
-                // TODO: 查询记录
-                // TODO: 移到其它位置
-                int totalState = await queryTotalState();
-                await _buildDailyRecord(totalState);
-                setState(() {
-                  _bodys[2] = DailyRecord(
-                    currentState: widget.currentState,
-                    currentMental: widget.currentMental,
-                    currentPhysical: widget.currentPhysical,
-                    currentSkill: widget.currentSkill,
-                    currentSense: widget.currentSense,
-                    currentOthers: widget.currentOthers,
-                    img: widget.stateImg,
-                    mood: widget.stateIcon,
-                    dState: totalState - 1250,
-                  );
-                });
               }
             ),
             // 显示搜索
             IconButton(
               icon: Icon(Icons.search),
-              color: Theme.of(context).accentColor,
+              color: Colors.white,
               onPressed: () async {
-                // TODO: 初始化数据库和数据表
-                await deleteDB(databaseName);
-                await createDatabase(databaseName);
-                await createStateTable();
-                await addState();
-                await queryState();
                 // TODO:实现搜索功能
                 Toast.toast(context, "功能尚未开放......Orz\n敬请期待吧~(￣▽￣)");
               },
@@ -336,51 +287,7 @@ class _MyHomePageState extends State<MyHomePage> {
           elevation: 0.0,
         ),
         body: _bodys[_tabIndex],
-        bottomNavigationBar: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: _buildBottomNavigatorButtons(),
-          /*<Widget>[
-            new IconButton(
-              icon: new Icon(
-                Icons.calendar_today,
-                size: _tabIndex == 0 ? 35 : 30,
-                color: _tabIndex == 0 ? Colors.blue : Colors.white,
-              ),
-              onPressed: () {
-                setState(() {
-                  _tabIndex = 0;
-                  _isEdit = false;
-                });
-              },
-            ),
-            new IconButton(
-              icon: new Icon(
-                Icons.add_circle_outline,
-                size: _tabIndex == 1 ? 35 : 30,
-                color: _tabIndex == 1 ? Colors.blueAccent : Colors.white,
-              ),
-              onPressed: () {
-                setState(() {
-                  _tabIndex = 1;
-                  _isEdit = true;
-                });
-              },
-            ),
-            new IconButton(
-              icon: new Icon(
-                Icons.child_care,
-                size: _tabIndex == 2 ? 35 : 30,
-                color: _tabIndex == 2 ? Colors.blueAccent : Colors.white,
-              ),
-              onPressed: () {
-                setState(() {
-                  _tabIndex = 2;
-                  _isEdit = false;
-                });
-              },
-            ),
-          ],*/
-        ),
+        bottomNavigationBar: _buildBottomNavigatorButtons(),
         drawer: DrawerPage(
           oriAvatar: _avatar,
           oriNickname: _nickname,
@@ -396,7 +303,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Colors.white,
               ),
               onPressed: _openCardPacketCallback,
-              backgroundColor: Colors.black54,
+              backgroundColor: Colors.blue[300],
             )
         ) : null,
         // resizeToAvoidBottomInset: false,
