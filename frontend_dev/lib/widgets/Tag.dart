@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_dev/tools/Toast.dart';
+import 'package:frontend_dev/widgets/Toast.dart';
 import 'package:frontend_dev/pages/swiper_page.dart';
 import 'package:frontend_dev/pages/snaplist_page.dart';
-import 'package:frontend_dev/tools/Card.dart';
+import 'package:frontend_dev/widgets/Card.dart';
 import 'package:frontend_dev/pages/card_page.dart';
-import 'package:frontend_dev/tools/CardModel.dart';
+import 'package:frontend_dev/widgets/CardModel.dart';
 
 class MainTag extends StatefulWidget{
   double size;

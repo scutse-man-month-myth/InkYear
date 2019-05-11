@@ -1,33 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_dev/database/table_state.dart';
 import 'dart:math';
-
-//个人状态的参数
-// TODO: 数据库重写
-String nickname = "Nickname";
-int maxDegree = 10;
-int currentDegree = 1;
-int accumulateDayNum = 1;
-int accumulateCardNum = 2;
-Color weatherPageColor = Colors.white;
+import 'package:frontend_dev/database/table_state.dart';
+import 'package:frontend_dev/constants/SourceImages.dart';
+import 'package:frontend_dev/constants/AntDesignIcons.dart';
 
 class DailyRecord extends StatefulWidget{
-  DailyRecord({this.currentState, this.currentMental, this.currentPhysical,
-    this.currentSkill, this.currentSense, this.currentTravel,
-    this.currentSocialize, this.currentOthers, this.img, this.mood, this.dState});
+  DailyRecord({
+    this.currentState,
+    this.currentMental,
+    this.currentPhysical,
+    this.currentSkill,
+    this.currentSense,
+    this.currentTravel,
+    this.currentSocialize,
+    this.currentOthers,
+    this.nickname='NickName',
+    this.state='SOSO',
+    this.image,
+    this.mood,
+    this.accumDay=1,
+    this.deltaState=0,
+    this.accumCard=1,
+  });
 
-  String img;
-  IconData mood;
-  int dState;
-
-  final int maxState = 2500; // 状态最大值
-  final int maximumMental = 500; // 佛系最大值
-  final int maximumPhysical = 500; // 养生最大值
-  final int maximumSkill = 500; // 技能最大值
-  final int maximumSense = 500; // 素养最大值
-  // final int maximumTravel = 500; // 足迹最大值
-  // final int maximumSocialize = 500; // 印象最大值
-  final int maximumOthers = 500; // 其它最大值
+  String nickname; // 昵称
+  String image = SourceImages.soso; // 状态图片
+  IconData mood = AntDesignIcons.smile; // 心情
+  String state; // 状态字串
+  int accumDay; // 累计天数
+  int deltaState; // 状态变化
+  int accumCard; // 累计卡片
 
   final int currentState; // 状态当前值
   final int currentMental; // 佛系当前值
@@ -38,17 +40,28 @@ class DailyRecord extends StatefulWidget{
   final int currentSocialize; // 印象当前值
   final int currentOthers; // 其它当前值
 
-  // TODO:匹配健康值
-  String state = 'soso';
+  final int maxState = 2500; // 状态最大值
+  final int maximumMental = 500; // 佛系最大值
+  final int maximumPhysical = 500; // 养生最大值
+  final int maximumSkill = 500; // 技能最大值
+  final int maximumSense = 500; // 素养最大值
+  final int maximumOthers = 500; // 其它最大值
+
+  int currentDegree = 0; // 当前等级
+  int maxDegree = 52; // 最大等级
 
   State<StatefulWidget> createState(){
     return new DailyRecordState();
   }
 }
 class DailyRecordState extends State<DailyRecord>{
+
   initState() {
-    List<String> splits = (widget.img.substring(5)).split('\.');
+    // 刷新状态图片和字串
+    List<String> splits = (widget.image.substring(5)).split('\.');
     widget.state = splits[0].toUpperCase();
+    // TODO: 细化刷新等级的规则
+    widget.currentDegree = widget.accumDay ~/ 7;
   }
 
   Widget build(BuildContext context){
@@ -70,7 +83,7 @@ class DailyRecordState extends State<DailyRecord>{
                     child:  new Container(
                       height: 250,
                       width: 250,
-                      child: new Image.asset(widget.img),
+                      child: new Image.asset(widget.image),
                     ),
                   ),
                   // 半圆进度条
@@ -81,8 +94,8 @@ class DailyRecordState extends State<DailyRecord>{
                           child: new GradientCircularProgressIndicator(
                             stokeWidth: 6,
                             radius: 170,
-                            colors: [Colors.blue, Colors.blueAccent],
                             totalAngle: pi,
+                            colors: [Colors.blue, Colors.blueAccent],
                             value: widget.currentState / widget.maxState,
                             backgroundColor: Colors.white70,
                             strokeCapRound: true,
@@ -136,7 +149,7 @@ class DailyRecordState extends State<DailyRecord>{
                                     padding: EdgeInsets.fromLTRB((MediaQuery.of(context).size.width -230) / 2.0, 25, 0, 5),
                                     child: new Row(
                                       children: <Widget>[
-                                        new Text(nickname, style: TextStyle(fontSize: 35, fontWeight: FontWeight.w400),),
+                                        new Text(widget.nickname, style: TextStyle(fontSize: 35, fontWeight: FontWeight.w400),),
                                         new IconButton(icon: new Icon(widget.mood, size: 30,), onPressed: null)
                                       ],
                                     ),
@@ -147,9 +160,9 @@ class DailyRecordState extends State<DailyRecord>{
                                     children: <Widget>[
                                       new Container(
                                         padding: EdgeInsets.fromLTRB(80, 0, 80, 10),
-                                        child: new LinearProgressIndicator(value: currentDegree/maxDegree),
+                                        child: new LinearProgressIndicator(value: widget.currentDegree/widget.maxDegree),
                                       ),
-                                      new Text("LEVEL $currentDegree/$maxDegree", style: TextStyle(fontSize: 17, fontWeight: FontWeight.w400),),
+                                      new Text("LEVEL ${widget.currentDegree}/${widget.maxDegree}", style: TextStyle(fontSize: 17, fontWeight: FontWeight.w400),),
                                     ],
                                   ),
                                   new Padding(padding: EdgeInsets.fromLTRB(0, 15, 0, 15)),
@@ -158,7 +171,7 @@ class DailyRecordState extends State<DailyRecord>{
                                     children: <Widget>[
                                       new Column(
                                         children: <Widget>[
-                                          new Text("$accumulateDayNum天", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w400),),
+                                          new Text("${widget.accumDay} 天", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w400),),
                                           new Text("累计天数",style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.blueGrey),)
                                         ],
                                       ),
@@ -175,8 +188,9 @@ class DailyRecordState extends State<DailyRecord>{
                                         children: <Widget>[
                                           new Row(
                                             children: <Widget>[
-                                              new Icon(Icons.add_circle, color: Colors.green,),
-                                              new Text("${widget.dState}", style: TextStyle(fontSize: 28, fontWeight: FontWeight.w400),),
+                                              // TODO: 动态变化是升或减或平
+                                              new Icon(Icons.trending_up),
+                                              new Text(" ${widget.deltaState}", style: TextStyle(fontSize: 28, fontWeight: FontWeight.w400),),
                                             ],
                                           ),
                                           new Text("状态变化",style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.blueGrey),)
@@ -193,7 +207,7 @@ class DailyRecordState extends State<DailyRecord>{
                                       ),
                                       new Column(
                                         children: <Widget>[
-                                          new Text("$accumulateCardNum张", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w400),),
+                                          new Text("${widget.accumCard} 张", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w400),),
                                           new Text("累计卡片",style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.blueGrey),)
                                         ],
                                       ),

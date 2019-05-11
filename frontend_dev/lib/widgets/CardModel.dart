@@ -3,7 +3,7 @@ import 'package:flutter_seekbar/flutter_seekbar.dart';
 import 'package:frontend_dev/constants/AntDesignIcons.dart';
 import 'package:frontend_dev/database/table_card.dart';
 import 'package:frontend_dev/database/table_state.dart';
-import 'package:frontend_dev/tools/Toast.dart';
+import 'package:frontend_dev/widgets/Toast.dart';
 import 'package:image_picker/image_picker.dart';
 
 String databaseName = "InkYear";
@@ -19,11 +19,11 @@ TextStyle big_hint_textStyle = TextStyle(color: Colors.grey, fontSize: 12);
 
 class BasicCardModel extends StatefulWidget{
   List<Widget> _checkboxTiles = [
-    Row(
+    /*Row(
       children: <Widget>[
         Icon(Icons.all_inclusive, size: 20),
         SizedBox(width: 10),
-        Text('输入标题', style: TextStyle(fontSize: 17)),
+        Text('示例标题', style: TextStyle(fontSize: 17)),
         SizedBox(width: 70),
         Checkbox(
             value: false,
@@ -35,7 +35,8 @@ class BasicCardModel extends StatefulWidget{
             }
         ),
       ],
-    )
+    )*/
+    SizedBox(),
   ];
   List<bool> _isChecks = [false];
 
@@ -46,12 +47,6 @@ class BasicCardModel extends StatefulWidget{
 
 class BasicCardModelState extends State<BasicCardModel>{
 
-  // TextStyle _textStyle = new TextStyle(fontSize: 15, color: Colors.black);
-  // String _text = "5.睡眠时间(小时)";
-  /*bool check1 = false;
-  bool check2 = false;
-  bool check3 = false;
-  bool check4 = false;*/
   double value1 = 7;
   double value2 = 0.0;
 
@@ -66,277 +61,6 @@ class BasicCardModelState extends State<BasicCardModel>{
 
   @override
   Widget build(BuildContext context){
-    /*return new Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        new IconButton(
-          icon: Icon(Icons.copyright),
-          onPressed: () async {
-            createCardTable();
-          },
-        ),
-        TextField(
-          onChanged: (String value) {
-            setState(() {
-              title = value;
-            });
-            print("title: $title");
-          },
-        ),
-        TextField(
-          onChanged: (String value) {
-            setState(() {
-              content = value;
-            });
-            print("content: $content");
-          },
-        ),
-        new IconButton(
-          icon: Icon(Icons.copyright),
-          onPressed: () async {
-            addCard(title, content);
-          },
-        ),
-        new IconButton(
-          icon: Icon(Icons.copyright),
-          onPressed: () async {
-            updateCard(title, content);
-          },
-        ),
-        new IconButton(
-          icon: Icon(Icons.copyright),
-          onPressed: () async {
-            queryCard(0);
-          },
-        ),
-        new IconButton(
-          icon: Icon(Icons.copyright),
-          onPressed: () async {
-            deleteDB();
-          },
-        ),
-        /*new Padding(
-          padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
-          child: new Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              new Text("1.背单词",style: _textStyle,),
-              new Switch(
-                value: this.check1,
-
-                activeColor: Colors.blue,
-                onChanged: (bool val) {
-                  this.setState(() {
-                    this.check1 = !this.check1;
-                  });
-                },
-              )
-            ],
-          ),
-        ),
-        new Padding(
-          padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-          child: new Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              new Text("2.步道乐跑",style: _textStyle,),
-              new Switch(
-                value: this.check2,
-                activeColor: Colors.blue,
-                onChanged: (bool val) {
-                  this.setState(() {
-                    this.check2 = !this.check2;
-                  });
-                },
-              )
-            ],
-          ),
-        ),
-        new Padding(
-          padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-          child: new Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              new Text("3.吃早餐",style: _textStyle,),
-              new Switch(
-                value: this.check3,
-                activeColor: Colors.blue,
-                onChanged: (bool val) {
-                  this.setState(() {
-                    this.check3 = !this.check3;
-                  });
-                },
-              )
-            ],
-          ),
-        ),
-        new Padding(
-          padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-          child: new Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              new Text("4.看小说",style: _textStyle,),
-              new Checkbox(
-                value: this.check4,
-                activeColor: Colors.blue,
-                onChanged: (bool val) {
-                  this.setState(() {
-                    this.check4 = !this.check4;
-                  });
-                },
-              )
-            ],
-          ),
-        ),
-        new Padding(
-          padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-          child: new Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              new Text("5.睡眠时间(小时)", style: _textStyle,),
-              new Container(
-                padding: EdgeInsets.fromLTRB(20, 17, 0, 0),
-                width: 250,
-                child: new SeekBar(
-                  backgroundColor: Colors.lightBlueAccent,
-                  progressColor: Colors.blue,
-                  progresseight: 10,
-                  value: value1,
-                  sectionCount: 5,
-                  sectionRadius: 5,
-                  sectionColor: Colors.red,
-                  sectionUnSelecteColor: Colors.red[100],
-                  showSectionText: true,
-                  sectionTexts: <SectionTextModel>[
-                    new SectionTextModel(
-                        position: 0,
-                        text: "0",
-                        progressColor: Colors.blue,
-                    ),
-                    new SectionTextModel(
-                        position: 1,
-                        text: "2",
-                        progressColor: Colors.blue,
-                    ),
-                    new SectionTextModel(
-                        position: 2,
-                        text: "4",
-                        progressColor: Colors.blue,
-                    ),
-                    new SectionTextModel(
-                        position: 3,
-                        text: "6",
-                        progressColor: Colors.blue,
-                    ),
-                    new SectionTextModel(
-                        position: 4,
-                        text: "8",
-                        progressColor: Colors.blue,
-                    ),
-                    new SectionTextModel(
-                        position: 5,
-                        text: ">=10",
-                        progressColor: Colors.blue,
-                    ),
-                  ],
-                  sectionTextMarginTop: 2,
-                  sectionDecimal: 0,
-                  sectionTextColor: Colors.black,
-                  sectionSelectTextColor: Colors.red,
-                  sectionTextSize: 14,
-                  hideBubble: true,
-                  bubbleRadius: 15,
-                  bubbleColor: Colors.purple,
-                  bubbleTextColor: Colors.white,
-                  bubbleTextSize: 14,
-                  bubbleMargin: -20,
-                  afterDragShowSectionText: true,
-                  onValueChanged: (progressValue){
-                    setState(() {
-                        value1 = progressValue.value;
-                    });
-                  },
-                ),
-              )
-            ],
-          )
-        ),
-        new Padding(
-            padding: EdgeInsets.fromLTRB(20, 25, 0, 0),
-            child: new Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                new Text("6.运动时间(分钟)", style: _textStyle,),
-                new Container(
-                  padding: EdgeInsets.fromLTRB(20, 17, 0, 0),
-                  width: 250,
-                  child: new SeekBar(
-                    backgroundColor: Colors.lightBlueAccent,
-                    progressColor: Colors.blue,
-                    progresseight: 10,
-                    value: value2,
-                    sectionCount: 5,
-                    sectionRadius: 5,
-                    sectionColor: Colors.red,
-                    sectionUnSelecteColor: Colors.red[100],
-                    showSectionText: true,
-                    sectionTextMarginTop: 2,
-                    sectionDecimal: 0,
-                    sectionTextColor: Colors.black,
-                    sectionSelectTextColor: Colors.red,
-                    sectionTextSize: 14,
-                    sectionTexts: <SectionTextModel>[
-                      new SectionTextModel(
-                        position: 0,
-                        text: "0",
-                        progressColor: Colors.blue,
-                      ),
-                      new SectionTextModel(
-                        position: 1,
-                        text: "20",
-                        progressColor: Colors.blue,
-                      ),
-                      new SectionTextModel(
-                        position: 2,
-                        text: "40",
-                        progressColor: Colors.blue,
-                      ),
-                      new SectionTextModel(
-                        position: 3,
-                        text: "60",
-                        progressColor: Colors.blue,
-                      ),
-                      new SectionTextModel(
-                        position: 4,
-                        text: "80",
-                        progressColor: Colors.blue,
-                      ),
-                      new SectionTextModel(
-                        position: 5,
-                        text: ">=100",
-                        progressColor: Colors.blue,
-                      ),
-                    ],
-                    hideBubble: true,
-                    bubbleRadius: 15,
-                    bubbleColor: Colors.purple,
-                    bubbleTextColor: Colors.white,
-                    bubbleTextSize: 14,
-                    bubbleMargin: -20,
-                    afterDragShowSectionText: true,
-                    onValueChanged: (progressValue){
-                      setState(() {
-                        value2 = progressValue.value;
-                      });
-                    },
-                  ),
-                )
-              ],
-            )
-        ),*/
-      ],
-    );*/
 
     Widget _buildCheckboxTile(IconData iconData, String title, int index, int tag) {
       return Row(
@@ -351,21 +75,6 @@ class BasicCardModelState extends State<BasicCardModel>{
             checkColor: Colors.white,
             activeColor: Colors.green,
             onChanged: (bool choice) async {
-              /*switch(index) {
-                case 0:
-                  value = await querySingleState(States.skill.index);
-                  tag = States.skill.index;
-                  break;
-                case 1:
-                  value = await querySingleState(States.sense.index);
-                  tag = States.sense.index;
-                  break;
-                case 2:
-                  value = await querySingleState(States.physical.index);
-                  tag = States.physical.index;
-                  break;
-              }*/
-
               int value = await querySingleState(tag);
               await queryState();
 
@@ -389,10 +98,7 @@ class BasicCardModelState extends State<BasicCardModel>{
 
     Widget _buildSeekbarTile(String content) {
       return new Row(
-        // crossAxisAlignment: CrossAxisAlignment.start,
-        // mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          // new Text(content, style: _textStyle),
           new Padding(
             padding: EdgeInsets.fromLTRB(15, 10, 0, 10),
             child: new Icon(Icons.hotel, color: Colors.black54, size: 25),
@@ -408,11 +114,6 @@ class BasicCardModelState extends State<BasicCardModel>{
               sectionCount: 5,
               showSectionText: true,
               sectionTexts: <SectionTextModel>[
-                /*new SectionTextModel(
-                    position: 0,
-                    text: "0",
-                    progressColor: Colors.blue,
-                  ),*/
                 new SectionTextModel(
                   position: 0,
                   text: "5h-",
@@ -449,12 +150,6 @@ class BasicCardModelState extends State<BasicCardModel>{
               sectionTextColor: Colors.black54,
               sectionSelectTextColor: Colors.black,
               sectionTextSize: 15,
-              /*hideBubble: true,
-                bubbleRadius: 15,
-                bubbleColor: Colors.purple,
-                bubbleTextColor: Colors.white,
-                bubbleTextSize: 14,
-                bubbleMargin: -20,*/
               afterDragShowSectionText: true,
               onValueChanged: (progressValue){
                 setState(() {
@@ -492,10 +187,28 @@ class BasicCardModelState extends State<BasicCardModel>{
       Map<String, IconData> icons = {
         // TODO: 英文输入法
         "佛系": Icons.favorite,
+        "mental": Icons.favorite,
         "养生": Icons.accessibility_new,
+        "physical": Icons.accessibility_new,
         "技能": Icons.build,
+        "skill": Icons.build,
         "素养": Icons.brush,
+        "sense": Icons.brush,
         "其它": Icons.all_inclusive,
+        "others": Icons.all_inclusive,
+      };
+      Map<String, int> tags = {
+        // TODO: 英文输入法
+        "佛系": 0,
+        "mental": 0,
+        "养生": 1,
+        "physical": 1,
+        "技能": 2,
+        "skill": 2,
+        "素养": 3,
+        "sense": 3,
+        "其它": 4,
+        "others": 4,
       };
 
       return SimpleDialog(
@@ -519,35 +232,12 @@ class BasicCardModelState extends State<BasicCardModel>{
             child: TextField(
               decoration: InputDecoration(
                 labelText: '请输入标题',
-                hintText: '多喝热水',
+                hintText: '逛逛论坛',
               ),
               onChanged: (String value) => title = value,
             ),
           ),
-          SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              FlatButton(
-                child: Text('↑', style: TextStyle(color: Colors.green)),
-                onPressed: () {
-                  setState(() {
-                    state = 5;
-                  });
-                },
-              ),
-              FlatButton(
-                child: Text('↓', style: TextStyle(color: Colors.red)),
-                color: Colors.white,
-                onPressed: () {
-                  setState(() {
-                    state = -5;
-                  });
-                },
-              )
-            ],
-          ),
-          SizedBox(height: 10),
+          SizedBox(height: 30),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
@@ -560,8 +250,8 @@ class BasicCardModelState extends State<BasicCardModel>{
                     print(tag);
                     print(title);
                     widget._isChecks.add(false);
-                    // widget._checkboxTiles.add(_buildCheckboxTile(icons[tag], title, _currCheckBox));
-                    widget._checkboxTiles.add(_buildCheckboxTile(icons['佛系'], '佛系测试', _currCheckBox, 0));
+                    widget._checkboxTiles.add(_buildCheckboxTile(icons[tag], title, _currCheckBox, tags[tag]));
+                    // widget._checkboxTiles.add(_buildCheckboxTile(icons['佛系'], '佛系测试', _currCheckBox, 0));
                     _currCheckBox += 1;
                     print(widget._checkboxTiles.asMap());
                     Navigator.of(context).pop();
@@ -674,19 +364,19 @@ class BasicCardModelState extends State<BasicCardModel>{
             maxLines: 2,
             onChanged: (String text) async{
               int value = await querySingleState(States.mental.index);
-              await updateSingleState(States.mental.index, value+text.length);
+              await updateSingleState(States.mental.index, value+(text.length ~/ 10));
             },
           ),
           SizedBox(height: 10),
           Text("Today's Bads: "),
           TextField(
             decoration: InputDecoration(
-              hintText: '一句话记录下难过的事8\nE.g. 熬夜大赛',
+              hintText: '一句话记录下难过的事8\nE.g. 熬夜秃头',
             ),
             maxLines: 2,
             onChanged: (String text) async{
               int value = await querySingleState(States.mental.index);
-              await updateSingleState(States.mental.index, value-text.length);
+              await updateSingleState(States.mental.index, value-(text.length ~/ 10));
             },
           ),
           SizedBox(height: 10),
@@ -770,50 +460,6 @@ class BasicCardModelState extends State<BasicCardModel>{
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              /*IconButton(
-                icon: isStars[0] ? Icon(Icons.star) : Icon(Icons.star_border),
-                onPressed: () {
-                  setState(() {
-                    isStars[0] = !isStars[0];
-                  });
-                },
-              ),
-              // SizedBox(width: 15),
-              IconButton(
-                icon: isStars[1] ? Icon(Icons.star) : Icon(Icons.star_border),
-                onPressed: () {
-                  setState(() {
-                    isStars[1] = !isStars[1];
-                  });
-                },
-              ),
-              // SizedBox(width: 15),
-              IconButton(
-                icon: isStars[2] ? Icon(Icons.star) : Icon(Icons.star_border),
-                onPressed: () {
-                  setState(() {
-                    isStars[2] = !isStars[2];
-                  });
-                },
-              ),
-              // SizedBox(width: 15),
-              IconButton(
-                icon: isStars[3] ? Icon(Icons.star) : Icon(Icons.star_border),
-                onPressed: () {
-                  setState(() {
-                    isStars[3] = !isStars[3];
-                  });
-                },
-              ),
-              // SizedBox(width: 15),
-              IconButton(
-                icon: isStars[4] ? Icon(Icons.star) : Icon(Icons.star_border),
-                onPressed: () {
-                  setState(() {
-                    isStars[4] = !isStars[4];
-                  });
-                },
-              ),*/
               _buildStar(0),
               // SizedBox(width: 13),
               _buildStar(1),
@@ -843,7 +489,7 @@ class BasicCardModelState extends State<BasicCardModel>{
         isActive: true,
         subtitle: (_currStep == 0) ? new Row(
           children: <Widget>[
-            new Text('√ 吾日三省吾身惹'),
+            new Text('√ 吾日三省吾身也'),
             new SizedBox(width: 73.0),
             new IconButton(
               icon: new Icon(Icons.add_circle, color: Colors.green, size: 25.0),
@@ -860,7 +506,7 @@ class BasicCardModelState extends State<BasicCardModel>{
               },
             ),
           ],
-        ) : new Text('√ 吾日三省吾身惹'),
+        ) : new Text('√ 吾日三省吾身也'),
       ),
       Step(
         title: new Text('朋克养生'),
@@ -871,6 +517,7 @@ class BasicCardModelState extends State<BasicCardModel>{
           children: <Widget>[
             new Text('√ 生活不止有枸杞'),
             new SizedBox(width: 85.0),
+            // TODO: 实现自定义添加
             new Icon(Icons.add_circle, color: Colors.green, size: 25.0),
           ],
         ) : new Text('√ 生活不止有枸杞'),
@@ -884,6 +531,7 @@ class BasicCardModelState extends State<BasicCardModel>{
           children: <Widget>[
             new Text('√ 乱喝鸡汤三脂高'),
             new SizedBox(width: 85.0),
+            // TODO: 实现自定义添加
             new Icon(Icons.add_circle, color: Colors.green, size: 25.0),
           ],
         ) : new Text('√ 乱喝鸡汤三脂高'),
@@ -949,8 +597,24 @@ class ExtendCardModel1 extends StatelessWidget{
           new Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
+              // new Icon(Icons.edit, color: Colors.grey, size:15),
               new Padding(padding: EdgeInsets.fromLTRB(5, 0, 0, 0)),
               new Text("输入标题", style: titleStyle,),
+            ],
+          ),
+          new Container(
+            padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+            child: new Divider(
+              height: 5,
+              color: Colors.grey,
+            ),
+          ),
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              // new Icon(Icons.tab, color: Colors.grey, size:15),
+              new Padding(padding: EdgeInsets.fromLTRB(5, 0, 0, 0)),
+              new Text("输入标签", style: titleStyle,),
             ],
           ),
           new Container(
@@ -1243,6 +907,13 @@ class BigExtendCardModel1State extends State<BigExtendCardModel1>{
                         ),
                         new TextFormField(
                           decoration: InputDecoration(
+                            hintText: '输入标签',
+                            hintStyle: big_titleStyle,
+                          ),
+                          onSaved: null,
+                        ),
+                        new TextFormField(
+                          decoration: InputDecoration(
                             hintText: '记录你的生活',
                             hintStyle: big_textStyle,
                             border: InputBorder.none,
@@ -1361,7 +1032,7 @@ class BigExtendCardModel2State extends State<BigExtendCardModel2>{
                     hintStyle: big_hint_textStyle,
                     border: InputBorder.none,
                   ),
-                  maxLength: 6,
+                  maxLength: 5,
                   onSaved: null,
                 ),
               )
@@ -1384,7 +1055,7 @@ class BigExtendCardModel2State extends State<BigExtendCardModel2>{
                     hintStyle: big_hint_textStyle,
                     border: InputBorder.none,
                   ),
-                  maxLength: 6,
+                  maxLength: 5,
                   onSaved: null,
                 ),
               )

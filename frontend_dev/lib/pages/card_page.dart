@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_dev/tools/Card.dart';
-import 'package:frontend_dev/tools/Tag.dart';
-import 'package:frontend_dev/tools/CardModel.dart';
+import 'package:frontend_dev/widgets/Card.dart';
+import 'package:frontend_dev/widgets/Tag.dart';
+import 'package:frontend_dev/widgets/CardModel.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 int _itemCount ;
@@ -71,8 +71,8 @@ class _SwiperViewState extends State<SwiperView> {
     // TODO: 修改界面
     cardList
     ..add(new CardPrototype(child: new BasicCardModel()))
-      ..add(new CardPrototype(child: new BasicCardModel()))
-      ..add(new CardPrototype(child: new ExtendCardModel1()));
+    ..add(new CardPrototype(child: new BigExtendCardModel1()))
+    ..add(new CardPrototype(child: new BigExtendCardModel2()));
 
     _itemCount = cardList.length;
     super.initState();

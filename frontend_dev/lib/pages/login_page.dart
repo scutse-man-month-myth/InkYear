@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_dev/constants/AntDesignIcons.dart';
 import 'package:frontend_dev/pages/register_page.dart';
-import 'package:frontend_dev/tools/Toast.dart';
+import 'package:frontend_dev/widgets/Toast.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -34,7 +34,6 @@ class _LoginPageState extends State<LoginPage> {
         body: Form(
             key: _formKey,
             child: Container(
-              color: Theme.of(context).backgroundColor,
               child: ListView(
                 padding: EdgeInsets.symmetric(horizontal: 22.0),
                 children: <Widget>[

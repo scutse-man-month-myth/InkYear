@@ -22,10 +22,10 @@ dependencies:
   flutter_seekbar:
     git: https://github.com/LiuC520/flutter_seekbar.git
   flutter_swiper: ^1.1.6
+  snaplist: ^0.1.8
   flutter_calendar: ^0.0.1
-  flutter_calendar_carousel:
-  url_launcher: ^3.0.2
-  image_picker: ^0.4.12+1
+  flutter_calendar_carousel: ^1.3.16
+  fancy_bottom_navigation: ^0.3.2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -41,8 +41,8 @@ dependencies:
   # A Flutter plugin for finding commonly used locations on the filesystem. Supports iOS and Android.
   path_provider: ^0.5.0+1
 
-  # A small cozy library that allows you to make snappable list views.
-  snaplist: ^0.1.8
+  # A Flutter plugin for iOS and Android for picking images from the image library, and taking new pictures with the camera.
+  image_picker: ^0.4.12+1
 
 dev_dependencies:
   flutter_test:
@@ -66,19 +66,17 @@ flutter:
   #  - images/a_dot_ham.jpeg
 
   assets:
-   - imgs/back.jpg
-   - imgs/background0.jpg
-   - imgs/background1.jpg
-   - imgs/background2.jpg
    - imgs/person.png
-   - imgs/profile.jpeg
-   - imgs/timg.jpg
    - imgs/weatherbackground1.jpg
    - imgs/weatherbackground2.jpg
    - imgs/weatherbackground3.jpg
    - imgs/good.png
    - imgs/bad.png
    - imgs/soso.png
+   - imgs/logo.png
+   - imgs/avatar.png
+   - imgs/background.png
+   - imgs/background.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

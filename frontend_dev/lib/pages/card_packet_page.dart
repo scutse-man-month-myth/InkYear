@@ -1,6 +1,9 @@
-import 'package:frontend_dev/tools/Card.dart';
+import 'package:frontend_dev/widgets/Card.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend_dev/tools/CardModel.dart';
+import 'package:frontend_dev/widgets/CardModel.dart';
+import 'package:frontend_dev/constants/SourceImages.dart';
+import 'package:frontend_dev/database/table_card.dart';
+import 'package:frontend_dev/widgets/Toast.dart';
 
 String _modelTag1 = "1";
 String _modelTag2 = "2";
@@ -20,7 +23,7 @@ class _CardPacketPageState extends State<CardPacketPage>{
       decoration: BoxDecoration(
         color: Theme.of(context).backgroundColor,
         image: DecorationImage(
-          image: AssetImage("imgs/background2.jpg"),
+          image: AssetImage(SourceImages.background),
           fit: BoxFit.fitWidth,
         )
       ),
@@ -29,13 +32,14 @@ class _CardPacketPageState extends State<CardPacketPage>{
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0.0,
-          leading: new IconButton(
+          /*leading: new IconButton(
               icon: new Icon(Icons.keyboard_backspace, size: 40, color: Colors.white,),
               onPressed: (){
                 Navigator.pop(context);
               }
-          ),
-          title: new Text("卡片模板", style: TextStyle(fontSize: 25),),
+          ),*/
+          leading: BackButton(),
+          title: new Text("卡片模板", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
         ),
         body: new CustomScrollView(
           shrinkWrap: true,
@@ -54,7 +58,8 @@ class _CardPacketPageState extends State<CardPacketPage>{
                                 padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                                 child: new SelectCard(
                                   child: ExtendCardModel1(),
-                                  onPressed: (){
+                                  onPressed: () async {
+                                    // await addExtendCard1();
                                     Navigator.pop(context,_modelTag1);
                                   },
                                 ),
@@ -64,18 +69,19 @@ class _CardPacketPageState extends State<CardPacketPage>{
                                 child: new SelectCard(
                                   child: ExtendCardModel3(),
                                   onPressed: (){
+                                    // TODO: await addExtendCard3();
                                     Navigator.pop(context,_modelTag3);
                                   },
                                 ),
                               ),
-                              new Padding(
+                              /*new Padding(
                                 padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
                                 child: new SelectCard(),
                               ),
                               new Padding(
                                 padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
                                 child: new SelectCard(),
-                              ),
+                              ),*/
                             ],
                           ),
                           new Column(
@@ -84,23 +90,28 @@ class _CardPacketPageState extends State<CardPacketPage>{
                                 padding: EdgeInsets.fromLTRB(0, 100, 0, 0),
                                 child: new SelectCard(
                                   child: ExtendCardModel2(),
-                                  onPressed: (){
+                                  onPressed: () async{
+                                    // await addExtendCard2();
                                     Navigator.pop(context,_modelTag2);
                                   },
                                 ),
                               ),
-                              new Padding(
+                              /*new Padding(
                                 padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
                                 child: new ExtendCardModel4(),
-                              ),
+                              ),*/
                               new Padding(
                                 padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
-                                child: new SelectCard(),
+                                child: new SelectCard(
+                                  onPressed: () {
+                                    Toast.toast(context, '一大波卡片模板正在来袭...');
+                                  },
+                                ),
                               ),
-                              new Padding(
+                              /*new Padding(
                                 padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
                                 child: new SelectCard(),
-                              ),
+                              ),*/
                             ],
                           )
                         ],
