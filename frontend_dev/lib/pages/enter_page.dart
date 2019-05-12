@@ -41,8 +41,8 @@ class EnterPage extends StatelessWidget {
                   await createCardTable();
                   //try {
                     await addState();
-                    await addBasicCard();
                     await queryState();
+                    // await addBasicCard();
                   //}
                   //catch (e) {
                     print('already initiated');

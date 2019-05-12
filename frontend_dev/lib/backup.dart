@@ -9,6 +9,21 @@
 // TODO: 总结项目
 // TODO: 一些映射配置化
 // TODO: 增多减少
+// TODO: ios的修改图标
+
+// 点击进入
+// 侧边栏
+// 关于我们
+// 天气
+// 状态小人
+// 卡包
+// 第二张卡片
+// 常规卡片
+  // skill: Flutter
+  // Release InkYear 1.0.0 :D
+  // Need sleep Orz
+// 状态小人
+// 日历
 
 // 父控件管理还是initState管理
 // 父控件参数还是子控件参数

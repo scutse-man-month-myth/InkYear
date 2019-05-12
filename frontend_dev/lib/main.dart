@@ -36,7 +36,9 @@ class MyApp extends StatelessWidget {
         primaryTextTheme: StringStyle.primaryTextStyle,*/
       ),
       // 入口界面控件
+      // title: '墨年InkYear',
       home: EnterPage(),
+
     );
   }
 }
@@ -78,8 +80,8 @@ class _MyHomePageState extends State<MyHomePage> {
   // 用户参数
   // TODO: 数据库重写
   String _avatar = SourceImages.avatar; // 头像
-  String _nickname = 'Nickname'; // 昵称
-  String _email = 'nickname@xxx.xxx'; // 邮箱
+  String _nickname = 'Man-Month'; // 昵称
+  String _email = 'manmonth@gmail.com'; // 邮箱
   String _password = 'password'; // 密码
   TextStyle _nicknameTextStyle = TextStyle(fontSize: 25);
 
