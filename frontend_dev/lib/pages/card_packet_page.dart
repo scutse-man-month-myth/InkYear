@@ -70,7 +70,7 @@ class _CardPacketPageState extends State<CardPacketPage>{
                                   child: ExtendCardModel3(),
                                   onPressed: (){
                                     // TODO: await addExtendCard3();
-                                    Navigator.pop(context,_modelTag3);
+                                    Navigator.pop(context);
                                   },
                                 ),
                               ),
@@ -92,7 +92,7 @@ class _CardPacketPageState extends State<CardPacketPage>{
                                   child: ExtendCardModel2(),
                                   onPressed: () async{
                                     // await addExtendCard2();
-                                    Navigator.pop(context,_modelTag2);
+                                    Navigator.pop(context);
                                   },
                                 ),
                               ),

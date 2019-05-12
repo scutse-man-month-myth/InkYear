@@ -144,7 +144,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String _getMonth() => _months[DateTime.now().month-1];
   String _getDay() => '${DateTime.now().day}';
   String _getDate() => _getMonth() + ' ' + _getDay();
-  String _getWeek() => _months[DateTime.now().weekday-1];
+  String _getWeek() => _weeks[DateTime.now().weekday-1];
 
   void _openTopReminderCallback(BuildContext context) {
     Navigator.of(context).push(
