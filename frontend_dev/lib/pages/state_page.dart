@@ -14,7 +14,7 @@ class DailyRecord extends StatefulWidget{
     this.currentTravel,
     this.currentSocialize,
     this.currentOthers,
-    this.nickname='NickName',
+    this.nickname='Man-Month',
     this.state='SOSO',
     this.image,
     this.mood,
